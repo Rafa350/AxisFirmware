@@ -1,0 +1,15 @@
+_motorInitialize: CODE, 7276 0 2
+_motorStep: CODE, 7248 0 10
+_moMoveAbs: CODE, 6652 0 352
+_motorStepPins: SMALLCONST, 4105 0 4
+_main: CODE, 7004 0 84
+_brsStep: CODE, 4110 0 1030
+_brsStart: CODE, 5140 0 946
+__initialization: CODE, 7088 0 76
+_inpInitialize: CODE, 7278 0 2
+_ParseCommand: CODE, 6086 0 566
+_motorDirection: CODE, 7258 0 10
+_motorEnablePins: SMALLCONST, 4101 0 4
+_motorDirrectionPins: SMALLCONST, 4097 0 4
+___wmul: CODE, 7170 0 62
+Total: 3152

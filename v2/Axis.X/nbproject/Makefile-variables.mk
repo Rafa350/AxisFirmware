@@ -1,0 +1,13 @@
+#
+# Generated - do not edit!
+#
+# NOCDDL
+#
+CND_BASEDIR=`pwd`
+# PINGUINO configuration
+CND_ARTIFACT_DIR_PINGUINO=dist/PINGUINO/production
+CND_ARTIFACT_NAME_PINGUINO=Axis.X.production.hex
+CND_ARTIFACT_PATH_PINGUINO=dist/PINGUINO/production/Axis.X.production.hex
+CND_PACKAGE_DIR_PINGUINO=${CND_DISTDIR}/PINGUINO/package
+CND_PACKAGE_NAME_PINGUINO=axis.x.tar
+CND_PACKAGE_PATH_PINGUINO=${CND_DISTDIR}/PINGUINO/package/axis.x.tar
