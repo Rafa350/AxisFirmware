@@ -1,12 +1,12 @@
-#include "eos.hpp"
-#include "System/eosApplication.hpp"
-#include "Services/eosAppLoop.hpp"
-#include "Controllers/Display/eosDisplay.hpp"
-#include "Controllers/Display/Drivers/eosILI9341.hpp"
+#include "eos.h"
+#include "System/eosApplication.h"
+#include "Services/eosAppLoop.h"
+#include "Controllers/Display/eosDisplay.h"
+#include "Controllers/Display/Drivers/eosILI9341.h"
 #include "HAL/halGPIO.h"
-#include "motor.hpp"
-#include "motion.hpp"
-#include "axMainForm.hpp"
+#include "motor.h"
+#include "motion.h"
+#include "axMainForm.h"
 
 
 using namespace eos;
