@@ -1,5 +1,5 @@
-#ifndef __motor__
-#define __motor__
+#ifndef __axisMotor__
+#define __axisMotor__
 
 
 #include "eos.h"
@@ -64,4 +64,4 @@ namespace axis {
 }
 
 
-#endif // __motor__
+#endif // __axisMotor__

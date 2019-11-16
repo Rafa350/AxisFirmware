@@ -1,7 +1,7 @@
 #include "eos.h"
 #include "HAL/halGPIO.h"
 
-#include "motor.h"
+#include "axisMotor.h"
 
 
 using namespace axis;

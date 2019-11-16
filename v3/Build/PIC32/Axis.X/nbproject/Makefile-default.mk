@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=../../../Source/appApplication.cpp ../../../Source/appMain.cpp ../../../../../EOS/v2/Source/StartUp/PIC32/main.cpp ../../../../../EOS/v2/Source/System/eosApplication.cpp ../../../../../EOS/v2/Source/System/eosString.cpp ../../../../../EOS/v2/Source/System/Core/eosTask.cpp ../../../../../EOS/v2/Source/System/Core/eosGlobalAlloc.cpp ../../../../../EOS/v2/Source/System/Core/eosErrorHandler.cpp ../../../../../EOS/v2/Source/Services/eosService.cpp ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/tasks.c ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/queue.c ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/list.c ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/portable/MemMang/heap_4.c ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/portable/MPLAB/PIC32MX/port.c ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/portable/MPLAB/PIC32MX/port_asm.S ../../../../../EOS/v2/Source/HAL/PIC32/halSYS.c ../../../Source/PIC32/appInitialize.cpp ../../../../../EOS/v2/Source/OSAL/FreeRTOS/osalHeap.c ../../../../../EOS/v2/Source/OSAL/FreeRTOS/osalKernel.c ../../../../../EOS/v2/Source/OSAL/FreeRTOS/osalTask.c ../../../../../EOS/v2/Source/OSAL/FreeRTOS/rtos_hooks.c ../../../../../EOS/v2/Source/OSAL/FreeRTOS/osalSemaphore.c ../../../../../EOS/v2/Source/OSAL/FreeRTOS/osalQueue.c ../../../../../EOS/v2/Source/System/Collections/eosList.cpp ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/timers.c ../../../Source/motor.cpp
+SOURCEFILES_QUOTED_IF_SPACED=../../../Source/PIC32/appInitialize.cpp ../../../../../EOS/v2/Source/HAL/PIC32/halSYS.c ../../../../../EOS/v2/Source/OSAL/FreeRTOS/osalHeap.c ../../../../../EOS/v2/Source/OSAL/FreeRTOS/osalKernel.c ../../../../../EOS/v2/Source/OSAL/FreeRTOS/osalTask.c ../../../../../EOS/v2/Source/OSAL/FreeRTOS/rtos_hooks.c ../../../../../EOS/v2/Source/OSAL/FreeRTOS/osalSemaphore.c ../../../../../EOS/v2/Source/OSAL/FreeRTOS/osalQueue.c ../../../../../EOS/v2/Source/Services/eosService.cpp ../../../../../EOS/v2/Source/StartUp/PIC32/main.cpp ../../../../../EOS/v2/Source/System/Collections/eosList.cpp ../../../../../EOS/v2/Source/System/Core/eosTask.cpp ../../../../../EOS/v2/Source/System/Core/eosGlobalAlloc.cpp ../../../../../EOS/v2/Source/System/Core/eosErrorHandler.cpp ../../../../../EOS/v2/Source/System/eosApplication.cpp ../../../../../EOS/v2/Source/System/eosString.cpp ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/tasks.c ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/queue.c ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/list.c ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/portable/MemMang/heap_4.c ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/portable/MPLAB/PIC32MX/port.c ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/portable/MPLAB/PIC32MX/port_asm.S ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/timers.c ../../../Source/axisApplication.cpp ../../../Source/axisMain.cpp ../../../Source/axisMotion.cpp ../../../Source/axisMotionService.cpp ../../../Source/axisMotor.cpp
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/_ext/449926602/appApplication.o ${OBJECTDIR}/_ext/449926602/appMain.o ${OBJECTDIR}/_ext/1530442337/main.o ${OBJECTDIR}/_ext/644179355/eosApplication.o ${OBJECTDIR}/_ext/644179355/eosString.o ${OBJECTDIR}/_ext/1878683351/eosTask.o ${OBJECTDIR}/_ext/1878683351/eosGlobalAlloc.o ${OBJECTDIR}/_ext/1878683351/eosErrorHandler.o ${OBJECTDIR}/_ext/1177943276/eosService.o ${OBJECTDIR}/_ext/1811515072/tasks.o ${OBJECTDIR}/_ext/1811515072/queue.o ${OBJECTDIR}/_ext/1811515072/list.o ${OBJECTDIR}/_ext/1807323683/heap_4.o ${OBJECTDIR}/_ext/1849293962/port.o ${OBJECTDIR}/_ext/1849293962/port_asm.o ${OBJECTDIR}/_ext/806995671/halSYS.o ${OBJECTDIR}/_ext/2116396228/appInitialize.o ${OBJECTDIR}/_ext/2118387804/osalHeap.o ${OBJECTDIR}/_ext/2118387804/osalKernel.o ${OBJECTDIR}/_ext/2118387804/osalTask.o ${OBJECTDIR}/_ext/2118387804/rtos_hooks.o ${OBJECTDIR}/_ext/2118387804/osalSemaphore.o ${OBJECTDIR}/_ext/2118387804/osalQueue.o ${OBJECTDIR}/_ext/1773950155/eosList.o ${OBJECTDIR}/_ext/1811515072/timers.o ${OBJECTDIR}/_ext/449926602/motor.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/_ext/449926602/appApplication.o.d ${OBJECTDIR}/_ext/449926602/appMain.o.d ${OBJECTDIR}/_ext/1530442337/main.o.d ${OBJECTDIR}/_ext/644179355/eosApplication.o.d ${OBJECTDIR}/_ext/644179355/eosString.o.d ${OBJECTDIR}/_ext/1878683351/eosTask.o.d ${OBJECTDIR}/_ext/1878683351/eosGlobalAlloc.o.d ${OBJECTDIR}/_ext/1878683351/eosErrorHandler.o.d ${OBJECTDIR}/_ext/1177943276/eosService.o.d ${OBJECTDIR}/_ext/1811515072/tasks.o.d ${OBJECTDIR}/_ext/1811515072/queue.o.d ${OBJECTDIR}/_ext/1811515072/list.o.d ${OBJECTDIR}/_ext/1807323683/heap_4.o.d ${OBJECTDIR}/_ext/1849293962/port.o.d ${OBJECTDIR}/_ext/1849293962/port_asm.o.d ${OBJECTDIR}/_ext/806995671/halSYS.o.d ${OBJECTDIR}/_ext/2116396228/appInitialize.o.d ${OBJECTDIR}/_ext/2118387804/osalHeap.o.d ${OBJECTDIR}/_ext/2118387804/osalKernel.o.d ${OBJECTDIR}/_ext/2118387804/osalTask.o.d ${OBJECTDIR}/_ext/2118387804/rtos_hooks.o.d ${OBJECTDIR}/_ext/2118387804/osalSemaphore.o.d ${OBJECTDIR}/_ext/2118387804/osalQueue.o.d ${OBJECTDIR}/_ext/1773950155/eosList.o.d ${OBJECTDIR}/_ext/1811515072/timers.o.d ${OBJECTDIR}/_ext/449926602/motor.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/_ext/2116396228/appInitialize.o ${OBJECTDIR}/_ext/806995671/halSYS.o ${OBJECTDIR}/_ext/2118387804/osalHeap.o ${OBJECTDIR}/_ext/2118387804/osalKernel.o ${OBJECTDIR}/_ext/2118387804/osalTask.o ${OBJECTDIR}/_ext/2118387804/rtos_hooks.o ${OBJECTDIR}/_ext/2118387804/osalSemaphore.o ${OBJECTDIR}/_ext/2118387804/osalQueue.o ${OBJECTDIR}/_ext/1177943276/eosService.o ${OBJECTDIR}/_ext/1530442337/main.o ${OBJECTDIR}/_ext/1773950155/eosList.o ${OBJECTDIR}/_ext/1878683351/eosTask.o ${OBJECTDIR}/_ext/1878683351/eosGlobalAlloc.o ${OBJECTDIR}/_ext/1878683351/eosErrorHandler.o ${OBJECTDIR}/_ext/644179355/eosApplication.o ${OBJECTDIR}/_ext/644179355/eosString.o ${OBJECTDIR}/_ext/1811515072/tasks.o ${OBJECTDIR}/_ext/1811515072/queue.o ${OBJECTDIR}/_ext/1811515072/list.o ${OBJECTDIR}/_ext/1807323683/heap_4.o ${OBJECTDIR}/_ext/1849293962/port.o ${OBJECTDIR}/_ext/1849293962/port_asm.o ${OBJECTDIR}/_ext/1811515072/timers.o ${OBJECTDIR}/_ext/449926602/axisApplication.o ${OBJECTDIR}/_ext/449926602/axisMain.o ${OBJECTDIR}/_ext/449926602/axisMotion.o ${OBJECTDIR}/_ext/449926602/axisMotionService.o ${OBJECTDIR}/_ext/449926602/axisMotor.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/_ext/2116396228/appInitialize.o.d ${OBJECTDIR}/_ext/806995671/halSYS.o.d ${OBJECTDIR}/_ext/2118387804/osalHeap.o.d ${OBJECTDIR}/_ext/2118387804/osalKernel.o.d ${OBJECTDIR}/_ext/2118387804/osalTask.o.d ${OBJECTDIR}/_ext/2118387804/rtos_hooks.o.d ${OBJECTDIR}/_ext/2118387804/osalSemaphore.o.d ${OBJECTDIR}/_ext/2118387804/osalQueue.o.d ${OBJECTDIR}/_ext/1177943276/eosService.o.d ${OBJECTDIR}/_ext/1530442337/main.o.d ${OBJECTDIR}/_ext/1773950155/eosList.o.d ${OBJECTDIR}/_ext/1878683351/eosTask.o.d ${OBJECTDIR}/_ext/1878683351/eosGlobalAlloc.o.d ${OBJECTDIR}/_ext/1878683351/eosErrorHandler.o.d ${OBJECTDIR}/_ext/644179355/eosApplication.o.d ${OBJECTDIR}/_ext/644179355/eosString.o.d ${OBJECTDIR}/_ext/1811515072/tasks.o.d ${OBJECTDIR}/_ext/1811515072/queue.o.d ${OBJECTDIR}/_ext/1811515072/list.o.d ${OBJECTDIR}/_ext/1807323683/heap_4.o.d ${OBJECTDIR}/_ext/1849293962/port.o.d ${OBJECTDIR}/_ext/1849293962/port_asm.o.d ${OBJECTDIR}/_ext/1811515072/timers.o.d ${OBJECTDIR}/_ext/449926602/axisApplication.o.d ${OBJECTDIR}/_ext/449926602/axisMain.o.d ${OBJECTDIR}/_ext/449926602/axisMotion.o.d ${OBJECTDIR}/_ext/449926602/axisMotionService.o.d ${OBJECTDIR}/_ext/449926602/axisMotor.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/_ext/449926602/appApplication.o ${OBJECTDIR}/_ext/449926602/appMain.o ${OBJECTDIR}/_ext/1530442337/main.o ${OBJECTDIR}/_ext/644179355/eosApplication.o ${OBJECTDIR}/_ext/644179355/eosString.o ${OBJECTDIR}/_ext/1878683351/eosTask.o ${OBJECTDIR}/_ext/1878683351/eosGlobalAlloc.o ${OBJECTDIR}/_ext/1878683351/eosErrorHandler.o ${OBJECTDIR}/_ext/1177943276/eosService.o ${OBJECTDIR}/_ext/1811515072/tasks.o ${OBJECTDIR}/_ext/1811515072/queue.o ${OBJECTDIR}/_ext/1811515072/list.o ${OBJECTDIR}/_ext/1807323683/heap_4.o ${OBJECTDIR}/_ext/1849293962/port.o ${OBJECTDIR}/_ext/1849293962/port_asm.o ${OBJECTDIR}/_ext/806995671/halSYS.o ${OBJECTDIR}/_ext/2116396228/appInitialize.o ${OBJECTDIR}/_ext/2118387804/osalHeap.o ${OBJECTDIR}/_ext/2118387804/osalKernel.o ${OBJECTDIR}/_ext/2118387804/osalTask.o ${OBJECTDIR}/_ext/2118387804/rtos_hooks.o ${OBJECTDIR}/_ext/2118387804/osalSemaphore.o ${OBJECTDIR}/_ext/2118387804/osalQueue.o ${OBJECTDIR}/_ext/1773950155/eosList.o ${OBJECTDIR}/_ext/1811515072/timers.o ${OBJECTDIR}/_ext/449926602/motor.o
+OBJECTFILES=${OBJECTDIR}/_ext/2116396228/appInitialize.o ${OBJECTDIR}/_ext/806995671/halSYS.o ${OBJECTDIR}/_ext/2118387804/osalHeap.o ${OBJECTDIR}/_ext/2118387804/osalKernel.o ${OBJECTDIR}/_ext/2118387804/osalTask.o ${OBJECTDIR}/_ext/2118387804/rtos_hooks.o ${OBJECTDIR}/_ext/2118387804/osalSemaphore.o ${OBJECTDIR}/_ext/2118387804/osalQueue.o ${OBJECTDIR}/_ext/1177943276/eosService.o ${OBJECTDIR}/_ext/1530442337/main.o ${OBJECTDIR}/_ext/1773950155/eosList.o ${OBJECTDIR}/_ext/1878683351/eosTask.o ${OBJECTDIR}/_ext/1878683351/eosGlobalAlloc.o ${OBJECTDIR}/_ext/1878683351/eosErrorHandler.o ${OBJECTDIR}/_ext/644179355/eosApplication.o ${OBJECTDIR}/_ext/644179355/eosString.o ${OBJECTDIR}/_ext/1811515072/tasks.o ${OBJECTDIR}/_ext/1811515072/queue.o ${OBJECTDIR}/_ext/1811515072/list.o ${OBJECTDIR}/_ext/1807323683/heap_4.o ${OBJECTDIR}/_ext/1849293962/port.o ${OBJECTDIR}/_ext/1849293962/port_asm.o ${OBJECTDIR}/_ext/1811515072/timers.o ${OBJECTDIR}/_ext/449926602/axisApplication.o ${OBJECTDIR}/_ext/449926602/axisMain.o ${OBJECTDIR}/_ext/449926602/axisMotion.o ${OBJECTDIR}/_ext/449926602/axisMotionService.o ${OBJECTDIR}/_ext/449926602/axisMotor.o
 
 # Source Files
-SOURCEFILES=../../../Source/appApplication.cpp ../../../Source/appMain.cpp ../../../../../EOS/v2/Source/StartUp/PIC32/main.cpp ../../../../../EOS/v2/Source/System/eosApplication.cpp ../../../../../EOS/v2/Source/System/eosString.cpp ../../../../../EOS/v2/Source/System/Core/eosTask.cpp ../../../../../EOS/v2/Source/System/Core/eosGlobalAlloc.cpp ../../../../../EOS/v2/Source/System/Core/eosErrorHandler.cpp ../../../../../EOS/v2/Source/Services/eosService.cpp ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/tasks.c ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/queue.c ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/list.c ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/portable/MemMang/heap_4.c ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/portable/MPLAB/PIC32MX/port.c ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/portable/MPLAB/PIC32MX/port_asm.S ../../../../../EOS/v2/Source/HAL/PIC32/halSYS.c ../../../Source/PIC32/appInitialize.cpp ../../../../../EOS/v2/Source/OSAL/FreeRTOS/osalHeap.c ../../../../../EOS/v2/Source/OSAL/FreeRTOS/osalKernel.c ../../../../../EOS/v2/Source/OSAL/FreeRTOS/osalTask.c ../../../../../EOS/v2/Source/OSAL/FreeRTOS/rtos_hooks.c ../../../../../EOS/v2/Source/OSAL/FreeRTOS/osalSemaphore.c ../../../../../EOS/v2/Source/OSAL/FreeRTOS/osalQueue.c ../../../../../EOS/v2/Source/System/Collections/eosList.cpp ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/timers.c ../../../Source/motor.cpp
+SOURCEFILES=../../../Source/PIC32/appInitialize.cpp ../../../../../EOS/v2/Source/HAL/PIC32/halSYS.c ../../../../../EOS/v2/Source/OSAL/FreeRTOS/osalHeap.c ../../../../../EOS/v2/Source/OSAL/FreeRTOS/osalKernel.c ../../../../../EOS/v2/Source/OSAL/FreeRTOS/osalTask.c ../../../../../EOS/v2/Source/OSAL/FreeRTOS/rtos_hooks.c ../../../../../EOS/v2/Source/OSAL/FreeRTOS/osalSemaphore.c ../../../../../EOS/v2/Source/OSAL/FreeRTOS/osalQueue.c ../../../../../EOS/v2/Source/Services/eosService.cpp ../../../../../EOS/v2/Source/StartUp/PIC32/main.cpp ../../../../../EOS/v2/Source/System/Collections/eosList.cpp ../../../../../EOS/v2/Source/System/Core/eosTask.cpp ../../../../../EOS/v2/Source/System/Core/eosGlobalAlloc.cpp ../../../../../EOS/v2/Source/System/Core/eosErrorHandler.cpp ../../../../../EOS/v2/Source/System/eosApplication.cpp ../../../../../EOS/v2/Source/System/eosString.cpp ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/tasks.c ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/queue.c ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/list.c ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/portable/MemMang/heap_4.c ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/portable/MPLAB/PIC32MX/port.c ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/portable/MPLAB/PIC32MX/port_asm.S ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/timers.c ../../../Source/axisApplication.cpp ../../../Source/axisMain.cpp ../../../Source/axisMotion.cpp ../../../Source/axisMotionService.cpp ../../../Source/axisMotor.cpp
 
 
 
@@ -121,36 +121,6 @@ endif
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: compile
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-${OBJECTDIR}/_ext/1811515072/tasks.o: ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/tasks.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/_ext/1811515072" 
-	@${RM} ${OBJECTDIR}/_ext/1811515072/tasks.o.d 
-	@${RM} ${OBJECTDIR}/_ext/1811515072/tasks.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1811515072/tasks.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PIC32MXSK=1  -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/1811515072/tasks.o.d" -o ${OBJECTDIR}/_ext/1811515072/tasks.o ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/tasks.c    -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
-	
-${OBJECTDIR}/_ext/1811515072/queue.o: ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/queue.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/_ext/1811515072" 
-	@${RM} ${OBJECTDIR}/_ext/1811515072/queue.o.d 
-	@${RM} ${OBJECTDIR}/_ext/1811515072/queue.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1811515072/queue.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PIC32MXSK=1  -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/1811515072/queue.o.d" -o ${OBJECTDIR}/_ext/1811515072/queue.o ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/queue.c    -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
-	
-${OBJECTDIR}/_ext/1811515072/list.o: ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/list.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/_ext/1811515072" 
-	@${RM} ${OBJECTDIR}/_ext/1811515072/list.o.d 
-	@${RM} ${OBJECTDIR}/_ext/1811515072/list.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1811515072/list.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PIC32MXSK=1  -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/1811515072/list.o.d" -o ${OBJECTDIR}/_ext/1811515072/list.o ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/list.c    -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
-	
-${OBJECTDIR}/_ext/1807323683/heap_4.o: ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/portable/MemMang/heap_4.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/_ext/1807323683" 
-	@${RM} ${OBJECTDIR}/_ext/1807323683/heap_4.o.d 
-	@${RM} ${OBJECTDIR}/_ext/1807323683/heap_4.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1807323683/heap_4.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PIC32MXSK=1  -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/1807323683/heap_4.o.d" -o ${OBJECTDIR}/_ext/1807323683/heap_4.o ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/portable/MemMang/heap_4.c    -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
-	
-${OBJECTDIR}/_ext/1849293962/port.o: ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/portable/MPLAB/PIC32MX/port.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/_ext/1849293962" 
-	@${RM} ${OBJECTDIR}/_ext/1849293962/port.o.d 
-	@${RM} ${OBJECTDIR}/_ext/1849293962/port.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1849293962/port.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PIC32MXSK=1  -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/1849293962/port.o.d" -o ${OBJECTDIR}/_ext/1849293962/port.o ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/portable/MPLAB/PIC32MX/port.c    -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
-	
 ${OBJECTDIR}/_ext/806995671/halSYS.o: ../../../../../EOS/v2/Source/HAL/PIC32/halSYS.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/_ext/806995671" 
 	@${RM} ${OBJECTDIR}/_ext/806995671/halSYS.o.d 
@@ -193,6 +163,36 @@ ${OBJECTDIR}/_ext/2118387804/osalQueue.o: ../../../../../EOS/v2/Source/OSAL/Free
 	@${RM} ${OBJECTDIR}/_ext/2118387804/osalQueue.o 
 	@${FIXDEPS} "${OBJECTDIR}/_ext/2118387804/osalQueue.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PIC32MXSK=1  -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/2118387804/osalQueue.o.d" -o ${OBJECTDIR}/_ext/2118387804/osalQueue.o ../../../../../EOS/v2/Source/OSAL/FreeRTOS/osalQueue.c    -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
 	
+${OBJECTDIR}/_ext/1811515072/tasks.o: ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/tasks.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/1811515072" 
+	@${RM} ${OBJECTDIR}/_ext/1811515072/tasks.o.d 
+	@${RM} ${OBJECTDIR}/_ext/1811515072/tasks.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1811515072/tasks.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PIC32MXSK=1  -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/1811515072/tasks.o.d" -o ${OBJECTDIR}/_ext/1811515072/tasks.o ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/tasks.c    -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
+	
+${OBJECTDIR}/_ext/1811515072/queue.o: ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/queue.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/1811515072" 
+	@${RM} ${OBJECTDIR}/_ext/1811515072/queue.o.d 
+	@${RM} ${OBJECTDIR}/_ext/1811515072/queue.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1811515072/queue.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PIC32MXSK=1  -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/1811515072/queue.o.d" -o ${OBJECTDIR}/_ext/1811515072/queue.o ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/queue.c    -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
+	
+${OBJECTDIR}/_ext/1811515072/list.o: ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/list.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/1811515072" 
+	@${RM} ${OBJECTDIR}/_ext/1811515072/list.o.d 
+	@${RM} ${OBJECTDIR}/_ext/1811515072/list.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1811515072/list.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PIC32MXSK=1  -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/1811515072/list.o.d" -o ${OBJECTDIR}/_ext/1811515072/list.o ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/list.c    -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
+	
+${OBJECTDIR}/_ext/1807323683/heap_4.o: ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/portable/MemMang/heap_4.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/1807323683" 
+	@${RM} ${OBJECTDIR}/_ext/1807323683/heap_4.o.d 
+	@${RM} ${OBJECTDIR}/_ext/1807323683/heap_4.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1807323683/heap_4.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PIC32MXSK=1  -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/1807323683/heap_4.o.d" -o ${OBJECTDIR}/_ext/1807323683/heap_4.o ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/portable/MemMang/heap_4.c    -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
+	
+${OBJECTDIR}/_ext/1849293962/port.o: ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/portable/MPLAB/PIC32MX/port.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/1849293962" 
+	@${RM} ${OBJECTDIR}/_ext/1849293962/port.o.d 
+	@${RM} ${OBJECTDIR}/_ext/1849293962/port.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1849293962/port.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PIC32MXSK=1  -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/1849293962/port.o.d" -o ${OBJECTDIR}/_ext/1849293962/port.o ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/portable/MPLAB/PIC32MX/port.c    -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
+	
 ${OBJECTDIR}/_ext/1811515072/timers.o: ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/timers.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/_ext/1811515072" 
 	@${RM} ${OBJECTDIR}/_ext/1811515072/timers.o.d 
@@ -200,36 +200,6 @@ ${OBJECTDIR}/_ext/1811515072/timers.o: ../../../../../EOS/v2/Library/PIC32/FreeR
 	@${FIXDEPS} "${OBJECTDIR}/_ext/1811515072/timers.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PIC32MXSK=1  -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/1811515072/timers.o.d" -o ${OBJECTDIR}/_ext/1811515072/timers.o ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/timers.c    -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
 	
 else
-${OBJECTDIR}/_ext/1811515072/tasks.o: ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/tasks.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/_ext/1811515072" 
-	@${RM} ${OBJECTDIR}/_ext/1811515072/tasks.o.d 
-	@${RM} ${OBJECTDIR}/_ext/1811515072/tasks.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1811515072/tasks.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/1811515072/tasks.o.d" -o ${OBJECTDIR}/_ext/1811515072/tasks.o ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/tasks.c    -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
-	
-${OBJECTDIR}/_ext/1811515072/queue.o: ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/queue.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/_ext/1811515072" 
-	@${RM} ${OBJECTDIR}/_ext/1811515072/queue.o.d 
-	@${RM} ${OBJECTDIR}/_ext/1811515072/queue.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1811515072/queue.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/1811515072/queue.o.d" -o ${OBJECTDIR}/_ext/1811515072/queue.o ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/queue.c    -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
-	
-${OBJECTDIR}/_ext/1811515072/list.o: ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/list.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/_ext/1811515072" 
-	@${RM} ${OBJECTDIR}/_ext/1811515072/list.o.d 
-	@${RM} ${OBJECTDIR}/_ext/1811515072/list.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1811515072/list.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/1811515072/list.o.d" -o ${OBJECTDIR}/_ext/1811515072/list.o ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/list.c    -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
-	
-${OBJECTDIR}/_ext/1807323683/heap_4.o: ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/portable/MemMang/heap_4.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/_ext/1807323683" 
-	@${RM} ${OBJECTDIR}/_ext/1807323683/heap_4.o.d 
-	@${RM} ${OBJECTDIR}/_ext/1807323683/heap_4.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1807323683/heap_4.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/1807323683/heap_4.o.d" -o ${OBJECTDIR}/_ext/1807323683/heap_4.o ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/portable/MemMang/heap_4.c    -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
-	
-${OBJECTDIR}/_ext/1849293962/port.o: ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/portable/MPLAB/PIC32MX/port.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/_ext/1849293962" 
-	@${RM} ${OBJECTDIR}/_ext/1849293962/port.o.d 
-	@${RM} ${OBJECTDIR}/_ext/1849293962/port.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1849293962/port.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/1849293962/port.o.d" -o ${OBJECTDIR}/_ext/1849293962/port.o ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/portable/MPLAB/PIC32MX/port.c    -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
-	
 ${OBJECTDIR}/_ext/806995671/halSYS.o: ../../../../../EOS/v2/Source/HAL/PIC32/halSYS.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/_ext/806995671" 
 	@${RM} ${OBJECTDIR}/_ext/806995671/halSYS.o.d 
@@ -272,6 +242,36 @@ ${OBJECTDIR}/_ext/2118387804/osalQueue.o: ../../../../../EOS/v2/Source/OSAL/Free
 	@${RM} ${OBJECTDIR}/_ext/2118387804/osalQueue.o 
 	@${FIXDEPS} "${OBJECTDIR}/_ext/2118387804/osalQueue.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/2118387804/osalQueue.o.d" -o ${OBJECTDIR}/_ext/2118387804/osalQueue.o ../../../../../EOS/v2/Source/OSAL/FreeRTOS/osalQueue.c    -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
 	
+${OBJECTDIR}/_ext/1811515072/tasks.o: ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/tasks.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/1811515072" 
+	@${RM} ${OBJECTDIR}/_ext/1811515072/tasks.o.d 
+	@${RM} ${OBJECTDIR}/_ext/1811515072/tasks.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1811515072/tasks.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/1811515072/tasks.o.d" -o ${OBJECTDIR}/_ext/1811515072/tasks.o ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/tasks.c    -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
+	
+${OBJECTDIR}/_ext/1811515072/queue.o: ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/queue.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/1811515072" 
+	@${RM} ${OBJECTDIR}/_ext/1811515072/queue.o.d 
+	@${RM} ${OBJECTDIR}/_ext/1811515072/queue.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1811515072/queue.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/1811515072/queue.o.d" -o ${OBJECTDIR}/_ext/1811515072/queue.o ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/queue.c    -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
+	
+${OBJECTDIR}/_ext/1811515072/list.o: ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/list.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/1811515072" 
+	@${RM} ${OBJECTDIR}/_ext/1811515072/list.o.d 
+	@${RM} ${OBJECTDIR}/_ext/1811515072/list.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1811515072/list.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/1811515072/list.o.d" -o ${OBJECTDIR}/_ext/1811515072/list.o ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/list.c    -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
+	
+${OBJECTDIR}/_ext/1807323683/heap_4.o: ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/portable/MemMang/heap_4.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/1807323683" 
+	@${RM} ${OBJECTDIR}/_ext/1807323683/heap_4.o.d 
+	@${RM} ${OBJECTDIR}/_ext/1807323683/heap_4.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1807323683/heap_4.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/1807323683/heap_4.o.d" -o ${OBJECTDIR}/_ext/1807323683/heap_4.o ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/portable/MemMang/heap_4.c    -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
+	
+${OBJECTDIR}/_ext/1849293962/port.o: ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/portable/MPLAB/PIC32MX/port.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/1849293962" 
+	@${RM} ${OBJECTDIR}/_ext/1849293962/port.o.d 
+	@${RM} ${OBJECTDIR}/_ext/1849293962/port.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1849293962/port.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/1849293962/port.o.d" -o ${OBJECTDIR}/_ext/1849293962/port.o ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/portable/MPLAB/PIC32MX/port.c    -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
+	
 ${OBJECTDIR}/_ext/1811515072/timers.o: ../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/timers.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/_ext/1811515072" 
 	@${RM} ${OBJECTDIR}/_ext/1811515072/timers.o.d 
@@ -283,17 +283,17 @@ endif
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: compileCPP
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-${OBJECTDIR}/_ext/449926602/appApplication.o: ../../../Source/appApplication.cpp  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/_ext/449926602" 
-	@${RM} ${OBJECTDIR}/_ext/449926602/appApplication.o.d 
-	@${RM} ${OBJECTDIR}/_ext/449926602/appApplication.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/449926602/appApplication.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PIC32MXSK=1  -fframe-base-loclist  -x c++ -c -mprocessor=$(MP_PROCESSOR_OPTION)  -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -frtti -fexceptions -fno-check-new -fenforce-eh-specs -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/449926602/appApplication.o.d" -o ${OBJECTDIR}/_ext/449926602/appApplication.o ../../../Source/appApplication.cpp   -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
+${OBJECTDIR}/_ext/2116396228/appInitialize.o: ../../../Source/PIC32/appInitialize.cpp  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/2116396228" 
+	@${RM} ${OBJECTDIR}/_ext/2116396228/appInitialize.o.d 
+	@${RM} ${OBJECTDIR}/_ext/2116396228/appInitialize.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/2116396228/appInitialize.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PIC32MXSK=1  -fframe-base-loclist  -x c++ -c -mprocessor=$(MP_PROCESSOR_OPTION)  -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -frtti -fexceptions -fno-check-new -fenforce-eh-specs -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/2116396228/appInitialize.o.d" -o ${OBJECTDIR}/_ext/2116396228/appInitialize.o ../../../Source/PIC32/appInitialize.cpp   -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
 	
-${OBJECTDIR}/_ext/449926602/appMain.o: ../../../Source/appMain.cpp  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/_ext/449926602" 
-	@${RM} ${OBJECTDIR}/_ext/449926602/appMain.o.d 
-	@${RM} ${OBJECTDIR}/_ext/449926602/appMain.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/449926602/appMain.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PIC32MXSK=1  -fframe-base-loclist  -x c++ -c -mprocessor=$(MP_PROCESSOR_OPTION)  -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -frtti -fexceptions -fno-check-new -fenforce-eh-specs -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/449926602/appMain.o.d" -o ${OBJECTDIR}/_ext/449926602/appMain.o ../../../Source/appMain.cpp   -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
+${OBJECTDIR}/_ext/1177943276/eosService.o: ../../../../../EOS/v2/Source/Services/eosService.cpp  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/1177943276" 
+	@${RM} ${OBJECTDIR}/_ext/1177943276/eosService.o.d 
+	@${RM} ${OBJECTDIR}/_ext/1177943276/eosService.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1177943276/eosService.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PIC32MXSK=1  -fframe-base-loclist  -x c++ -c -mprocessor=$(MP_PROCESSOR_OPTION)  -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -frtti -fexceptions -fno-check-new -fenforce-eh-specs -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/1177943276/eosService.o.d" -o ${OBJECTDIR}/_ext/1177943276/eosService.o ../../../../../EOS/v2/Source/Services/eosService.cpp   -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
 	
 ${OBJECTDIR}/_ext/1530442337/main.o: ../../../../../EOS/v2/Source/StartUp/PIC32/main.cpp  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/_ext/1530442337" 
@@ -301,17 +301,11 @@ ${OBJECTDIR}/_ext/1530442337/main.o: ../../../../../EOS/v2/Source/StartUp/PIC32/
 	@${RM} ${OBJECTDIR}/_ext/1530442337/main.o 
 	@${FIXDEPS} "${OBJECTDIR}/_ext/1530442337/main.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PIC32MXSK=1  -fframe-base-loclist  -x c++ -c -mprocessor=$(MP_PROCESSOR_OPTION)  -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -frtti -fexceptions -fno-check-new -fenforce-eh-specs -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/1530442337/main.o.d" -o ${OBJECTDIR}/_ext/1530442337/main.o ../../../../../EOS/v2/Source/StartUp/PIC32/main.cpp   -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
 	
-${OBJECTDIR}/_ext/644179355/eosApplication.o: ../../../../../EOS/v2/Source/System/eosApplication.cpp  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/_ext/644179355" 
-	@${RM} ${OBJECTDIR}/_ext/644179355/eosApplication.o.d 
-	@${RM} ${OBJECTDIR}/_ext/644179355/eosApplication.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/644179355/eosApplication.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PIC32MXSK=1  -fframe-base-loclist  -x c++ -c -mprocessor=$(MP_PROCESSOR_OPTION)  -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -frtti -fexceptions -fno-check-new -fenforce-eh-specs -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/644179355/eosApplication.o.d" -o ${OBJECTDIR}/_ext/644179355/eosApplication.o ../../../../../EOS/v2/Source/System/eosApplication.cpp   -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
-	
-${OBJECTDIR}/_ext/644179355/eosString.o: ../../../../../EOS/v2/Source/System/eosString.cpp  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/_ext/644179355" 
-	@${RM} ${OBJECTDIR}/_ext/644179355/eosString.o.d 
-	@${RM} ${OBJECTDIR}/_ext/644179355/eosString.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/644179355/eosString.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PIC32MXSK=1  -fframe-base-loclist  -x c++ -c -mprocessor=$(MP_PROCESSOR_OPTION)  -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -frtti -fexceptions -fno-check-new -fenforce-eh-specs -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/644179355/eosString.o.d" -o ${OBJECTDIR}/_ext/644179355/eosString.o ../../../../../EOS/v2/Source/System/eosString.cpp   -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
+${OBJECTDIR}/_ext/1773950155/eosList.o: ../../../../../EOS/v2/Source/System/Collections/eosList.cpp  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/1773950155" 
+	@${RM} ${OBJECTDIR}/_ext/1773950155/eosList.o.d 
+	@${RM} ${OBJECTDIR}/_ext/1773950155/eosList.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1773950155/eosList.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PIC32MXSK=1  -fframe-base-loclist  -x c++ -c -mprocessor=$(MP_PROCESSOR_OPTION)  -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -frtti -fexceptions -fno-check-new -fenforce-eh-specs -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/1773950155/eosList.o.d" -o ${OBJECTDIR}/_ext/1773950155/eosList.o ../../../../../EOS/v2/Source/System/Collections/eosList.cpp   -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
 	
 ${OBJECTDIR}/_ext/1878683351/eosTask.o: ../../../../../EOS/v2/Source/System/Core/eosTask.cpp  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/_ext/1878683351" 
@@ -331,42 +325,60 @@ ${OBJECTDIR}/_ext/1878683351/eosErrorHandler.o: ../../../../../EOS/v2/Source/Sys
 	@${RM} ${OBJECTDIR}/_ext/1878683351/eosErrorHandler.o 
 	@${FIXDEPS} "${OBJECTDIR}/_ext/1878683351/eosErrorHandler.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PIC32MXSK=1  -fframe-base-loclist  -x c++ -c -mprocessor=$(MP_PROCESSOR_OPTION)  -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -frtti -fexceptions -fno-check-new -fenforce-eh-specs -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/1878683351/eosErrorHandler.o.d" -o ${OBJECTDIR}/_ext/1878683351/eosErrorHandler.o ../../../../../EOS/v2/Source/System/Core/eosErrorHandler.cpp   -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
 	
-${OBJECTDIR}/_ext/1177943276/eosService.o: ../../../../../EOS/v2/Source/Services/eosService.cpp  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/_ext/1177943276" 
-	@${RM} ${OBJECTDIR}/_ext/1177943276/eosService.o.d 
-	@${RM} ${OBJECTDIR}/_ext/1177943276/eosService.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1177943276/eosService.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PIC32MXSK=1  -fframe-base-loclist  -x c++ -c -mprocessor=$(MP_PROCESSOR_OPTION)  -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -frtti -fexceptions -fno-check-new -fenforce-eh-specs -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/1177943276/eosService.o.d" -o ${OBJECTDIR}/_ext/1177943276/eosService.o ../../../../../EOS/v2/Source/Services/eosService.cpp   -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
+${OBJECTDIR}/_ext/644179355/eosApplication.o: ../../../../../EOS/v2/Source/System/eosApplication.cpp  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/644179355" 
+	@${RM} ${OBJECTDIR}/_ext/644179355/eosApplication.o.d 
+	@${RM} ${OBJECTDIR}/_ext/644179355/eosApplication.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/644179355/eosApplication.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PIC32MXSK=1  -fframe-base-loclist  -x c++ -c -mprocessor=$(MP_PROCESSOR_OPTION)  -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -frtti -fexceptions -fno-check-new -fenforce-eh-specs -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/644179355/eosApplication.o.d" -o ${OBJECTDIR}/_ext/644179355/eosApplication.o ../../../../../EOS/v2/Source/System/eosApplication.cpp   -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
 	
+${OBJECTDIR}/_ext/644179355/eosString.o: ../../../../../EOS/v2/Source/System/eosString.cpp  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/644179355" 
+	@${RM} ${OBJECTDIR}/_ext/644179355/eosString.o.d 
+	@${RM} ${OBJECTDIR}/_ext/644179355/eosString.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/644179355/eosString.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PIC32MXSK=1  -fframe-base-loclist  -x c++ -c -mprocessor=$(MP_PROCESSOR_OPTION)  -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -frtti -fexceptions -fno-check-new -fenforce-eh-specs -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/644179355/eosString.o.d" -o ${OBJECTDIR}/_ext/644179355/eosString.o ../../../../../EOS/v2/Source/System/eosString.cpp   -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
+	
+${OBJECTDIR}/_ext/449926602/axisApplication.o: ../../../Source/axisApplication.cpp  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/449926602" 
+	@${RM} ${OBJECTDIR}/_ext/449926602/axisApplication.o.d 
+	@${RM} ${OBJECTDIR}/_ext/449926602/axisApplication.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/449926602/axisApplication.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PIC32MXSK=1  -fframe-base-loclist  -x c++ -c -mprocessor=$(MP_PROCESSOR_OPTION)  -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -frtti -fexceptions -fno-check-new -fenforce-eh-specs -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/449926602/axisApplication.o.d" -o ${OBJECTDIR}/_ext/449926602/axisApplication.o ../../../Source/axisApplication.cpp   -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
+	
+${OBJECTDIR}/_ext/449926602/axisMain.o: ../../../Source/axisMain.cpp  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/449926602" 
+	@${RM} ${OBJECTDIR}/_ext/449926602/axisMain.o.d 
+	@${RM} ${OBJECTDIR}/_ext/449926602/axisMain.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/449926602/axisMain.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PIC32MXSK=1  -fframe-base-loclist  -x c++ -c -mprocessor=$(MP_PROCESSOR_OPTION)  -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -frtti -fexceptions -fno-check-new -fenforce-eh-specs -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/449926602/axisMain.o.d" -o ${OBJECTDIR}/_ext/449926602/axisMain.o ../../../Source/axisMain.cpp   -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
+	
+${OBJECTDIR}/_ext/449926602/axisMotion.o: ../../../Source/axisMotion.cpp  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/449926602" 
+	@${RM} ${OBJECTDIR}/_ext/449926602/axisMotion.o.d 
+	@${RM} ${OBJECTDIR}/_ext/449926602/axisMotion.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/449926602/axisMotion.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PIC32MXSK=1  -fframe-base-loclist  -x c++ -c -mprocessor=$(MP_PROCESSOR_OPTION)  -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -frtti -fexceptions -fno-check-new -fenforce-eh-specs -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/449926602/axisMotion.o.d" -o ${OBJECTDIR}/_ext/449926602/axisMotion.o ../../../Source/axisMotion.cpp   -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
+	
+${OBJECTDIR}/_ext/449926602/axisMotionService.o: ../../../Source/axisMotionService.cpp  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/449926602" 
+	@${RM} ${OBJECTDIR}/_ext/449926602/axisMotionService.o.d 
+	@${RM} ${OBJECTDIR}/_ext/449926602/axisMotionService.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/449926602/axisMotionService.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PIC32MXSK=1  -fframe-base-loclist  -x c++ -c -mprocessor=$(MP_PROCESSOR_OPTION)  -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -frtti -fexceptions -fno-check-new -fenforce-eh-specs -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/449926602/axisMotionService.o.d" -o ${OBJECTDIR}/_ext/449926602/axisMotionService.o ../../../Source/axisMotionService.cpp   -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
+	
+${OBJECTDIR}/_ext/449926602/axisMotor.o: ../../../Source/axisMotor.cpp  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/449926602" 
+	@${RM} ${OBJECTDIR}/_ext/449926602/axisMotor.o.d 
+	@${RM} ${OBJECTDIR}/_ext/449926602/axisMotor.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/449926602/axisMotor.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PIC32MXSK=1  -fframe-base-loclist  -x c++ -c -mprocessor=$(MP_PROCESSOR_OPTION)  -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -frtti -fexceptions -fno-check-new -fenforce-eh-specs -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/449926602/axisMotor.o.d" -o ${OBJECTDIR}/_ext/449926602/axisMotor.o ../../../Source/axisMotor.cpp   -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
+	
+else
 ${OBJECTDIR}/_ext/2116396228/appInitialize.o: ../../../Source/PIC32/appInitialize.cpp  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/_ext/2116396228" 
 	@${RM} ${OBJECTDIR}/_ext/2116396228/appInitialize.o.d 
 	@${RM} ${OBJECTDIR}/_ext/2116396228/appInitialize.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/2116396228/appInitialize.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PIC32MXSK=1  -fframe-base-loclist  -x c++ -c -mprocessor=$(MP_PROCESSOR_OPTION)  -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -frtti -fexceptions -fno-check-new -fenforce-eh-specs -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/2116396228/appInitialize.o.d" -o ${OBJECTDIR}/_ext/2116396228/appInitialize.o ../../../Source/PIC32/appInitialize.cpp   -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/2116396228/appInitialize.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC} $(MP_EXTRA_CC_PRE)  -g -x c++ -c -mprocessor=$(MP_PROCESSOR_OPTION)  -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -frtti -fexceptions -fno-check-new -fenforce-eh-specs -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/2116396228/appInitialize.o.d" -o ${OBJECTDIR}/_ext/2116396228/appInitialize.o ../../../Source/PIC32/appInitialize.cpp   -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
 	
-${OBJECTDIR}/_ext/1773950155/eosList.o: ../../../../../EOS/v2/Source/System/Collections/eosList.cpp  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/_ext/1773950155" 
-	@${RM} ${OBJECTDIR}/_ext/1773950155/eosList.o.d 
-	@${RM} ${OBJECTDIR}/_ext/1773950155/eosList.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1773950155/eosList.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PIC32MXSK=1  -fframe-base-loclist  -x c++ -c -mprocessor=$(MP_PROCESSOR_OPTION)  -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -frtti -fexceptions -fno-check-new -fenforce-eh-specs -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/1773950155/eosList.o.d" -o ${OBJECTDIR}/_ext/1773950155/eosList.o ../../../../../EOS/v2/Source/System/Collections/eosList.cpp   -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
-	
-${OBJECTDIR}/_ext/449926602/motor.o: ../../../Source/motor.cpp  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/_ext/449926602" 
-	@${RM} ${OBJECTDIR}/_ext/449926602/motor.o.d 
-	@${RM} ${OBJECTDIR}/_ext/449926602/motor.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/449926602/motor.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PIC32MXSK=1  -fframe-base-loclist  -x c++ -c -mprocessor=$(MP_PROCESSOR_OPTION)  -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -frtti -fexceptions -fno-check-new -fenforce-eh-specs -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/449926602/motor.o.d" -o ${OBJECTDIR}/_ext/449926602/motor.o ../../../Source/motor.cpp   -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
-	
-else
-${OBJECTDIR}/_ext/449926602/appApplication.o: ../../../Source/appApplication.cpp  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/_ext/449926602" 
-	@${RM} ${OBJECTDIR}/_ext/449926602/appApplication.o.d 
-	@${RM} ${OBJECTDIR}/_ext/449926602/appApplication.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/449926602/appApplication.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC} $(MP_EXTRA_CC_PRE)  -g -x c++ -c -mprocessor=$(MP_PROCESSOR_OPTION)  -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -frtti -fexceptions -fno-check-new -fenforce-eh-specs -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/449926602/appApplication.o.d" -o ${OBJECTDIR}/_ext/449926602/appApplication.o ../../../Source/appApplication.cpp   -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
-	
-${OBJECTDIR}/_ext/449926602/appMain.o: ../../../Source/appMain.cpp  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/_ext/449926602" 
-	@${RM} ${OBJECTDIR}/_ext/449926602/appMain.o.d 
-	@${RM} ${OBJECTDIR}/_ext/449926602/appMain.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/449926602/appMain.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC} $(MP_EXTRA_CC_PRE)  -g -x c++ -c -mprocessor=$(MP_PROCESSOR_OPTION)  -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -frtti -fexceptions -fno-check-new -fenforce-eh-specs -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/449926602/appMain.o.d" -o ${OBJECTDIR}/_ext/449926602/appMain.o ../../../Source/appMain.cpp   -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
+${OBJECTDIR}/_ext/1177943276/eosService.o: ../../../../../EOS/v2/Source/Services/eosService.cpp  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/1177943276" 
+	@${RM} ${OBJECTDIR}/_ext/1177943276/eosService.o.d 
+	@${RM} ${OBJECTDIR}/_ext/1177943276/eosService.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1177943276/eosService.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC} $(MP_EXTRA_CC_PRE)  -g -x c++ -c -mprocessor=$(MP_PROCESSOR_OPTION)  -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -frtti -fexceptions -fno-check-new -fenforce-eh-specs -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/1177943276/eosService.o.d" -o ${OBJECTDIR}/_ext/1177943276/eosService.o ../../../../../EOS/v2/Source/Services/eosService.cpp   -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
 	
 ${OBJECTDIR}/_ext/1530442337/main.o: ../../../../../EOS/v2/Source/StartUp/PIC32/main.cpp  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/_ext/1530442337" 
@@ -374,17 +386,11 @@ ${OBJECTDIR}/_ext/1530442337/main.o: ../../../../../EOS/v2/Source/StartUp/PIC32/
 	@${RM} ${OBJECTDIR}/_ext/1530442337/main.o 
 	@${FIXDEPS} "${OBJECTDIR}/_ext/1530442337/main.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC} $(MP_EXTRA_CC_PRE)  -g -x c++ -c -mprocessor=$(MP_PROCESSOR_OPTION)  -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -frtti -fexceptions -fno-check-new -fenforce-eh-specs -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/1530442337/main.o.d" -o ${OBJECTDIR}/_ext/1530442337/main.o ../../../../../EOS/v2/Source/StartUp/PIC32/main.cpp   -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
 	
-${OBJECTDIR}/_ext/644179355/eosApplication.o: ../../../../../EOS/v2/Source/System/eosApplication.cpp  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/_ext/644179355" 
-	@${RM} ${OBJECTDIR}/_ext/644179355/eosApplication.o.d 
-	@${RM} ${OBJECTDIR}/_ext/644179355/eosApplication.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/644179355/eosApplication.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC} $(MP_EXTRA_CC_PRE)  -g -x c++ -c -mprocessor=$(MP_PROCESSOR_OPTION)  -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -frtti -fexceptions -fno-check-new -fenforce-eh-specs -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/644179355/eosApplication.o.d" -o ${OBJECTDIR}/_ext/644179355/eosApplication.o ../../../../../EOS/v2/Source/System/eosApplication.cpp   -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
-	
-${OBJECTDIR}/_ext/644179355/eosString.o: ../../../../../EOS/v2/Source/System/eosString.cpp  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/_ext/644179355" 
-	@${RM} ${OBJECTDIR}/_ext/644179355/eosString.o.d 
-	@${RM} ${OBJECTDIR}/_ext/644179355/eosString.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/644179355/eosString.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC} $(MP_EXTRA_CC_PRE)  -g -x c++ -c -mprocessor=$(MP_PROCESSOR_OPTION)  -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -frtti -fexceptions -fno-check-new -fenforce-eh-specs -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/644179355/eosString.o.d" -o ${OBJECTDIR}/_ext/644179355/eosString.o ../../../../../EOS/v2/Source/System/eosString.cpp   -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
+${OBJECTDIR}/_ext/1773950155/eosList.o: ../../../../../EOS/v2/Source/System/Collections/eosList.cpp  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/1773950155" 
+	@${RM} ${OBJECTDIR}/_ext/1773950155/eosList.o.d 
+	@${RM} ${OBJECTDIR}/_ext/1773950155/eosList.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1773950155/eosList.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC} $(MP_EXTRA_CC_PRE)  -g -x c++ -c -mprocessor=$(MP_PROCESSOR_OPTION)  -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -frtti -fexceptions -fno-check-new -fenforce-eh-specs -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/1773950155/eosList.o.d" -o ${OBJECTDIR}/_ext/1773950155/eosList.o ../../../../../EOS/v2/Source/System/Collections/eosList.cpp   -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
 	
 ${OBJECTDIR}/_ext/1878683351/eosTask.o: ../../../../../EOS/v2/Source/System/Core/eosTask.cpp  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/_ext/1878683351" 
@@ -404,29 +410,47 @@ ${OBJECTDIR}/_ext/1878683351/eosErrorHandler.o: ../../../../../EOS/v2/Source/Sys
 	@${RM} ${OBJECTDIR}/_ext/1878683351/eosErrorHandler.o 
 	@${FIXDEPS} "${OBJECTDIR}/_ext/1878683351/eosErrorHandler.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC} $(MP_EXTRA_CC_PRE)  -g -x c++ -c -mprocessor=$(MP_PROCESSOR_OPTION)  -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -frtti -fexceptions -fno-check-new -fenforce-eh-specs -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/1878683351/eosErrorHandler.o.d" -o ${OBJECTDIR}/_ext/1878683351/eosErrorHandler.o ../../../../../EOS/v2/Source/System/Core/eosErrorHandler.cpp   -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
 	
-${OBJECTDIR}/_ext/1177943276/eosService.o: ../../../../../EOS/v2/Source/Services/eosService.cpp  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/_ext/1177943276" 
-	@${RM} ${OBJECTDIR}/_ext/1177943276/eosService.o.d 
-	@${RM} ${OBJECTDIR}/_ext/1177943276/eosService.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1177943276/eosService.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC} $(MP_EXTRA_CC_PRE)  -g -x c++ -c -mprocessor=$(MP_PROCESSOR_OPTION)  -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -frtti -fexceptions -fno-check-new -fenforce-eh-specs -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/1177943276/eosService.o.d" -o ${OBJECTDIR}/_ext/1177943276/eosService.o ../../../../../EOS/v2/Source/Services/eosService.cpp   -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
+${OBJECTDIR}/_ext/644179355/eosApplication.o: ../../../../../EOS/v2/Source/System/eosApplication.cpp  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/644179355" 
+	@${RM} ${OBJECTDIR}/_ext/644179355/eosApplication.o.d 
+	@${RM} ${OBJECTDIR}/_ext/644179355/eosApplication.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/644179355/eosApplication.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC} $(MP_EXTRA_CC_PRE)  -g -x c++ -c -mprocessor=$(MP_PROCESSOR_OPTION)  -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -frtti -fexceptions -fno-check-new -fenforce-eh-specs -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/644179355/eosApplication.o.d" -o ${OBJECTDIR}/_ext/644179355/eosApplication.o ../../../../../EOS/v2/Source/System/eosApplication.cpp   -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
 	
-${OBJECTDIR}/_ext/2116396228/appInitialize.o: ../../../Source/PIC32/appInitialize.cpp  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/_ext/2116396228" 
-	@${RM} ${OBJECTDIR}/_ext/2116396228/appInitialize.o.d 
-	@${RM} ${OBJECTDIR}/_ext/2116396228/appInitialize.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/2116396228/appInitialize.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC} $(MP_EXTRA_CC_PRE)  -g -x c++ -c -mprocessor=$(MP_PROCESSOR_OPTION)  -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -frtti -fexceptions -fno-check-new -fenforce-eh-specs -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/2116396228/appInitialize.o.d" -o ${OBJECTDIR}/_ext/2116396228/appInitialize.o ../../../Source/PIC32/appInitialize.cpp   -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
+${OBJECTDIR}/_ext/644179355/eosString.o: ../../../../../EOS/v2/Source/System/eosString.cpp  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/644179355" 
+	@${RM} ${OBJECTDIR}/_ext/644179355/eosString.o.d 
+	@${RM} ${OBJECTDIR}/_ext/644179355/eosString.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/644179355/eosString.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC} $(MP_EXTRA_CC_PRE)  -g -x c++ -c -mprocessor=$(MP_PROCESSOR_OPTION)  -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -frtti -fexceptions -fno-check-new -fenforce-eh-specs -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/644179355/eosString.o.d" -o ${OBJECTDIR}/_ext/644179355/eosString.o ../../../../../EOS/v2/Source/System/eosString.cpp   -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
 	
-${OBJECTDIR}/_ext/1773950155/eosList.o: ../../../../../EOS/v2/Source/System/Collections/eosList.cpp  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/_ext/1773950155" 
-	@${RM} ${OBJECTDIR}/_ext/1773950155/eosList.o.d 
-	@${RM} ${OBJECTDIR}/_ext/1773950155/eosList.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1773950155/eosList.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC} $(MP_EXTRA_CC_PRE)  -g -x c++ -c -mprocessor=$(MP_PROCESSOR_OPTION)  -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -frtti -fexceptions -fno-check-new -fenforce-eh-specs -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/1773950155/eosList.o.d" -o ${OBJECTDIR}/_ext/1773950155/eosList.o ../../../../../EOS/v2/Source/System/Collections/eosList.cpp   -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
-	
-${OBJECTDIR}/_ext/449926602/motor.o: ../../../Source/motor.cpp  nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/_ext/449926602/axisApplication.o: ../../../Source/axisApplication.cpp  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/_ext/449926602" 
-	@${RM} ${OBJECTDIR}/_ext/449926602/motor.o.d 
-	@${RM} ${OBJECTDIR}/_ext/449926602/motor.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/449926602/motor.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC} $(MP_EXTRA_CC_PRE)  -g -x c++ -c -mprocessor=$(MP_PROCESSOR_OPTION)  -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -frtti -fexceptions -fno-check-new -fenforce-eh-specs -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/449926602/motor.o.d" -o ${OBJECTDIR}/_ext/449926602/motor.o ../../../Source/motor.cpp   -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
+	@${RM} ${OBJECTDIR}/_ext/449926602/axisApplication.o.d 
+	@${RM} ${OBJECTDIR}/_ext/449926602/axisApplication.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/449926602/axisApplication.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC} $(MP_EXTRA_CC_PRE)  -g -x c++ -c -mprocessor=$(MP_PROCESSOR_OPTION)  -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -frtti -fexceptions -fno-check-new -fenforce-eh-specs -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/449926602/axisApplication.o.d" -o ${OBJECTDIR}/_ext/449926602/axisApplication.o ../../../Source/axisApplication.cpp   -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
+	
+${OBJECTDIR}/_ext/449926602/axisMain.o: ../../../Source/axisMain.cpp  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/449926602" 
+	@${RM} ${OBJECTDIR}/_ext/449926602/axisMain.o.d 
+	@${RM} ${OBJECTDIR}/_ext/449926602/axisMain.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/449926602/axisMain.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC} $(MP_EXTRA_CC_PRE)  -g -x c++ -c -mprocessor=$(MP_PROCESSOR_OPTION)  -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -frtti -fexceptions -fno-check-new -fenforce-eh-specs -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/449926602/axisMain.o.d" -o ${OBJECTDIR}/_ext/449926602/axisMain.o ../../../Source/axisMain.cpp   -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
+	
+${OBJECTDIR}/_ext/449926602/axisMotion.o: ../../../Source/axisMotion.cpp  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/449926602" 
+	@${RM} ${OBJECTDIR}/_ext/449926602/axisMotion.o.d 
+	@${RM} ${OBJECTDIR}/_ext/449926602/axisMotion.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/449926602/axisMotion.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC} $(MP_EXTRA_CC_PRE)  -g -x c++ -c -mprocessor=$(MP_PROCESSOR_OPTION)  -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -frtti -fexceptions -fno-check-new -fenforce-eh-specs -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/449926602/axisMotion.o.d" -o ${OBJECTDIR}/_ext/449926602/axisMotion.o ../../../Source/axisMotion.cpp   -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
+	
+${OBJECTDIR}/_ext/449926602/axisMotionService.o: ../../../Source/axisMotionService.cpp  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/449926602" 
+	@${RM} ${OBJECTDIR}/_ext/449926602/axisMotionService.o.d 
+	@${RM} ${OBJECTDIR}/_ext/449926602/axisMotionService.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/449926602/axisMotionService.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC} $(MP_EXTRA_CC_PRE)  -g -x c++ -c -mprocessor=$(MP_PROCESSOR_OPTION)  -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -frtti -fexceptions -fno-check-new -fenforce-eh-specs -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/449926602/axisMotionService.o.d" -o ${OBJECTDIR}/_ext/449926602/axisMotionService.o ../../../Source/axisMotionService.cpp   -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
+	
+${OBJECTDIR}/_ext/449926602/axisMotor.o: ../../../Source/axisMotor.cpp  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/449926602" 
+	@${RM} ${OBJECTDIR}/_ext/449926602/axisMotor.o.d 
+	@${RM} ${OBJECTDIR}/_ext/449926602/axisMotor.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/449926602/axisMotor.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CPPC} $(MP_EXTRA_CC_PRE)  -g -x c++ -c -mprocessor=$(MP_PROCESSOR_OPTION)  -I"../../../Include" -I"../../../Include/PIC32" -I"../../../../../EOS/v2/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Include" -I"../../../../../EOS/v2/Library/PIC32/FreeRTOS/Source/Portable/MPLAB/PIC32MX" -I"../../../../../EOS/v2/Library/PIC32/Harmony/Framework" -frtti -fexceptions -fno-check-new -fenforce-eh-specs -ffunction-sections -DHARDWARE_PIC32_USB_STARTER_KIT_I -MMD -MF "${OBJECTDIR}/_ext/449926602/axisMotor.o.d" -o ${OBJECTDIR}/_ext/449926602/axisMotor.o ../../../Source/axisMotor.cpp   -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD) 
 	
 endif
 

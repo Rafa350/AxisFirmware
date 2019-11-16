@@ -1,22 +1,22 @@
 #include "eos.h"
-#include "appApplication.h"
+#include "axisApplication.h"
 
 
 using namespace eos;
-using namespace app;
+using namespace axis;
 
 
 /// ----------------------------------------------------------------------
-/// \brief Constructor del objecte.
+/// \brief    Constructor del objecte.
 ///
-MyApplication::MyApplication() {
+AxisApplication::AxisApplication() {
 
 }
 
 
 /// ----------------------------------------------------------------------
-/// \brief Inicialitza l'aplicacio.
+/// \brief    Inicialitza l'aplicacio.
 ///
-void MyApplication::onInitialize() {
+void AxisApplication::onInitialize() {
        
 }

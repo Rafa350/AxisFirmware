@@ -1,9 +1,9 @@
 #include "eos.h"
-#include "appApplication.h"
+#include "axisApplication.h"
 
 
 using namespace eos;
-using namespace app;
+using namespace axis;
 
 
 /// ----------------------------------------------------------------------
@@ -11,7 +11,7 @@ using namespace app;
 ///
 void appMain() {
 
-	Application *app = new MyApplication();
+	Application *app = new AxisApplication();
 	app->run();
 	delete app;
 }

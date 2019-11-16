@@ -9,8 +9,10 @@
           <itemPath>../../../Include/PIC32/FreeRTOSConfig.h</itemPath>
         </logicalFolder>
         <itemPath>../../../Include/eosConfig.h</itemPath>
-        <itemPath>../../../Include/appApplication.h</itemPath>
-        <itemPath>../../../Include/motor.h</itemPath>
+        <itemPath>../../../Include/axisApplication.h</itemPath>
+        <itemPath>../../../Include/axisMotion.h</itemPath>
+        <itemPath>../../../Include/axisMotionService.h</itemPath>
+        <itemPath>../../../Include/axisMotor.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="Framework" projectFiles="true">
         <logicalFolder name="f1" displayName="EOS" projectFiles="true">
@@ -18,9 +20,11 @@
             <logicalFolder name="f1" displayName="PIC32" projectFiles="true">
               <itemPath>../../../../../EOS/v2/Include/HAL/PIC32/halSYS.h</itemPath>
               <itemPath>../../../../../EOS/v2/Include/HAL/PIC32/halGPIO.h</itemPath>
+              <itemPath>../../../../../EOS/v2/Include/HAL/PIC32/halTMR.h</itemPath>
             </logicalFolder>
             <itemPath>../../../../../EOS/v2/Include/HAL/halSYS.h</itemPath>
             <itemPath>../../../../../EOS/v2/Include/HAL/halGPIO.h</itemPath>
+            <itemPath>../../../../../EOS/v2/Include/HAL/halTMR.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f1" displayName="System" projectFiles="true">
             <itemPath>../../../../../EOS/v2/Include/System/eosApplication.h</itemPath>
@@ -42,9 +46,11 @@
         <logicalFolder name="f1" displayName="PIC32" projectFiles="true">
           <itemPath>../../../Source/PIC32/appInitialize.cpp</itemPath>
         </logicalFolder>
-        <itemPath>../../../Source/appApplication.cpp</itemPath>
-        <itemPath>../../../Source/appMain.cpp</itemPath>
-        <itemPath>../../../Source/motor.cpp</itemPath>
+        <itemPath>../../../Source/axisApplication.cpp</itemPath>
+        <itemPath>../../../Source/axisMain.cpp</itemPath>
+        <itemPath>../../../Source/axisMotion.cpp</itemPath>
+        <itemPath>../../../Source/axisMotionService.cpp</itemPath>
+        <itemPath>../../../Source/axisMotor.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="Framework" projectFiles="true">
         <logicalFolder name="f1" displayName="EOS" projectFiles="true">
