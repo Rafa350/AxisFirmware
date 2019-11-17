@@ -41,24 +41,18 @@ namespace axis {
             };
         
         private:
-            GPIOPort stepPort;
-            GPIOPin stepPin;
-            GPIOPort directionPort;
-            GPIOPin directionPin;
-            GPIOPort enablePort;
-            GPIOPin enablePin;
-            GPIOPort homePort;
-            GPIOPin homePin;
-            GPIOPort limitPort;
-            GPIOPin limitPin;
+            Configuration cfg;
         
         public:
-            Motor(const Configuration *configuration);
+            Motor(const Configuration *cfg);
             void setState(State state) const;
             void setDirection(Direction direction) const;
             void setStep(Step step) const;
             bool getHome() const;
             bool getLimit() const;
+            
+        private:
+            void initialize();
     };
 
 }

@@ -8,7 +8,11 @@
 
 namespace axis {
     
+    class MotionService;
+    
     class AxisApplication: public eos::Application {
+        private:
+            MotionService *motionService;
 
         protected:
             void onInitialize();

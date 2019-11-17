@@ -12,29 +12,24 @@ using namespace axis;
 /// \param    configuration: Parametres de configuracio.
 ///
 Motor::Motor(
-    const Configuration *configuration) {
+    const Configuration *cfg) {
     
-    stepPort = configuration->stepPort;
-    stepPin = configuration->stepPin;
+    memcpy(&this->cfg, cfg, sizeof(Configuration));
+    initialize();
+}
 
-    directionPort = configuration->directionPort;
-    directionPin = configuration->directionPin;
-    
-    enablePort = configuration->enablePort;
-    enablePin = configuration->enablePin;
-    
-    homePort = configuration->homePort;
-    homePin = configuration->homePin;
 
-    limitPort = configuration->limitPort;
-    limitPin = configuration->limitPin;
+/// ----------------------------------------------------------------------
+/// \brief    Inicialitzacio.
+/// 
+void Motor::initialize() {
     
-    halGPIOInitializePin(stepPort, stepPin, HAL_GPIO_MODE_OUTPUT_PP, HAL_GPIO_AF_NONE);
-    halGPIOInitializePin(directionPort, directionPin, HAL_GPIO_MODE_OUTPUT_PP, HAL_GPIO_AF_NONE);
-    halGPIOInitializePin(enablePort, enablePin, HAL_GPIO_MODE_OUTPUT_PP, HAL_GPIO_AF_NONE);
+    halGPIOInitializePin(cfg.stepPort, cfg.stepPin, HAL_GPIO_MODE_OUTPUT_PP, HAL_GPIO_AF_NONE);
+    halGPIOInitializePin(cfg.directionPort, cfg.directionPin, HAL_GPIO_MODE_OUTPUT_PP, HAL_GPIO_AF_NONE);
+    halGPIOInitializePin(cfg.enablePort, cfg.enablePin, HAL_GPIO_MODE_OUTPUT_PP, HAL_GPIO_AF_NONE);
 
-    halGPIOInitializePin(homePort, homePin, HAL_GPIO_MODE_INPUT, HAL_GPIO_AF_NONE);
-    halGPIOInitializePin(limitPort, limitPin, HAL_GPIO_MODE_INPUT, HAL_GPIO_AF_NONE);
+    halGPIOInitializePin(cfg.homePort, cfg.homePin, HAL_GPIO_MODE_INPUT, HAL_GPIO_AF_NONE);
+    halGPIOInitializePin(cfg.limitPort, cfg.limitPin, HAL_GPIO_MODE_INPUT, HAL_GPIO_AF_NONE);
 }
 
 
@@ -45,8 +40,8 @@ Motor::Motor(
 void Motor::setState(
     State state) const {
 
-    if (enablePin != 0xFF)
-        halGPIOWritePin(enablePort, enablePin, state == State::enabled);
+    if (cfg.enablePin != 0xFF)
+        halGPIOWritePin(cfg.enablePort, cfg.enablePin, state == State::enabled);
 }
 
 
@@ -57,7 +52,7 @@ void Motor::setState(
 void Motor::setDirection(
     Direction direction) const {
 
-    halGPIOWritePin(directionPort, directionPin, direction == Direction::backward);
+    halGPIOWritePin(cfg.directionPort, cfg.directionPin, direction == Direction::backward);
 }
 
 
@@ -70,15 +65,15 @@ void Motor::setStep(
 
     switch (step) {
         case Step::idle:
-            halGPIOClearPin(stepPort, stepPin);
+            halGPIOClearPin(cfg.stepPort, cfg.stepPin);
             break;
             
         case Step::active:
-            halGPIOSetPin(stepPort, stepPin);
+            halGPIOSetPin(cfg.stepPort, cfg.stepPin);
             break;
             
         case Step::toggle:
-            halGPIOTogglePin(stepPort, stepPin);
+            halGPIOTogglePin(cfg.stepPort, cfg.stepPin);
             break;
     }
 }
@@ -90,7 +85,7 @@ void Motor::setStep(
 ///
 bool Motor::getHome() const {
     
-    return halGPIOReadPin(homePort, homePin);
+    return halGPIOReadPin(cfg.homePort, cfg.homePin);
 }
 
 
@@ -100,5 +95,5 @@ bool Motor::getHome() const {
 ///
 bool Motor::getLimit() const {
 
-    return halGPIOReadPin(limitPort, limitPin);
+    return halGPIOReadPin(cfg.limitPort, cfg.limitPin);
 }
