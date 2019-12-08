@@ -5,7 +5,7 @@
 #include "eos.h"
 #include "Services/eosService.h"
 
-#include "axisMotor.h"
+#include "axisMotion.h"
 
 
 namespace eos {
@@ -17,20 +17,15 @@ namespace eos {
 namespace axis {
     
     class MotionService: public eos::Service {
-        public:
-            struct Configuration {
-                Motor *xMotor;
-                Motor *yMotor;
-                Motor *zMotor;
-            };
-            
         private:
-            Motor *xMotor;
-            Motor *yMotor;
-            Motor *zMotor;
+            Motion* motion;
+            
+        protected:
+            void onInitialize() override;
+            void onTask() override;
             
         public:
-            MotionService(eos::Application *application, const Configuration *cfg);
+            MotionService(eos::Application *application, Motion* motion);
     };
 }
 

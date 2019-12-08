@@ -9,11 +9,19 @@ using namespace axis;
 
 
 MotionService::MotionService(
-    Application *application,
-    const Configuration *cfg): 
+    Application* application,
+    Motion* motion): 
     
     Service(application),
-    xMotor(cfg->xMotor),
-    yMotor(cfg->yMotor),
-    zMotor(cfg->zMotor) {    
+    motion(motion) {
+}
+
+
+void MotionService::onInitialize() {
+    
+}
+
+
+void MotionService::onTask() {
+    
 }

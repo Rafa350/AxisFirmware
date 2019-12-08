@@ -38,6 +38,8 @@
 #define AXIS_MOTOR_Z_ENABLE_PORT       HAL_GPIO_PORT_A
 #define AXIS_MOTOR_Z_ENABLE_PIN        HAL_GPIO_PIN_12
 
+#define AXIS_MOTION_TIMER              HAL_TMR_TIMER_1
+
 
 #include "board/board.h"
 

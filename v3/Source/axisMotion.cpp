@@ -1,4 +1,5 @@
 #include "eos.h"
+#include "System/eosMath.h"
 #include "HAL/halTMR.h"
 #include "System/eosMath.h"
 #include "System/Core/eosTask.h"
@@ -11,8 +12,6 @@
 #include "sys/attribs.h"
 
 
-#define MOTION_TIMER_ID       HAL_TMR_TIMER_1
-
 #define HZ                    100000.0L
 
 #define FRACTIONAL_BITS       48
@@ -21,21 +20,21 @@
 
 // Valors minims
 //
-#define MIN_SPEED             10
-#define MIN_ACCELERATION      10
-#define MIN_JERK              100
+#define MOTION_MIN_SPEED          10
+#define MOTION_MIN_ACCELERATION   10
+#define MOTION_MIN_JERK           100
 
 // Valors maxims
 //
-#define MAX_SPEED             1500000
-#define MAX_ACCELERATION      1500000
-#define MAX_JERK              1500000
+#define MOTION_MAX_SPEED          1500000
+#define MOTION_MAX_ACCELERATION   1500000
+#define MOTION_MAX_JERK           1500000
 
 // Valors per defecte
 //
-#define DEF_SPEED             150
-#define DEF_ACCELERATION      300
-#define DEF_JERK              100
+#define MOTION_DEF_SPEED          150
+#define MOTION_DEF_ACCELERATION   300
+#define MOTION_DEF_JERK           100
 
 
 using namespace eos;
@@ -49,36 +48,27 @@ using namespace axis;
 #define exp4(a)     ((a) * (a) * (a) * (a)) 
 #define rt2(a)      sqrtl(a)                
 #define rt3(a)      cbrtl(a)                
-#ifndef max
-#define max(a, b)   (((a) > (b)) ? (a) : (b))
-#endif
-#ifndef min
-#define min(a, b)   (((a) < (b)) ? (a) : (b))
-#endif
 
 
 /// ----------------------------------------------------------------------
 /// \brief    Constructor.
-/// \param    numAxis: Numero d'eixos.
-/// \param    motors: Controladors dels motors de cada eix.
+/// \param    cfg: Parametres de configuracio.
 ///
 Motion::Motion(
-    int numAxis,
-    Motor *motors[]):
+    const Configuration& cfg):
     
-    numAxis(numAxis),
-    busy(false) {
+    busy(false),
+    cfg(cfg) {
     
-    for (int i = 0; i < numAxis; i++) {
-        this->motors[i] = motors[i];
+    for (int i = 0; i < cfg.numAxis; i++) {
         axisPos[i] = 0;
         axisMax[i] = INT_MAX;
         axisMin[i] = INT_MIN;
     }
     
-    jerk = DEF_JERK;
-    maxAcceleration = DEF_ACCELERATION;
-    maxSpeed = DEF_SPEED;
+    jerk = MOTION_DEF_JERK;
+    maxAcceleration = MOTION_DEF_ACCELERATION;
+    maxSpeed = MOTION_DEF_SPEED;
 
     timerInitialize();
 }
@@ -105,10 +95,10 @@ void Motion::setMaxSpeed(
       
     // Ajusta limits
     //
-    if (speed < MIN_SPEED) 
-        speed = MIN_SPEED;        
-    else if (speed > MAX_SPEED)
-        speed = MAX_SPEED;
+    if (speed < MOTION_MIN_SPEED) 
+        speed = MOTION_MIN_SPEED;        
+    else if (speed > MOTION_MAX_SPEED)
+        speed = MOTION_MAX_SPEED;
         
     // Canvia la velocitat maxima
     //
@@ -130,10 +120,10 @@ void Motion::setMaxAcceleration(
     
     // Ajusta els limits
     //
-    if (acceleration < MIN_ACCELERATION) 
-        acceleration = MIN_ACCELERATION;
-    else if (acceleration > MAX_ACCELERATION)
-        acceleration = MAX_ACCELERATION;
+    if (acceleration < MOTION_MIN_ACCELERATION) 
+        acceleration = MOTION_MIN_ACCELERATION;
+    else if (acceleration > MOTION_MAX_ACCELERATION)
+        acceleration = MOTION_MAX_ACCELERATION;
 
     // Canvia l'acceleracio maxima
     //
@@ -155,10 +145,10 @@ void Motion::setJerk(
       
     // Ajusta els limits
     //
-    if (jerk < MIN_JERK) 
-        jerk = MIN_JERK;
-    else if (jerk > MAX_JERK)
-        jerk = MAX_JERK;
+    if (jerk < MOTION_MIN_JERK) 
+        jerk = MOTION_MIN_JERK;
+    else if (jerk > MOTION_MAX_JERK)
+        jerk = MOTION_MAX_JERK;
 
     // Canvia el impuls
     //
@@ -167,16 +157,16 @@ void Motion::setJerk(
 
 
 void Motion::setMaxPosition(
-    int position[]) {
+    const Vector& position) {
     
-    memcpy(axisMax, position, sizeof(axisMax[0] * numAxis));
+    axisMax = position;
 }
 
 
 void Motion::setMinPosition(
-    int position[]) {
+    const Vector& position) {
     
-    memcpy(axisMin, position, sizeof(axisMin[0] * numAxis));
+    axisMin = position;
 }
 
 
@@ -185,7 +175,8 @@ void Motion::setMinPosition(
 ///
 void Motion::setHome() {
     
-    memset(axisPos, 0, sizeof(axisPos[0]) * numAxis);
+    int v[] = {0, 0, 0};
+    axisPos = Vector(v);
 }
 
 
@@ -199,7 +190,7 @@ int Motion::getAxis(
     
     int position = -1;
 
-    if (axis <= numAxis) {
+    if (axis <= cfg.numAxis) {
         Task::enterCriticalSection();
         position = axisPos[axis];
         Task::exitCriticalSection();
@@ -210,11 +201,25 @@ int Motion::getAxis(
 
 
 /// ----------------------------------------------------------------------
+/// \brief    Obte la posicio dels eixos.
+/// \return   La posicio.
+///
+Motion::Vector Motion::getPosition() const {
+
+    Vector position;
+    Task::enterCriticalSection();
+    position = axisPos;
+    Task::enterCriticalSection();
+    return position;
+}
+
+
+/// ----------------------------------------------------------------------
 /// \brief    Realitza un moviment absolut a la posicio especificada
 /// \param    position: Posicio
 ///
 void Motion::doMoveAbs(
-    int position[]) {
+    const Vector& position) {
 
     // Si es ocupat no fa res
     //
@@ -223,25 +228,18 @@ void Motion::doMoveAbs(
 
     // Ajusta els limits
     //
-    for (unsigned i = 0; i < numAxis; i++) {
+    Vector newPosition(position);
+    for (int i = 0; i < cfg.numAxis; i++) {
         if (position[i] < axisMin[i]) 
-            position[i] = axisMin[i];
+            newPosition[i] = axisMin[i];
         else if (position[i] > axisMax[i])
-            position[i] = axisMax[i];
-    }
-
-    // Comprova si cal moure quelcom
-    //
-    bool canMove = false;
-    for (unsigned i = 0; (i < numAxis) && !canMove; i++) {
-        if (position[i] != axisPos[i])
-            canMove = true;
+            newPosition[i] = axisMax[i];
     }
 
     // Si cal moure, ho fa
     //
-    if (canMove) 
-        start(position);
+    if (newPosition != axisPos) 
+        start(newPosition);
 }
 
 
@@ -250,15 +248,9 @@ void Motion::doMoveAbs(
 /// \param    delta: Increment de posicio
 ///
 void Motion::doMoveRel(
-    int delta[]) {
+    const Vector& delta) {
 
-    // Pasa a coordinades absolutes
-    //
-    int position[MAX_AXIS];
-    for (unsigned i = 0; i < numAxis; i++)
-        position[i] = axisPos[i] + delta[i];
-
-    doMoveAbs(position);
+    doMoveAbs(axisPos + delta);
 }
 
 
@@ -273,21 +265,21 @@ void Motion::doMoveAbsAxis(
 
     // Comprova si els parametres son valids
     //
-    if (axis >= numAxis)
+    if (axis >= cfg.numAxis)
         return;
 
     // Calcula el moviment a realitzar
     //
-    int p[MAX_AXIS];
-    for (unsigned i = 0; i < numAxis; i++)
+    Vector newPosition;
+    for (int i = 0; i < cfg.numAxis; i++)
         if (i == axis)
-            p[i] = position;
+            newPosition[i] = position;
         else
-            p[i] = axisPos[i];
+            newPosition[i] = axisPos[i];
 
     // Realitza el moviment
     //
-    doMoveAbs(p);
+    doMoveAbs(newPosition);
 }
 
 
@@ -296,7 +288,7 @@ void Motion::doMoveAbsAxis(
 ///
 void Motion::doMoveHome() {
     
-    int position[MAX_AXIS];
+    int position[MOTION_MAX_AXIS];
     
     memset(position, 0, sizeof(position));
     doMoveAbs(position);
@@ -318,7 +310,7 @@ void Motion::doStop() {
 void Motion::timerInitialize() {
 
     TMRInitializeInfo info = {
-        .timer = MOTION_TIMER_ID,
+        .timer = cfg.timer,
         .period = 25,
         .options = HAL_TMR_MODE_16 | HAL_TMR_CLKDIV_32,
         .irqCallback = timerInterruptCallback,
@@ -333,7 +325,7 @@ void Motion::timerInitialize() {
 ///
 void Motion::timerStart() {
     
-    halTMRStartTimer(MOTION_TIMER_ID);
+    halTMRStartTimer(cfg.timer);
 }
 
 
@@ -342,17 +334,17 @@ void Motion::timerStart() {
 ///
 void Motion::timerStop() {
 
-    halTMRStopTimer(MOTION_TIMER_ID);
+    halTMRStopTimer(cfg.timer);
 }
 
 
 /// ----------------------------------------------------------------------
 /// \brief    Procesa la interrupcio del temporitzador.
-/// \param    timer: Identificador del temporitzador.
+/// \param    timer: Handler del temporitzador.
 /// \param    param: Parametre. En aquest cas el punter this.
 ///
 void Motion::timerInterruptCallback(
-    uint8_t timer, 
+    TMRTimer timer, 
     void *param) {
     
     Motion *motion = static_cast<Motion*>(param);
@@ -363,9 +355,10 @@ void Motion::timerInterruptCallback(
 /// ----------------------------------------------------------------------
 /// \brief    Inicialitzacio del moviment.
 /// \param    position: Coordinades absolutes del desti del moviment.
+/// \remarks  Es calcula suposant que la velocitat inicial i final es 0.
 ///
 void Motion::start(
-    int position[]) {
+    const Vector& position) {
 
     // Posa el controlador en modus ocupat
     //
@@ -373,29 +366,29 @@ void Motion::start(
 
     // Realitza les operacions de calcul de trajectoria
     //
-    int delta[MAX_AXIS];
-    for (unsigned i = 0; i < numAxis; i++) {
+    int delta[MOTION_MAX_AXIS];
+    for (int i = 0; i < cfg.numAxis; i++) {
         int d = position[i] - axisPos[i];
         if (d < 0) {
             d = -d;
             inc[i] = -1;
-            motors[i]->setDirection(Motor::Direction::backward);
+            cfg.motors[i]->setDirection(Motor::Direction::backward);
         }
         else {
             inc[i] = 1;
-            motors[i]->setDirection(Motor::Direction::forward);
+            cfg.motors[i]->setDirection(Motor::Direction::forward);
         }
         delta[i] = d;
     }
 
     int deltaMax = INT_MIN;
-    for (unsigned i = 0; i < numAxis; i++) {
+    for (int i = 0; i < cfg.numAxis; i++) {
         if (delta[i] > deltaMax) {
             deltaMax = delta[i];
             mainAxis = i;
         }
     }
-    for (unsigned i = 0; i < numAxis; i++) {
+    for (int i = 0; i < cfg.numAxis; i++) {
         ddelta[i] = delta[i] * 2;
         error[i] = ddelta[i] - deltaMax;
     }
@@ -490,7 +483,7 @@ void Motion::start(
     curSpeed = 0;
     curPosition = 0;
 
-    // Activa el temporitzador i comen�a a generar interrupcions
+    // Activa el temporitzador i comença a generar interrupcions
     //
     timerStart();
 }
@@ -513,8 +506,8 @@ void Motion::loop() {
 
     bool doStep = false;
     
-    for (unsigned i = 0; i < numAxis; i++)
-        motors[i]->setStep(Motor::Step::idle);
+    for (int i = 0; i < cfg.numAxis; i++)
+        cfg.motors[i]->setStep(Motor::Step::idle);
 
     switch (phase) {
 
@@ -658,18 +651,18 @@ void Motion::loop() {
     if (doStep) {
         
         int ma = mainAxis;
-        for (unsigned i = 0; i < numAxis; i++) {
+        for (int i = 0; i < cfg.numAxis; i++) {
             if (i != ma) {
                 if (error[i] > 0) {
                     error[i] -= ddelta[ma];
                     axisPos[i] += inc[i];
-                    motors[i]->setStep(Motor::Step::active);
+                    cfg.motors[i]->setStep(Motor::Step::active);
                 }
                 error[i] += ddelta[i];
             }
         }
         axisPos[ma] += inc[ma];        
-        motors[ma]->setStep(Motor::Step::active);
+        cfg.motors[ma]->setStep(Motor::Step::active);
 
         // Incrementa el contador de pasos
         //

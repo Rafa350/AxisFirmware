@@ -4,6 +4,8 @@
 
 #include "eos.h"
 #include "System/eosApplication.h"
+#include "axisMotor.h"
+#include "axisMotion.h"
 
 
 namespace axis {
@@ -12,7 +14,11 @@ namespace axis {
     
     class AxisApplication: public eos::Application {
         private:
-            MotionService *motionService;
+            Motor* xMotor;
+            Motor* yMotor;
+            Motor* zMotor;
+            Motion* motion;
+            MotionService* motionService;
 
         protected:
             void onInitialize();

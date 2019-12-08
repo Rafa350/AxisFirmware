@@ -12,9 +12,9 @@ using namespace axis;
 /// \param    configuration: Parametres de configuracio.
 ///
 Motor::Motor(
-    const Configuration *cfg) {
+    const Configuration& cfg) {
     
-    memcpy(&this->cfg, cfg, sizeof(Configuration));
+    memcpy(&this->cfg, &cfg, sizeof(Configuration));
     initialize();
 }
 

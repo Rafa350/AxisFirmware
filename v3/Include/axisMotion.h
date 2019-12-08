@@ -3,17 +3,28 @@
 
 
 #include "eos.h"
+#include "HAL/halTMR.h"
+#include "System/Collections/eosStaticArray.h"
 #include "axisMotor.h"
 
 
-#ifndef MAX_AXIS
-#define MAX_AXIS        6    // Numero maxim d'eixos soportats
+#ifndef MOTION_MAX_AXIS
+#define MOTION_MAX_AXIS  3
 #endif
 
 
 namespace axis {
     
-    class Motion {
+    class Motion {        
+        public:
+            typedef eos::StaticArray<Motor*, MOTION_MAX_AXIS> Motors;
+            typedef eos::StaticArray<int, MOTION_MAX_AXIS> Vector;
+            struct Configuration {
+                int numAxis;
+                Motors motors;
+                TMRTimer timer;
+            };
+            
         private:
             enum class Phase {                 // Fase del perfil 'S'
                 phase_I,
@@ -26,11 +37,10 @@ namespace axis {
             };
             
         private:
-            int numAxis;                       // -Mumero d'eixos
-            Motor *motors[MAX_AXIS];           // -Motors dels eixos
-            int axisMax[MAX_AXIS];             // -Valor maxim de cada eix
-            int axisMin[MAX_AXIS];             // -Valor minim de cada eix
-            int axisPos[MAX_AXIS];             // -Posicio de cada eix
+            Configuration cfg;
+            Vector axisMax;                    // -Valor maxim de cada eix
+            Vector axisMin;                    // -Valor minim de cada eix
+            Vector axisPos;                    // -Posicio de cada eix
             int maxSpeed;                      // -Velocitat maxima
             int maxAcceleration;               // -Acceleracio maxima
             int jerk;                          // -Impuls
@@ -53,28 +63,29 @@ namespace axis {
             int stepNumber;                    // -Numero de pasos a realitzar
             int stepCounter;                   // -Contador de pasos realitzats
             int mainAxis;                      // -Eix principal (El mes llarg)
-            int error[MAX_AXIS];               // -Error acumulat
-            int ddelta[MAX_AXIS];              // -Deltas * 2
-            int inc[MAX_AXIS];                 // -Increments dels eixos per cada pas
+            Vector error;                      // -Error acumulat
+            Vector ddelta;                     // -Deltas * 2
+            Vector inc;                        // -Increments dels eixos per cada pas
             
         public:
-            Motion(int numAxis, Motor *motors[]);
+            Motion(const Configuration& cfg);
             ~Motion();
 
             void setMaxSpeed(int speed);
             void setMaxAcceleration(int acceleration);
             void setJerk(int jerk);
-            void setMaxPosition(int position[]);
-            void setMinPosition(int position[]);
+            void setMaxPosition(const Vector& position);
+            void setMinPosition(const Vector& position);
             void setHome();
 
             bool isBusy() const { return busy; }
             int getAxis(int axis) const;
+            Vector getPosition() const;
 
             void doMoveAbsAxis(int axis, int position);
             void doMoveRelAxis(int axis, int delta);
-            void doMoveAbs(int position[]);
-            void doMoveRel(int delta[]);
+            void doMoveAbs(const Vector& position);
+            void doMoveRel(const Vector& delta);
             void doMoveHome();
             void doStop();
             
@@ -82,10 +93,10 @@ namespace axis {
             void timerInitialize();
             void timerStart();
             void timerStop();
-            void start(int position[]);
+            void start(const Vector& position);
             void stop();
             void loop();
-            static void timerInterruptCallback(uint8_t timer, void *param);
+            static void timerInterruptCallback(TMRTimer timer, void* param);
     };
 }
 

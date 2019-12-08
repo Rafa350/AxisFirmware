@@ -2,6 +2,7 @@
 #include "HAL\halGPIO.h"
 #include "axisApplication.h"
 #include "axisMotionService.h"
+#include "axisMotion.h"
 #include "axisMotor.h"
 
 
@@ -24,7 +25,7 @@ AxisApplication::AxisApplication() {
     motorCfg.directionPin = AXIS_MOTOR_X_DIRECTION_PIN;
     motorCfg.enablePort = AXIS_MOTOR_X_ENABLE_PORT;
     motorCfg.enablePin = AXIS_MOTOR_X_ENABLE_PIN;
-    Motor *xMotor = new Motor(&motorCfg);
+    xMotor = new Motor(motorCfg);
     
     // Crea el motor del eix Y
     //
@@ -34,7 +35,7 @@ AxisApplication::AxisApplication() {
     motorCfg.directionPin = AXIS_MOTOR_Y_DIRECTION_PIN;
     motorCfg.enablePort = AXIS_MOTOR_Y_ENABLE_PORT;
     motorCfg.enablePin = AXIS_MOTOR_Y_ENABLE_PIN;
-    Motor *yMotor = new Motor(&motorCfg);
+    yMotor = new Motor(motorCfg);
 
     // Crea el motor del eix Z
     //    
@@ -44,13 +45,21 @@ AxisApplication::AxisApplication() {
     motorCfg.directionPin = AXIS_MOTOR_Z_DIRECTION_PIN;
     motorCfg.enablePort = AXIS_MOTOR_Z_ENABLE_PORT;
     motorCfg.enablePin = AXIS_MOTOR_Z_ENABLE_PIN;
-    Motor *zMotor = new Motor(&motorCfg);
-      
-    MotionService::Configuration motionServiceCfg;
-    motionServiceCfg.xMotor = xMotor;
-    motionServiceCfg.yMotor = yMotor;
-    motionServiceCfg.zMotor = zMotor;
-    motionService = new MotionService(this, &motionServiceCfg);
+    zMotor = new Motor(motorCfg);
+    
+    // Crea el controlador de moviment
+    //
+    Motion::Configuration motionCfg;
+    motionCfg.numAxis = 3;
+    motionCfg.motors[0] = xMotor;
+    motionCfg.motors[1] = yMotor;
+    motionCfg.motors[2] = zMotor;
+    motionCfg.timer = AXIS_MOTION_TIMER;
+    motion = new Motion(motionCfg);      
+    
+    // Crea el servei de control de moviment
+    //
+    motionService = new MotionService(this, motion);
 }
 
 

@@ -44,7 +44,7 @@ namespace axis {
             Configuration cfg;
         
         public:
-            Motor(const Configuration *cfg);
+            Motor(const Configuration& cfg);
             void setState(State state) const;
             void setDirection(Direction direction) const;
             void setStep(Step step) const;
