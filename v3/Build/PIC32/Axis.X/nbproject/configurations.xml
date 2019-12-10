@@ -28,6 +28,9 @@
           </logicalFolder>
           <logicalFolder name="f3" displayName="Services" projectFiles="true">
             <itemPath>../../../../../EOS/v2/Include/Services/eosService.h</itemPath>
+            <itemPath>../../../../../EOS/v2/Include/Services/eosFsmService.h</itemPath>
+            <itemPath>../../../../../EOS/v2/Include/Services/eosDigOutputService.h</itemPath>
+            <itemPath>../../../../../EOS/v2/Include/Services/eosDigInputService.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f1" displayName="System" projectFiles="true">
             <logicalFolder name="f1" displayName="Collections" projectFiles="true">
@@ -79,6 +82,9 @@
           </logicalFolder>
           <logicalFolder name="f3" displayName="Services" projectFiles="true">
             <itemPath>../../../../../EOS/v2/Source/Services/eosService.cpp</itemPath>
+            <itemPath>../../../../../EOS/v2/Source/Services/eosFsmService.cpp</itemPath>
+            <itemPath>../../../../../EOS/v2/Source/Services/eosDigInputService.cpp</itemPath>
+            <itemPath>../../../../../EOS/v2/Source/Services/eosDigOutputService.cpp</itemPath>
           </logicalFolder>
           <logicalFolder name="f1" displayName="StartUp" projectFiles="true">
             <itemPath>../../../../../EOS/v2/Source/StartUp/PIC32/main.cpp</itemPath>
@@ -91,6 +97,7 @@
               <itemPath>../../../../../EOS/v2/Source/System/Core/eosTask.cpp</itemPath>
               <itemPath>../../../../../EOS/v2/Source/System/Core/eosGlobalAlloc.cpp</itemPath>
               <itemPath>../../../../../EOS/v2/Source/System/Core/eosErrorHandler.cpp</itemPath>
+              <itemPath>../../../../../EOS/v2/Source/System/Core/eosQueue.cpp</itemPath>
             </logicalFolder>
             <itemPath>../../../../../EOS/v2/Source/System/eosApplication.cpp</itemPath>
             <itemPath>../../../../../EOS/v2/Source/System/eosString.cpp</itemPath>

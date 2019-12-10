@@ -1,5 +1,8 @@
 #include "eos.h"
 #include "HAL\halGPIO.h"
+#include "Services/eosDigInputService.h"
+#include "Services/eosDigOutputService.h"
+#include "Services/eosFsmService.h"
 #include "axisApplication.h"
 #include "axisMotionService.h"
 #include "axisMotion.h"
@@ -13,7 +16,9 @@ using namespace axis;
 /// ----------------------------------------------------------------------
 /// \brief    Constructor del objecte.
 ///
-AxisApplication::AxisApplication() {
+AxisApplication::AxisApplication():
+
+    digInputEventCallback(this, &AxisApplication::digInputEventHandler) {
     
     Motor::Configuration motorCfg;
     
@@ -60,6 +65,20 @@ AxisApplication::AxisApplication() {
     // Crea el servei de control de moviment
     //
     motionService = new MotionService(this, motion);
+    
+    // Crea el servei de maquina d'estats finits
+    //
+    fsmService = new FsmService(this, nullptr);
+    
+    // Crea el servei d'entrades digitals
+    //
+    digInputService = new DigInputService(this);
+    DigInput *digInput1 = new DigInput(digInputService, 0, 0, 0);
+    digInput1->setEventCallback(&digInputEventCallback);
+    
+    // Crea el servei de sortides diogitals
+    //
+    digOutputService = new DigOutputService(this, 0);
 }
 
 
@@ -68,4 +87,10 @@ AxisApplication::AxisApplication() {
 ///
 void AxisApplication::onInitialize() {
        
+}
+
+
+void AxisApplication::digInputEventHandler(
+    const DigInput::EventArgs& args) {
+    
 }
