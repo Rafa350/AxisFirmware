@@ -238,8 +238,12 @@ void Motion::doMoveAbs(
 
     // Si cal moure, ho fa
     //
-    if (newPosition != axisPos) 
-        start(newPosition);
+    for (int i = 0; i < cfg.numAxis; i++) {
+        if (newPosition[i] != axisPos[i]) {
+            start(newPosition);
+            break;
+        }
+    }
 }
 
 
@@ -249,8 +253,11 @@ void Motion::doMoveAbs(
 ///
 void Motion::doMoveRel(
     const Vector& delta) {
-
-    doMoveAbs(axisPos + delta);
+    
+    Vector position;
+    for (int i = 0; i < cfg.numAxis; i++)
+        position[i] = axisPos[i] + delta[i];
+    doMoveAbs(position);
 }
 
 
@@ -313,8 +320,8 @@ void Motion::timerInitialize() {
         .timer = cfg.timer,
         .period = 25,
         .options = HAL_TMR_MODE_16 | HAL_TMR_CLKDIV_32,
-        .irqCallback = timerInterruptCallback,
-        .irqParam = this
+        .isrFunction = timerInterruptCallback,
+        .isrParams = this
     };
     halTMRInitialize(&info);
 }

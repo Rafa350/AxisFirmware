@@ -2,7 +2,6 @@
 #include "HAL\halGPIO.h"
 #include "Services/eosDigInputService.h"
 #include "Services/eosDigOutputService.h"
-#include "Services/eosFsmService.h"
 #include "axisApplication.h"
 #include "axisMotionService.h"
 #include "axisMotion.h"
@@ -68,17 +67,63 @@ AxisApplication::AxisApplication():
     
     // Crea el servei de maquina d'estats finits
     //
-    fsmService = new FsmService(this, nullptr);
+    //fsmService = new FsmService(this, nullptr);
     
-    // Crea el servei d'entrades digitals
+    // Inicialitza el servei d'entrades digitals
     //
-    digInputService = new DigInputService(this);
-    DigInput *digInput1 = new DigInput(digInputService, 0, 0, 0);
-    digInput1->setEventCallback(&digInputEventCallback);
+    InitializeDigInputService();
     
-    // Crea el servei de sortides diogitals
+    // Inicialitza el servei de sortides digitals
     //
-    digOutputService = new DigOutputService(this, 0);
+    InitializeDigOutputService();
+}
+
+
+/// ----------------------------------------------------------------------
+/// \brief    Inicialitza el servei d'entrades digitals.
+///
+void AxisApplication::InitializeDigInputService() {
+    
+    // Inicialitza el servei
+    //
+    DigInputService::InitParams digInputServiceInit;
+    digInputServiceInit.timer = HAL_TMR_TIMER_3;
+    digInputServiceInit.period = 5;
+    digInputService = new DigInputService(this, digInputServiceInit);
+    
+    DigInput::InitParams digInputInit;
+    digInputInit.eventCallback = &digInputEventCallback;
+    digInputInit.eventParam = nullptr;
+    
+    // Inicialitza la entrada SW_SW1
+    //
+    halGPIOInitializePin(SW_SW1_PORT, SW_SW1_PIN, HAL_GPIO_MODE_INPUT, HAL_GPIO_AF_NONE);
+    digInputInit.port = SW_SW1_PORT;
+    digInputInit.pin = SW_SW1_PIN;
+    digInput1 = new DigInput(digInputService, digInputInit);
+}
+
+
+/// ----------------------------------------------------------------------
+/// \brief    Inicialitza el servei de sortides digitals.
+///
+void AxisApplication::InitializeDigOutputService() {
+    
+    // Inicialitza el servei
+    //
+    DigOutputService::InitParams digOutputServiceInit;
+    digOutputServiceInit.timer = HAL_TMR_TIMER_2;
+    digOutputServiceInit.period = 1;
+    digOutputService = new DigOutputService(this, digOutputServiceInit);
+    
+    DigOutput::InitParams digOutputInit;
+
+    // Inicialitza la sortida LED_LED1
+    //
+    halGPIOInitializePin(LED_LED1_PORT, LED_LED1_PIN, HAL_GPIO_MODE_OUTPUT_PP | HAL_GPIO_INIT_CLR, HAL_GPIO_AF_NONE);
+    digOutputInit.port = LED_LED1_PORT;
+    digOutputInit.pin = LED_LED1_PIN;
+    digOutput1 = new DigOutput(digOutputService, digOutputInit);
 }
 
 

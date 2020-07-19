@@ -41,7 +41,7 @@
 #define AXIS_MOTION_TIMER              HAL_TMR_TIMER_1
 
 
-#include "board/board.h"
+#include "Board/eosBoard.h"
 
 
 #endif // __eosConfig__

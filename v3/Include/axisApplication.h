@@ -4,6 +4,7 @@
 
 #include "eos.h"
 #include "Services/eosDigInputService.h"
+#include "Services/eosDigOutputService.h"
 #include "System/eosApplication.h"
 #include "System/eosCallbacks.h"
 #include "axisMotor.h"
@@ -12,7 +13,6 @@
 
 namespace eos {
  
-    class DigOutputService;
     class FsmService;
 }
 
@@ -34,10 +34,16 @@ namespace axis {
             Motion* motion;
             MotionService* motionService;
             DigInputService* digInputService;
+            DigInput* digInput1;
             DigOutputService* digOutputService;
-            FsmService* fsmService;
+            DigOutput* digOutput1;
+            //FsmService* fsmService;
             
             DigInputEventCallback digInputEventCallback;
+            
+        private:
+            void InitializeDigInputService();
+            void InitializeDigOutputService();
 
         protected:
             void onInitialize();
