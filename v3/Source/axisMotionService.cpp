@@ -19,9 +19,10 @@ MotionService::MotionService(
 
 void MotionService::onInitialize() {
     
+    motion->setHome();
 }
 
 
 void MotionService::onTask() {
-    
+
 }

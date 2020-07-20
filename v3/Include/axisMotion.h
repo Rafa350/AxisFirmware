@@ -82,10 +82,10 @@ namespace axis {
             int getAxis(int axis) const;
             Vector getPosition() const;
 
-            void doMoveAbsAxis(int axis, int position);
-            void doMoveRelAxis(int axis, int delta);
+            void doMoveAbs(int axis, int position);
             void doMoveAbs(const Vector& position);
             void doMoveRel(const Vector& delta);
+            void doMoveRel(int axis, int delta);
             void doMoveHome();
             void doStop();
             

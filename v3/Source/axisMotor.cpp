@@ -13,8 +13,9 @@ using namespace axis;
 ///
 Motor::Motor(
     const Configuration& cfg) {
+
+    this->cfg = cfg;
     
-    memcpy(&this->cfg, &cfg, sizeof(Configuration));
     initialize();
 }
 
@@ -24,12 +25,23 @@ Motor::Motor(
 /// 
 void Motor::initialize() {
     
-    halGPIOInitializePin(cfg.stepPort, cfg.stepPin, HAL_GPIO_MODE_OUTPUT_PP, HAL_GPIO_AF_NONE);
-    halGPIOInitializePin(cfg.directionPort, cfg.directionPin, HAL_GPIO_MODE_OUTPUT_PP, HAL_GPIO_AF_NONE);
-    halGPIOInitializePin(cfg.enablePort, cfg.enablePin, HAL_GPIO_MODE_OUTPUT_PP, HAL_GPIO_AF_NONE);
+    halGPIOInitializePin(cfg.stepPort, cfg.stepPin, 
+        HAL_GPIO_MODE_OUTPUT_PP | HAL_GPIO_INIT_CLR, HAL_GPIO_AF_NONE);
+   
+    halGPIOInitializePin(cfg.directionPort, cfg.directionPin, 
+        HAL_GPIO_MODE_OUTPUT_PP | HAL_GPIO_INIT_CLR, HAL_GPIO_AF_NONE);
+    
+    // El port ENABLE es opcional
+    //
+    if (cfg.enablePort != 0xFF)
+        halGPIOInitializePin(cfg.enablePort, cfg.enablePin, 
+            HAL_GPIO_MODE_OUTPUT_PP | HAL_GPIO_INIT_CLR, HAL_GPIO_AF_NONE);
 
-    halGPIOInitializePin(cfg.homePort, cfg.homePin, HAL_GPIO_MODE_INPUT, HAL_GPIO_AF_NONE);
-    halGPIOInitializePin(cfg.limitPort, cfg.limitPin, HAL_GPIO_MODE_INPUT, HAL_GPIO_AF_NONE);
+    //halGPIOInitializePin(cfg.homePort, cfg.homePin, HAL_GPIO_MODE_INPUT, HAL_GPIO_AF_NONE);
+    //halCNInitializeLine
+    
+    //halGPIOInitializePin(cfg.limitPort, cfg.limitPin, HAL_GPIO_MODE_INPUT, HAL_GPIO_AF_NONE);
+    //halCNInitializeLine
 }
 
 

@@ -42,8 +42,9 @@ namespace axis {
             DigInputEventCallback digInputEventCallback;
             
         private:
-            void InitializeDigInputService();
-            void InitializeDigOutputService();
+            void initializeDigInputService();
+            void initializeDigOutputService();
+            void initializeMotionService();
 
         protected:
             void onInitialize();

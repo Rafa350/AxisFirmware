@@ -1,5 +1,5 @@
 #include "eos.h"
-#include "System/eosMath.h"
+#include "HAL/halSYS.h"
 #include "HAL/halTMR.h"
 #include "System/eosMath.h"
 #include "System/Core/eosTask.h"
@@ -10,12 +10,13 @@
 #include "limits.h"
 #include "math.h"
 #include "sys/attribs.h"
+#include "peripheral/int/plib_int.h"
 
 
-#define HZ                    100000.0L
+#define HZ                        100000.0L
 
-#define FRACTIONAL_BITS       48
-#define FRACTIONAL_MASK       (((uint64_t)1 << FRACTIONAL_BITS) - 1)
+#define FRACTIONAL_BITS           48
+#define FRACTIONAL_MASK           (((uint64_t)1 << FRACTIONAL_BITS) - 1)
 
 
 // Valors minims
@@ -248,25 +249,11 @@ void Motion::doMoveAbs(
 
 
 /// ----------------------------------------------------------------------
-/// \brief    Realitza un moviment relatiu a la posicio actual
-/// \param    delta: Increment de posicio
-///
-void Motion::doMoveRel(
-    const Vector& delta) {
-    
-    Vector position;
-    for (int i = 0; i < cfg.numAxis; i++)
-        position[i] = axisPos[i] + delta[i];
-    doMoveAbs(position);
-}
-
-
-/// ----------------------------------------------------------------------
 /// \brief    Realitza un moviment absolut en el eix especificat.
 /// \param    axis: Eix a moure
 /// \param    position: Nova posicio
 ///
-void Motion::doMoveAbsAxis(
+void Motion::doMoveAbs(
     int axis,
     int position) {
 
@@ -291,14 +278,55 @@ void Motion::doMoveAbsAxis(
 
 
 /// ----------------------------------------------------------------------
+/// \brief    Realitza un moviment relatiu a la posicio actual
+/// \param    delta: Increment de posicio
+///
+void Motion::doMoveRel(
+    const Vector& delta) {
+    
+    Vector position;
+    for (int i = 0; i < cfg.numAxis; i++)
+        position[i] = axisPos[i] + delta[i];
+    doMoveAbs(position);
+}
+
+
+/// ----------------------------------------------------------------------
+/// \brief    Realitza un moviment relatiu a la posicio actual.
+/// \param    axis: L'eix a moure.
+/// \param    delte: Distancia.
+///
+void Motion::doMoveRel(
+    int axis, 
+    int delta) {
+    
+    // Comprova si els parametres son valids
+    //
+    if (axis >= cfg.numAxis)
+        return;
+
+    // Calcula el moviment a realitzar
+    //
+    Vector newDelta;
+    for (int i = 0; i < cfg.numAxis; i++)
+        if (i == axis)
+            newDelta[i] = axis;
+        else
+            newDelta[i] = 0;
+
+    // Realitza el moviment
+    //
+    doMoveRel(newDelta);
+}
+
+
+/// ----------------------------------------------------------------------
 /// \brief    Realitza un moviment a la posicio HOME
 ///
 void Motion::doMoveHome() {
-    
-    int position[MOTION_MAX_AXIS];
-    
-    memset(position, 0, sizeof(position));
-    doMoveAbs(position);
+
+    int v[] = {0, 0, 0};
+    doMoveAbs(v);
 }
 
 
@@ -316,14 +344,17 @@ void Motion::doStop() {
 ///
 void Motion::timerInitialize() {
 
-    TMRInitializeInfo info = {
-        .timer = cfg.timer,
-        .period = 25,
-        .options = HAL_TMR_MODE_16 | HAL_TMR_CLKDIV_32,
-        .isrFunction = timerInterruptCallback,
-        .isrParams = this
-    };
-    halTMRInitialize(&info);
+    TMRInitializeInfo tmrInfo;
+    
+    tmrInfo.timer = cfg.timer;
+    tmrInfo.options = HAL_TMR_MODE_16 | HAL_TMR_CLKDIV_32 | HAL_TMR_INTERRUPT_ENABLE;
+    tmrInfo.period =  halSYSGetPeripheralClockFrequency() / 32 / 100000;
+    tmrInfo.irqPriority = INT_PRIORITY_LEVEL2;
+    tmrInfo.irqSubPriority = INT_SUBPRIORITY_LEVEL0;
+    tmrInfo.isrFunction = timerInterruptCallback;
+    tmrInfo.isrParams = this;
+
+    halTMRInitialize(&tmrInfo);
 }
 
 
@@ -352,9 +383,9 @@ void Motion::timerStop() {
 ///
 void Motion::timerInterruptCallback(
     TMRTimer timer, 
-    void *param) {
+    void* param) {
     
-    Motion *motion = static_cast<Motion*>(param);
+    Motion* motion = static_cast<Motion*>(param);
     motion->loop();
 }
 

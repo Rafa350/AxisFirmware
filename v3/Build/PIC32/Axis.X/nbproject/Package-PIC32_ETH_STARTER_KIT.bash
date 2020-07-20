@@ -6,7 +6,7 @@
 
 # Macros
 TOP=`pwd`
-CND_CONF=default
+CND_CONF=PIC32_ETH_STARTER_KIT
 CND_DISTDIR=dist
 TMPDIR=build/${CND_CONF}/${IMAGE_TYPE}/tmp-packaging
 TMPDIRNAME=tmp-packaging
