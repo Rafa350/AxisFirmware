@@ -17,7 +17,7 @@ using namespace axis;
 /// \brief    Constructor del objecte.
 ///
 AxisApplication::AxisApplication():
-    digInputEventCallback(this, &AxisApplication::digInputEventHandler) {
+    sw1EventCallback(this, &AxisApplication::sw1EventHandler) {
     
 }
 
@@ -35,7 +35,6 @@ void AxisApplication::initializeDigInputService() {
     digInputService = new DigInputService(this, digInputServiceInit);
     
     DigInput::InitParams digInputInit;
-    digInputInit.eventCallback = &digInputEventCallback;
     digInputInit.eventParam = nullptr;
     
     // Inicialitza la entrada SW_SW1
@@ -44,7 +43,8 @@ void AxisApplication::initializeDigInputService() {
     halCNInitializeLine(SW_SW1_CN, HAL_CN_PULL_UP);
     digInputInit.port = SW_SW1_PORT;
     digInputInit.pin = SW_SW1_PIN;
-    digInput1 = new DigInput(digInputService, digInputInit);
+    digInputInit.eventCallback = &sw1EventCallback;
+    sw1 = new DigInput(digInputService, digInputInit);
 }
 
 
@@ -67,7 +67,7 @@ void AxisApplication::initializeDigOutputService() {
     halGPIOInitializePin(LED_LED3_PORT, LED_LED3_PIN, HAL_GPIO_MODE_OUTPUT_PP | HAL_GPIO_INIT_CLR, HAL_GPIO_AF_NONE);
     digOutputInit.port = LED_LED3_PORT;
     digOutputInit.pin = LED_LED3_PIN;
-    digOutput1 = new DigOutput(digOutputService, digOutputInit);
+    led3 = new DigOutput(digOutputService, digOutputInit);
 }
 
 
@@ -118,6 +118,9 @@ void AxisApplication::initializeMotionService() {
     motionCfg.motors[2] = zMotor;
     motionCfg.timer = AXIS_MOTION_TIMER;
     motion = new Motion(motionCfg);      
+    motion->setJerk(50000);
+    motion->setMaxAcceleration(800000);
+    motion->setMaxSpeed(800000);
     
     // Crea el servei de control de moviment
     //
@@ -137,12 +140,12 @@ void AxisApplication::onInitialize() {
 }
 
 
-void AxisApplication::digInputEventHandler(
+void AxisApplication::sw1EventHandler(
     const DigInput::EventArgs& args) {
     
-    if (!args.input->read())
-        digOutput1->toggle();
+    if (!sw1->read())
+        led3->toggle();
     
     motion->setHome();
-    motion->doMoveRel(0, 32000);
+    motion->doMoveRel(0, 3200);
 }

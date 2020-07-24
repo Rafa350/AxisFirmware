@@ -5,17 +5,32 @@
 #include "eos.h"
 #include "HAL/halTMR.h"
 #include "System/Collections/eosStaticArray.h"
+#include "System/Collections/eosCircularQueue.h"
 #include "axisMotor.h"
 
 
 #ifndef MOTION_MAX_AXIS
-#define MOTION_MAX_AXIS  3
+#define MOTION_MAX_AXIS 3
+#endif
+
+#ifndef MOTION_QUEUE_SIZE
+#define MOTION_QUEUE_SIZE 20
 #endif
 
 
 namespace axis {
     
     class Motion {        
+        private:
+            struct Block {
+                int64_t timeAccelUp;
+                int64_t timeConstUp;
+                int64_t stepsFlat;
+                int64_t timeAccelDown;
+                int64_t timeConstDown;
+            };
+            typedef eos::CircularQueue<Block*, MOTION_QUEUE_SIZE> BlockQueue;
+            
         public:
             typedef eos::StaticArray<Motor*, MOTION_MAX_AXIS> Motors;
             typedef eos::StaticArray<int, MOTION_MAX_AXIS> Vector;

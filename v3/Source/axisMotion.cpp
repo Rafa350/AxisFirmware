@@ -33,9 +33,9 @@
 
 // Valors per defecte
 //
-#define MOTION_DEF_SPEED          150
-#define MOTION_DEF_ACCELERATION   300
-#define MOTION_DEF_JERK           100
+#define MOTION_DEF_SPEED          500000
+#define MOTION_DEF_ACCELERATION   500000
+#define MOTION_DEF_JERK           50000
 
 
 using namespace eos;
@@ -310,7 +310,7 @@ void Motion::doMoveRel(
     Vector newDelta;
     for (int i = 0; i < cfg.numAxis; i++)
         if (i == axis)
-            newDelta[i] = axis;
+            newDelta[i] = delta;
         else
             newDelta[i] = 0;
 
@@ -353,7 +353,6 @@ void Motion::timerInitialize() {
     tmrInfo.irqSubPriority = INT_SUBPRIORITY_LEVEL0;
     tmrInfo.isrFunction = timerInterruptCallback;
     tmrInfo.isrParams = this;
-
     halTMRInitialize(&tmrInfo);
 }
 
@@ -533,6 +532,10 @@ void Motion::start(
 void Motion::stop() {
     
     timerStop();
+
+    for (int i = 0; i < cfg.numAxis; i++)
+        cfg.motors[i]->setStep(Motor::Step::idle);
+
     busy = false;
 }
 

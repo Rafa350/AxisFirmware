@@ -33,13 +33,16 @@ namespace axis {
             Motor* zMotor;
             Motion* motion;
             MotionService* motionService;
+            
             DigInputService* digInputService;
-            DigInput* digInput1;
+            DigInput* sw1;
+            
             DigOutputService* digOutputService;
-            DigOutput* digOutput1;
+            DigOutput* led3;
+            
             //FsmService* fsmService;
             
-            DigInputEventCallback digInputEventCallback;
+            DigInputEventCallback sw1EventCallback;
             
         private:
             void initializeDigInputService();
@@ -48,7 +51,7 @@ namespace axis {
 
         protected:
             void onInitialize();
-            void digInputEventHandler(const DigInput::EventArgs& args);
+            void sw1EventHandler(const DigInput::EventArgs& args);
 
         public:
             AxisApplication();
