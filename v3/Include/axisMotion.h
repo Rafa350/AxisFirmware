@@ -60,6 +60,9 @@ namespace axis {
             int maxAcceleration;               // -Acceleracio maxima
             int jerk;                          // -Impuls
             bool busy;                         // -Ocupat en un moviment
+            //BlockQueue queue;                // -Cua de blocs
+            //Block* lastBlock;                // -Ultim bloc afeigit
+            //Block* currentBlock;             // -Blocc actual
             
             // Control del perfil de velocitat
             //

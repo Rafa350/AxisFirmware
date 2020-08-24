@@ -22,6 +22,9 @@ namespace axis {
                 GPIOPin homePin;
                 GPIOPort limitPort;
                 GPIOPin limitPin;
+                int maxJerk;
+                int maxAccel;
+                int maxSpeed;
             };
             
             enum class Direction {
