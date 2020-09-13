@@ -5,6 +5,9 @@
                    displayName="Header Files"
                    projectFiles="true">
       <logicalFolder name="f1" displayName="App" projectFiles="true">
+        <logicalFolder name="f2" displayName="Board" projectFiles="true">
+          <itemPath>../../../Include/Board/eosConfig_PIC32_USB_STARTER_KIT_I.h</itemPath>
+        </logicalFolder>
         <logicalFolder name="f1" displayName="PIC32" projectFiles="true">
           <itemPath>../../../Include/PIC32/FreeRTOSConfig.h</itemPath>
         </logicalFolder>
@@ -32,6 +35,7 @@
             <itemPath>../../../../../EOS/v2/Include/HAL/halSYS.h</itemPath>
             <itemPath>../../../../../EOS/v2/Include/HAL/halGPIO.h</itemPath>
             <itemPath>../../../../../EOS/v2/Include/HAL/halTMR.h</itemPath>
+            <itemPath>../../../../../EOS/v2/Include/HAL/halINT.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f3" displayName="Services" projectFiles="true">
             <itemPath>../../../../../EOS/v2/Include/Services/eosService.h</itemPath>
