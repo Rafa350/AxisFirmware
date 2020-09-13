@@ -1,6 +1,8 @@
 #include "eos.h"
 #include "HAL\halGPIO.h"
+#ifdef EOS_PIC32
 #include "HAL\PIC32\halCN.h"
+#endif
 #include "Services/eosDigInputService.h"
 #include "Services/eosDigOutputService.h"
 #include "axisApplication.h"
@@ -27,6 +29,16 @@ AxisApplication::AxisApplication():
 ///
 void AxisApplication::initializeDigInputService() {
     
+    // Inicialitza el ports
+    //
+#ifdef EOS_PIC32
+    halGPIOInitializePin(SW_SW1_PORT, SW_SW1_PIN, HAL_GPIO_MODE_INPUT, HAL_GPIO_AF_NONE);
+    halCNInitializeLine(SW_SW1_CN, HAL_CN_PULL_UP);
+#endif
+    
+    // Inicialitza el temporitzador
+    //
+    
     // Inicialitza el servei
     //
     DigInputService::InitParams digInputServiceInit;
@@ -39,8 +51,6 @@ void AxisApplication::initializeDigInputService() {
     
     // Inicialitza la entrada SW_SW1
     //
-    halGPIOInitializePin(SW_SW1_PORT, SW_SW1_PIN, HAL_GPIO_MODE_INPUT, HAL_GPIO_AF_NONE);
-    halCNInitializeLine(SW_SW1_CN, HAL_CN_PULL_UP);
     digInputInit.port = SW_SW1_PORT;
     digInputInit.pin = SW_SW1_PIN;
     digInputInit.eventCallback = &sw1EventCallback;
@@ -53,6 +63,16 @@ void AxisApplication::initializeDigInputService() {
 ///
 void AxisApplication::initializeDigOutputService() {
     
+    // Inicialitza els ports
+    //
+#ifdef EOS_PIC32
+    halGPIOInitializePin(LED_LED3_PORT, LED_LED3_PIN, 
+        HAL_GPIO_MODE_OUTPUT_PP | HAL_GPIO_INIT_CLR, HAL_GPIO_AF_NONE);
+#endif
+    
+    // Inicialitza el temporitzador
+    //
+    
     // Inicialitza el servei
     //
     DigOutputService::InitParams digOutputServiceInit;
@@ -64,7 +84,6 @@ void AxisApplication::initializeDigOutputService() {
 
     // Inicialitza la sortida LED_LED1
     //
-    halGPIOInitializePin(LED_LED3_PORT, LED_LED3_PIN, HAL_GPIO_MODE_OUTPUT_PP | HAL_GPIO_INIT_CLR, HAL_GPIO_AF_NONE);
     digOutputInit.port = LED_LED3_PORT;
     digOutputInit.pin = LED_LED3_PIN;
     led3 = new DigOutput(digOutputService, digOutputInit);
@@ -72,9 +91,15 @@ void AxisApplication::initializeDigOutputService() {
 
 
 /// ----------------------------------------------------------------------
-/// \brief    Inicialitza el servei de conmtrol de moviment.
+/// \brief    Inicialitza el servei de control de moviment.
 ///
 void AxisApplication::initializeMotionService() {
+    
+    // Inicialitza els ports
+    //
+    
+    // Inicialitza el temporitzador
+    //
     
     Motor::Configuration motorCfg;
     

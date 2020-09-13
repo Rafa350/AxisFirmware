@@ -354,6 +354,8 @@ void Motion::timerInitialize() {
     tmrInfo.isrFunction = timerInterruptCallback;
     tmrInfo.isrParams = this;
     halTMRInitialize(&tmrInfo);
+    
+    //halTMRSetInterruptFunction(cfg.timer, timerInterruptCallback, this);
 }
 
 
