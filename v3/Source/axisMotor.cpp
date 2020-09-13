@@ -25,23 +25,39 @@ Motor::Motor(
 /// 
 void Motor::initialize() {
     
+	// Inicialitza el pin STEP
+	//
     halGPIOInitializePin(cfg.stepPort, cfg.stepPin, 
         HAL_GPIO_MODE_OUTPUT_PP | HAL_GPIO_INIT_CLR, HAL_GPIO_AF_NONE);
    
+    // Inicialitza el pin DIR
+    //
     halGPIOInitializePin(cfg.directionPort, cfg.directionPin, 
         HAL_GPIO_MODE_OUTPUT_PP | HAL_GPIO_INIT_CLR, HAL_GPIO_AF_NONE);
     
-    // El port ENABLE es opcional
+    // Inicialitza el pin ENABLE
     //
     if (cfg.enablePort != 0xFF)
         halGPIOInitializePin(cfg.enablePort, cfg.enablePin, 
             HAL_GPIO_MODE_OUTPUT_PP | HAL_GPIO_INIT_CLR, HAL_GPIO_AF_NONE);
 
-    //halGPIOInitializePin(cfg.homePort, cfg.homePin, HAL_GPIO_MODE_INPUT, HAL_GPIO_AF_NONE);
+    // Inicialitza el pin HOME
+    //
+#if defined(EOS_STM32)
+    halGPIOInitializePin(cfg.homePort, cfg.homePin, HAL_GPIO_MODE_INPUT | HAL_GPIO_PULL_UP, HAL_GPIO_AF_NONE);
+#elif defined(EOS_PIC32)
+    halGPIOInitializePin(cfg.homePort, cfg.homePin, HAL_GPIO_MODE_INPUT, HAL_GPIO_AF_NONE);
     //halCNInitializeLine
+#endif
     
-    //halGPIOInitializePin(cfg.limitPort, cfg.limitPin, HAL_GPIO_MODE_INPUT, HAL_GPIO_AF_NONE);
+    // Inicialitza el pin LIMIT
+    //
+#if defined(EOS_STM32)
+    halGPIOInitializePin(cfg.limitPort, cfg.limitPin, HAL_GPIO_MODE_INPUT | HAL_GPIO_PULL_UP, HAL_GPIO_AF_NONE);
+#elif defined(EOS_PIC32)
+    halGPIOInitializePin(cfg.limitPort, cfg.limitPin, HAL_GPIO_MODE_INPUT, HAL_GPIO_AF_NONE);
     //halCNInitializeLine
+#endif
 }
 
 

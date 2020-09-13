@@ -1,6 +1,7 @@
 #include "eos.h"
 #include "HAL/halSYS.h"
 #include "HAL/halTMR.h"
+#include "HAL/halINT.h"
 #include "System/eosMath.h"
 #include "System/Core/eosTask.h"
 
@@ -9,8 +10,7 @@
 
 #include "limits.h"
 #include "math.h"
-#include "sys/attribs.h"
-#include "peripheral/int/plib_int.h"
+//#include "sys/attribs.h"
 
 
 #define HZ                        100000.0L
@@ -347,10 +347,15 @@ void Motion::timerInitialize() {
     TMRInitializeInfo tmrInfo;
     
     tmrInfo.timer = cfg.timer;
+#if defined(EOS_PIC32)
     tmrInfo.options = HAL_TMR_MODE_16 | HAL_TMR_CLKDIV_32 | HAL_TMR_INTERRUPT_ENABLE;
     tmrInfo.period =  halSYSGetPeripheralClockFrequency() / 32 / 100000;
-    tmrInfo.irqPriority = INT_PRIORITY_LEVEL2;
-    tmrInfo.irqSubPriority = INT_SUBPRIORITY_LEVEL0;
+#elif defined(EOS_STM32F7)
+    tmrInfo.options = HAL_TMR_MODE_16 | HAL_TMR_CLKDIV_1 | HAL_TMR_INTERRUPT_ENABLE;
+    tmrInfo.period =  halSYSGetPeripheralClock1Frequency() / 32 / 100000;
+#endif
+    tmrInfo.irqPriority = AXIS_MOTION_TIMER_INT_PRIORITY_LEVEL;
+    tmrInfo.irqSubPriority = AXIS_MOTION_TIMER_INT_SUBPRIORITY_LEVEL;
     tmrInfo.isrFunction = timerInterruptCallback;
     tmrInfo.isrParams = this;
     halTMRInitialize(&tmrInfo);

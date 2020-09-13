@@ -1,5 +1,5 @@
-#ifndef __STM32_eosConfig__
-#define __STM32_eosConfig__
+#ifndef __eosConfig_STM32F746G_DISCO__
+#define __eosConfig_STM32F746G_DISCO__
 
 
 #define AXIS_INPUTS_TIMER              HAL_TMR_TIMER_2
@@ -58,7 +58,9 @@
 
 // Opcions de configuracio del timer
 //
-#define AXIS_MOTION_TIMER              HAL_TMR_TIMER_4
+#define AXIS_MOTION_TIMER                        HAL_TMR_TIMER_4
+#define AXIS_MOTION_TIMER_INT_PRIORITY_LEVEL     HAL_INT_PRIORITY_LEVEL5
+#define AXIS_MOTION_TIMER_INT_SUBPRIORITY_LEVEL  HAL_INT_SUBPRIORITY_LEVEL0
 
 
-#endif // __STM32_eosConfig__
+#endif // __eosConfig_STM32F746G_DISCO__

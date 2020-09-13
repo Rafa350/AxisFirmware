@@ -31,9 +31,11 @@ void AxisApplication::initializeDigInputService() {
     
     // Inicialitza el ports
     //
-#ifdef EOS_PIC32
+#if defined(EOS_PIC32)
     halGPIOInitializePin(SW_SW1_PORT, SW_SW1_PIN, HAL_GPIO_MODE_INPUT, HAL_GPIO_AF_NONE);
     halCNInitializeLine(SW_SW1_CN, HAL_CN_PULL_UP);
+#elif defined(EOS_STM32)
+    halGPIOInitializePin(SW_SW1_PORT, SW_SW1_PIN, HAL_GPIO_MODE_INPUT | HAL_GPIO_PULL_UP, HAL_GPIO_AF_NONE);
 #endif
     
     // Inicialitza el temporitzador
@@ -65,10 +67,8 @@ void AxisApplication::initializeDigOutputService() {
     
     // Inicialitza els ports
     //
-#ifdef EOS_PIC32
-    halGPIOInitializePin(LED_LED3_PORT, LED_LED3_PIN, 
+    halGPIOInitializePin(LED_LED1_PORT, LED_LED1_PIN,
         HAL_GPIO_MODE_OUTPUT_PP | HAL_GPIO_INIT_CLR, HAL_GPIO_AF_NONE);
-#endif
     
     // Inicialitza el temporitzador
     //
@@ -84,8 +84,8 @@ void AxisApplication::initializeDigOutputService() {
 
     // Inicialitza la sortida LED_LED1
     //
-    digOutputInit.port = LED_LED3_PORT;
-    digOutputInit.pin = LED_LED3_PIN;
+    digOutputInit.port = LED_LED1_PORT;
+    digOutputInit.pin = LED_LED1_PIN;
     led3 = new DigOutput(digOutputService, digOutputInit);
 }
 
