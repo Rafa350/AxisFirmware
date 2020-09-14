@@ -15,10 +15,10 @@
 
 
 #if defined(HARDWARE_PIC32_USB_STARTER_KIT_I)
-    #include "Board/eosConfig_PIC32_USB_STARTER_KIT_I.h"
+    #include "eosConfig_PIC32_USB_STARTER_KIT_I.h"
  
 #elif defined(HARDWARE_STM32F746G_DISCO)
-    #include "Board/eosConfig_STM32F746G_DISCO.h"
+    #include "eosConfig_STM32F746G_DISCO.h"
 #endif
 
 

@@ -1,5 +1,5 @@
-#ifndef __eosConfig_STM32F746G_DISCO__
-#define __eosConfig_STM32F746G_DISCO__
+#ifndef __eosConfig_PIC32_USB_STARTER_KIT_I__
+#define __eosConfig_PIC32_USB_STARTER_KIT_I__
 
 
 #define AXIS_INPUTS_TIMER              HAL_TMR_TIMER_2
@@ -8,10 +8,10 @@
 // Opcions de configuracio del eix X
 //
 #define AXIS_MOTOR_X_STEP_PORT         HAL_GPIO_PORT_D   
-#define AXIS_MOTOR_X_STEP_PIN          HAL_GPIO_PIN_0   
+#define AXIS_MOTOR_X_STEP_PIN          HAL_GPIO_PIN_3   
 
 #define AXIS_MOTOR_X_DIRECTION_PORT    HAL_GPIO_PORT_D    
-#define AXIS_MOTOR_X_DIRECTION_PIN     HAL_GPIO_PIN_3
+#define AXIS_MOTOR_X_DIRECTION_PIN     HAL_GPIO_PIN_4
 
 #define AXIS_MOTOR_X_ENABLE_PORT       0xFF
 #define AXIS_MOTOR_X_ENABLE_PIN        0xFF
@@ -25,10 +25,10 @@
 // Opcions de configuracio del eix Y
 //
 #define AXIS_MOTOR_Y_STEP_PORT         HAL_GPIO_PORT_D
-#define AXIS_MOTOR_Y_STEP_PIN          HAL_GPIO_PIN_1
+#define AXIS_MOTOR_Y_STEP_PIN          HAL_GPIO_PIN_5
 
 #define AXIS_MOTOR_Y_DIRECTION_PORT    HAL_GPIO_PORT_D
-#define AXIS_MOTOR_Y_DIRECTION_PIN     HAL_GPIO_PIN_4
+#define AXIS_MOTOR_Y_DIRECTION_PIN     HAL_GPIO_PIN_8
 
 #define AXIS_MOTOR_Y_ENABLE_PORT       0xFF
 #define AXIS_MOTOR_Y_ENABLE_PIN        0xFF
@@ -42,10 +42,10 @@
 // Opcions de configuracio del eix Z
 //
 #define AXIS_MOTOR_Z_STEP_PORT         HAL_GPIO_PORT_D
-#define AXIS_MOTOR_Z_STEP_PIN          HAL_GPIO_PIN_2
+#define AXIS_MOTOR_Z_STEP_PIN          HAL_GPIO_PIN_9
 
 #define AXIS_MOTOR_Z_DIRECTION_PORT    HAL_GPIO_PORT_D
-#define AXIS_MOTOR_Z_DIRECTION_PIN     HAL_GPIO_PIN_5
+#define AXIS_MOTOR_Z_DIRECTION_PIN     HAL_GPIO_PIN_10
 
 #define AXIS_MOTOR_Z_ENABLE_PORT       0xFF
 #define AXIS_MOTOR_Z_ENABLE_PIN        0xFF
@@ -59,8 +59,8 @@
 // Opcions de configuracio del timer
 //
 #define AXIS_MOTION_TIMER                        HAL_TMR_TIMER_4
-#define AXIS_MOTION_TIMER_INT_PRIORITY_LEVEL     HAL_INT_PRIORITY_LEVEL5
+#define AXIS_MOTION_TIMER_INT_PRIORITY_LEVEL     HAL_INT_PRIORITY_LEVEL2    
 #define AXIS_MOTION_TIMER_INT_SUBPRIORITY_LEVEL  HAL_INT_SUBPRIORITY_LEVEL0
 
 
-#endif // __eosConfig_STM32F746G_DISCO__
+#endif // __eosConfig_PIC32_USB_STARTER_KIT_I__

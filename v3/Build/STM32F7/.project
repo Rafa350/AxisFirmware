@@ -51,11 +51,6 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>Inc/App/Board</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
 			<name>Inc/App/STM32F7</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
@@ -84,6 +79,11 @@
 			<name>Inc/App/eosConfig.h</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Include/eosConfig.h</locationURI>
+		</link>
+		<link>
+			<name>Inc/App/eosConfig_STM32F746G_DISCO.h</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Include/eosConfig_STM32F746G_DISCO.h</locationURI>
 		</link>
 		<link>
 			<name>Inc/Framework/EOS</name>
@@ -129,11 +129,6 @@
 			<name>Src/Framework/STM32</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>Inc/App/Board/eosConfig_STM32F746G_DISCO.h</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Include/Board/eosConfig_STM32F746G_DISCO.h</locationURI>
 		</link>
 		<link>
 			<name>Inc/App/STM32F7/FreeRTOSConfig.h</name>
