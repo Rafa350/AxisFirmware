@@ -5,15 +5,18 @@
                    displayName="Header Files"
                    projectFiles="true">
       <logicalFolder name="f1" displayName="App" projectFiles="true">
+        <logicalFolder name="f2" displayName="Board" projectFiles="true">
+          <itemPath>../../../Include/Board/appBoard.h</itemPath>
+          <itemPath>../../../Include/Board/appBoard_PIC32_USB_STARTER_KIT_I.h</itemPath>
+        </logicalFolder>
         <logicalFolder name="f1" displayName="PIC32" projectFiles="true">
           <itemPath>../../../Include/PIC32/FreeRTOSConfig.h</itemPath>
+          <itemPath>../../../Include/PIC32/eosConfig.h</itemPath>
         </logicalFolder>
-        <itemPath>../../../Include/eosConfig.h</itemPath>
         <itemPath>../../../Include/axisApplication.h</itemPath>
         <itemPath>../../../Include/axisMotion.h</itemPath>
         <itemPath>../../../Include/axisMotionService.h</itemPath>
         <itemPath>../../../Include/axisMotor.h</itemPath>
-        <itemPath>../../../Include/eosConfig_PIC32_USB_STARTER_KIT_I.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="Framework" projectFiles="true">
         <logicalFolder name="f1" displayName="EOS" projectFiles="true">
@@ -153,7 +156,7 @@
         <targetDevice>PIC32MX460F512L</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>SKDEPIC32PlatformTool</platformTool>
+        <platformTool>noID</platformTool>
         <languageToolchain>XC32</languageToolchain>
         <languageToolchainVersion>2.41</languageToolchainVersion>
         <platform>3</platform>

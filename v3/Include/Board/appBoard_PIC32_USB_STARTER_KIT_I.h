@@ -1,5 +1,30 @@
-#ifndef __eosConfig_PIC32_USB_STARTER_KIT_I__
-#define __eosConfig_PIC32_USB_STARTER_KIT_I__
+#ifndef __appBoard_PIC32_USB_STARTER_KIT_I__
+#define __appBoard_PIC32_USB_STARTER_KIT_I__
+
+
+// Conexions a la placa d'expanssio.
+//
+// Senyal     Senyal PIC32          Pin
+// ---------  --------------------  -------
+// X-STEP     OC4/RD3               J11-18
+// X-DIR      PMPWR/OC5/C13/RD4     J10-14
+// X-HOME
+// X-LIMIT
+//
+// Y-STEP     PMPRD/RD5             J11-13
+// Y-DIR      IC1/RTCC/RD8          J11-25
+// Y-HOME
+// Y-LIMIT
+//
+// Z-STEP     SS1/IC2/RD9           J11-26
+// Z-DIR      SCK1/IC3/PMPCS2/RD10  J10-16
+// Z-HOME
+// Z-LIMIT
+//
+// 5V0        +5.0                  J10-28 
+// 3V3        +3.3                  J10-27
+// GND        GND                   J10-45
+//
 
 
 #define AXIS_INPUTS_TIMER              HAL_TMR_TIMER_2
@@ -63,4 +88,4 @@
 #define AXIS_MOTION_TIMER_INT_SUBPRIORITY_LEVEL  HAL_INT_SUBPRIORITY_LEVEL0
 
 
-#endif // __eosConfig_PIC32_USB_STARTER_KIT_I__
+#endif // __appBoard_PIC32_USB_STARTER_KIT_I__

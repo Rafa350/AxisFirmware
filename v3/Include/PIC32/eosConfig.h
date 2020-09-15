@@ -12,14 +12,7 @@
 
 
 #include "Board/eosBoard.h"
-
-
-#if defined(HARDWARE_PIC32_USB_STARTER_KIT_I)
-    #include "eosConfig_PIC32_USB_STARTER_KIT_I.h"
- 
-#elif defined(HARDWARE_STM32F746G_DISCO)
-    #include "eosConfig_STM32F746G_DISCO.h"
-#endif
+#include "Board/appBoard.h"
 
 
 #endif // __eosConfig__

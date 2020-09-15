@@ -1,5 +1,5 @@
-#ifndef __eosConfig_STM32F746G_DISCO__
-#define __eosConfig_STM32F746G_DISCO__
+#ifndef __appBoard_STM32F746G_DISCO__
+#define __appBoard_STM32F746G_DISCO__
 
 
 #define AXIS_INPUTS_TIMER              HAL_TMR_TIMER_2
@@ -63,4 +63,4 @@
 #define AXIS_MOTION_TIMER_INT_SUBPRIORITY_LEVEL  HAL_INT_SUBPRIORITY_LEVEL0
 
 
-#endif // __eosConfig_STM32F746G_DISCO__
+#endif // __appBoard_STM32F746G_DISCO__
