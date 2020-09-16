@@ -36,6 +36,7 @@ namespace axis {
             
             DigInputService* digInputService;
             DigInput* sw1;
+            DigInput* sw2;
             
             DigOutputService* digOutputService;
             DigOutput* led3;
@@ -43,6 +44,7 @@ namespace axis {
             //FsmService* fsmService;
             
             DigInputEventCallback sw1EventCallback;
+            DigInputEventCallback sw2EventCallback;
             
         private:
             void initializeDigInputService();
@@ -52,6 +54,7 @@ namespace axis {
         protected:
             void onInitialize();
             void sw1EventHandler(const DigInput::EventArgs& args);
+            void sw2EventHandler(const DigInput::EventArgs& args);
 
         public:
             AxisApplication();

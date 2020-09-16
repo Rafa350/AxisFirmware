@@ -32,11 +32,11 @@
 
 // Opcions de configuracio del eix X
 //
-#define AXIS_MOTOR_X_STEP_PORT         HAL_GPIO_PORT_D   
-#define AXIS_MOTOR_X_STEP_PIN          HAL_GPIO_PIN_3   
+#define AXIS_MOTOR_X_STEP_PORT         LED_LED1_PORT    // HAL_GPIO_PORT_D   
+#define AXIS_MOTOR_X_STEP_PIN          LED_LED1_PIN     // HAL_GPIO_PIN_3   
 
-#define AXIS_MOTOR_X_DIRECTION_PORT    HAL_GPIO_PORT_D    
-#define AXIS_MOTOR_X_DIRECTION_PIN     HAL_GPIO_PIN_4
+#define AXIS_MOTOR_X_DIRECTION_PORT    LED_LED2_PORT    // HAL_GPIO_PORT_D    
+#define AXIS_MOTOR_X_DIRECTION_PIN     LED_LED2_PIN     // HAL_GPIO_PIN_4
 
 #define AXIS_MOTOR_X_ENABLE_PORT       0xFF
 #define AXIS_MOTOR_X_ENABLE_PIN        0xFF

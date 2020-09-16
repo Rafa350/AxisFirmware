@@ -538,11 +538,16 @@ void Motion::start(
 ///
 void Motion::stop() {
     
+    // Desactiva el temporitzador, i deixa de generar interrupcions.
     timerStop();
 
+    // Posa els pins de control dels motors en estat desactivat.
+    //
     for (int i = 0; i < cfg.numAxis; i++)
         cfg.motors[i]->setStep(Motor::Step::idle);
 
+    // Indica que el controladior esta lliure per un altre moviment.
+    //
     busy = false;
 }
 

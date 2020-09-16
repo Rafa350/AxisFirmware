@@ -15,11 +15,15 @@ using namespace eos;
 using namespace axis;
 
 
+const int move = 32000;
+bool lock = false;
+
 /// ----------------------------------------------------------------------
 /// \brief    Constructor del objecte.
 ///
 AxisApplication::AxisApplication():
-    sw1EventCallback(this, &AxisApplication::sw1EventHandler) {
+    sw1EventCallback(this, &AxisApplication::sw1EventHandler),
+    sw2EventCallback(this, &AxisApplication::sw2EventHandler) {
     
 }
 
@@ -34,6 +38,8 @@ void AxisApplication::initializeDigInputService() {
 #if defined(EOS_PIC32)
     halGPIOInitializePin(SW_SW1_PORT, SW_SW1_PIN, HAL_GPIO_MODE_INPUT, HAL_GPIO_AF_NONE);
     halCNInitializeLine(SW_SW1_CN, HAL_CN_PULL_UP);
+    halGPIOInitializePin(SW_SW2_PORT, SW_SW2_PIN, HAL_GPIO_MODE_INPUT, HAL_GPIO_AF_NONE);
+    halCNInitializeLine(SW_SW2_CN, HAL_CN_PULL_UP);
 #elif defined(EOS_STM32)
     halGPIOInitializePin(SW_SW1_PORT, SW_SW1_PIN, HAL_GPIO_MODE_INPUT | HAL_GPIO_PULL_UP, HAL_GPIO_AF_NONE);
 #endif
@@ -57,6 +63,13 @@ void AxisApplication::initializeDigInputService() {
     digInputInit.pin = SW_SW1_PIN;
     digInputInit.eventCallback = &sw1EventCallback;
     sw1 = new DigInput(digInputService, digInputInit);
+
+    // Inicialitza la entrada SW_SW2
+    //
+    digInputInit.port = SW_SW2_PORT;
+    digInputInit.pin = SW_SW2_PIN;
+    digInputInit.eventCallback = &sw2EventCallback;
+    sw2 = new DigInput(digInputService, digInputInit);
 }
 
 
@@ -67,7 +80,7 @@ void AxisApplication::initializeDigOutputService() {
     
     // Inicialitza els ports
     //
-    halGPIOInitializePin(LED_LED1_PORT, LED_LED1_PIN,
+    halGPIOInitializePin(LED_LED3_PORT, LED_LED3_PIN,
         HAL_GPIO_MODE_OUTPUT_PP | HAL_GPIO_INIT_CLR, HAL_GPIO_AF_NONE);
     
     // Inicialitza el temporitzador
@@ -82,10 +95,10 @@ void AxisApplication::initializeDigOutputService() {
     
     DigOutput::InitParams digOutputInit;
 
-    // Inicialitza la sortida LED_LED1
+    // Inicialitza la sortida LED_LED3
     //
-    digOutputInit.port = LED_LED1_PORT;
-    digOutputInit.pin = LED_LED1_PIN;
+    digOutputInit.port = LED_LED3_PORT;
+    digOutputInit.pin = LED_LED3_PIN;
     led3 = new DigOutput(digOutputService, digOutputInit);
 }
 
@@ -149,7 +162,7 @@ void AxisApplication::initializeMotionService() {
     
     // Crea el servei de control de moviment
     //
-    //motionService = new MotionService(this, motion);
+    motionService = new MotionService(this, motion);
 }
 
 
@@ -168,9 +181,18 @@ void AxisApplication::onInitialize() {
 void AxisApplication::sw1EventHandler(
     const DigInput::EventArgs& args) {
     
-    if (!sw1->read())
-        led3->toggle();
+    if (!sw1->read()) {
+        led3->pulse(250);
+        motion->doMoveRel(0, move);
+    }
+}
+
+
+void AxisApplication::sw2EventHandler(
+    const DigInput::EventArgs& args) {
     
-    motion->setHome();
-    motion->doMoveRel(0, 3200);
+    if (!sw2->read()) {
+        led3->pulse(250);
+        motion->doMoveRel(0, -move);
+    }
 }
