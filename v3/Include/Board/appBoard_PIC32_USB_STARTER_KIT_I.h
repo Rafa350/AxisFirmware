@@ -27,10 +27,22 @@
 //
 
 
-#define AXIS_INPUTS_TIMER              HAL_TMR_TIMER_2
-#define AXIS_OUTPUTS_TIMER             HAL_TMR_TIMER_3
+// Opcions de contfiguracio del servei DigInputs
+//
+#define AXIS_INPUTS_TIMER                        HAL_TMR_TIMER_2
+#define AXIS_INPUTS_TIMER_INTERRUPT_PRIORITY     HAL_INT_PRIORITY_LEVEL2
+#define AXIS_INPUTS_TIMER_INTERRUPT_SUBPRIORITY  HAL_INT_SUBPRIORITY_LEVEL2
+#define AXIS_INPUTS_TIMER_PERIOD                 5
 
-// Opcions de configuracio del eix X
+// Opcions de contfiguracio del servei DigOutputs
+//
+#define AXIS_OUTPUTS_TIMER                       HAL_TMR_TIMER_3
+#define AXIS_OUTPUTS_TIMER_INTERRUPT_PRIORITY    HAL_INT_PRIORITY_LEVEL2
+#define AXIS_OUTPUTS_TIMER_INTERRUPT_SUBPRIORITY HAL_INT_SUBPRIORITY_LEVEL2
+#define AXIS_OUTPUTS_TIMER_PERIOD                1
+
+
+// Opcions de configuracio del motor del eix X
 //
 #define AXIS_MOTOR_X_STEP_PORT         LED_LED1_PORT    // HAL_GPIO_PORT_D   
 #define AXIS_MOTOR_X_STEP_PIN          LED_LED1_PIN     // HAL_GPIO_PIN_3   
@@ -47,7 +59,7 @@
 #define AXIS_MOTOR_X_LIMIT_PORT        HAL_GPIO_PORT_
 #define AXIS_MOTOR_X_LIMIT_PIN         HAL_GPIO_PIN_
 
-// Opcions de configuracio del eix Y
+// Opcions de configuracio del motor del eix Y
 //
 #define AXIS_MOTOR_Y_STEP_PORT         HAL_GPIO_PORT_D
 #define AXIS_MOTOR_Y_STEP_PIN          HAL_GPIO_PIN_5
@@ -64,7 +76,7 @@
 #define AXIS_MOTOR_Y_LIMIT_PORT        HAL_GPIO_PORT_
 #define AXIS_MOTOR_Y_LIMIT_PIN         HAL_GPIO_PIN_
 
-// Opcions de configuracio del eix Z
+// Opcions de configuracio del motor del eix Z
 //
 #define AXIS_MOTOR_Z_STEP_PORT         HAL_GPIO_PORT_D
 #define AXIS_MOTOR_Z_STEP_PIN          HAL_GPIO_PIN_9
@@ -81,7 +93,7 @@
 #define AXIS_MOTOR_Z_LIMIT_PORT        HAL_GPIO_PORT_
 #define AXIS_MOTOR_Z_LIMIT_PIN         HAL_GPIO_PIN_
 
-// Opcions de configuracio del timer
+// Opcions de configuracio del control de moviment
 //
 #define AXIS_MOTION_TIMER                        HAL_TMR_TIMER_4
 #define AXIS_MOTION_TIMER_INT_PRIORITY_LEVEL     HAL_INT_PRIORITY_LEVEL2    

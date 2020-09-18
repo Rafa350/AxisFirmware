@@ -1,5 +1,8 @@
 #include "eos.h"
 #include "HAL\halGPIO.h"
+#include "HAL\halINT.h"
+#include "HAL\halSYS.h"
+#include "HAL\halTMR.h"
 #ifdef EOS_PIC32
 #include "HAL\PIC32\halCN.h"
 #endif
@@ -31,7 +34,7 @@ AxisApplication::AxisApplication():
 /// ----------------------------------------------------------------------
 /// \brief    Inicialitza el servei d'entrades digitals.
 ///
-void AxisApplication::initializeDigInputService() {
+void AxisApplication::configureDigInputService() {
     
     // Inicialitza el ports
     //
@@ -46,12 +49,26 @@ void AxisApplication::initializeDigInputService() {
     
     // Inicialitza el temporitzador
     //
+	TMRInitializeInfo tmrInfo;
+	tmrInfo.timer = AXIS_INPUTS_TIMER;
+	tmrInfo.isrFunction = NULL;
+#if defined(EOS_PIC32)
+    tmrInfo.options = HAL_TMR_MODE_16 | HAL_TMR_CLKDIV_64;
+    tmrInfo.period = ((halSYSGetPeripheralClockFrequency() * AXIS_INPUTS_TIMER_PERIOD) / 64000) - 1; 
+#elif defined(EOS_STM32F4) || defined(EOS_STM32F7)
+    tmrInfo.options = HAL_TMR_MODE_16 | HAL_TMR_CLKDIV_1;
+    tmrInfo.prescaler = (HAL_RCC_GetPCLK1Freq() / 1000000L) - 1; // 1MHz
+    tmrInfo.period = (1000 * AXIS_INPUTS_TIMER_PERIOD) - 1;
+#else
+    //#error CPU no soportada
+#endif   
+	halTMRInitialize(&tmrInfo);
+    halTMRSetInterruptPriority(AXIS_INPUTS_TIMER, AXIS_INPUTS_TIMER_INTERRUPT_PRIORITY, AXIS_INPUTS_TIMER_INTERRUPT_SUBPRIORITY);
     
     // Inicialitza el servei
     //
     DigInputService::InitParams digInputServiceInit;
     digInputServiceInit.timer = AXIS_INPUTS_TIMER;
-    digInputServiceInit.period = 5;
     digInputService = new DigInputService(this, digInputServiceInit);
     
     DigInput::InitParams digInputInit;
@@ -76,7 +93,7 @@ void AxisApplication::initializeDigInputService() {
 /// ----------------------------------------------------------------------
 /// \brief    Inicialitza el servei de sortides digitals.
 ///
-void AxisApplication::initializeDigOutputService() {
+void AxisApplication::configureDigOutputService() {
     
     // Inicialitza els ports
     //
@@ -85,12 +102,26 @@ void AxisApplication::initializeDigOutputService() {
     
     // Inicialitza el temporitzador
     //
+	TMRInitializeInfo tmrInfo;
+	tmrInfo.timer = AXIS_OUTPUTS_TIMER;
+	tmrInfo.isrFunction = NULL;
+#if defined(EOS_PIC32)
+    tmrInfo.options = HAL_TMR_MODE_16 | HAL_TMR_CLKDIV_64;
+    tmrInfo.period = ((halSYSGetPeripheralClockFrequency() * AXIS_OUTPUTS_TIMER_PERIOD) / 64000) - 1; 
+#elif defined(EOS_STM32F4) || defined(EOS_STM32F7)
+    tmrInfo.options = HAL_TMR_MODE_16 | HAL_TMR_CLKDIV_1;
+    tmrInfo.prescaler = (HAL_RCC_GetPCLK1Freq() / 1000000L) - 1; // 1MHz
+    tmrInfo.period = (1000 * AXIS_INPUTS_OUTPUTS_PERIOD) - 1;
+#else
+    //#error CPU no soportada
+#endif   
+	halTMRInitialize(&tmrInfo);
+    halTMRSetInterruptPriority(AXIS_OUTPUTS_TIMER, AXIS_OUTPUTS_TIMER_INTERRUPT_PRIORITY, AXIS_OUTPUTS_TIMER_INTERRUPT_SUBPRIORITY);    
     
     // Inicialitza el servei
     //
     DigOutputService::InitParams digOutputServiceInit;
     digOutputServiceInit.timer = AXIS_OUTPUTS_TIMER;
-    digOutputServiceInit.period = 1;
     digOutputService = new DigOutputService(this, digOutputServiceInit);
     
     DigOutput::InitParams digOutputInit;
@@ -106,7 +137,7 @@ void AxisApplication::initializeDigOutputService() {
 /// ----------------------------------------------------------------------
 /// \brief    Inicialitza el servei de control de moviment.
 ///
-void AxisApplication::initializeMotionService() {
+void AxisApplication::configureMotionService() {
     
     // Inicialitza els ports
     //
@@ -171,10 +202,10 @@ void AxisApplication::initializeMotionService() {
 ///
 void AxisApplication::onInitialize() {
        
-    initializeMotionService();
+    configureMotionService();
     //fsmService = new FsmService(this, nullptr);
-    initializeDigInputService();
-    initializeDigOutputService();
+    configureDigInputService();
+    configureDigOutputService();
 }
 
 

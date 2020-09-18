@@ -47,9 +47,9 @@ namespace axis {
             DigInputEventCallback sw2EventCallback;
             
         private:
-            void initializeDigInputService();
-            void initializeDigOutputService();
-            void initializeMotionService();
+            void configureDigInputService();
+            void configureDigOutputService();
+            void configureMotionService();
 
         protected:
             void onInitialize();

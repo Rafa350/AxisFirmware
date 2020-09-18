@@ -18,14 +18,10 @@
 // Configuracio global del sistema
 //
 #define Eos_ApplicationTickEnabled                    0    
+#define Eos_ApplicationTickTimer                      HAL_TMR_TIMER_5
 #define Eos_UseRTOS                                   1
 #define Eos_UseApplicationInitializeCallback          0
 #define Eos_UseApplicationTerminateCallback           0
-
-// Configuracio del servei DigInput
-//
-#define DigInputService_TimerInterruptPriority        HAL_INT_PRIORITY_LEVEL2
-#define DigInputService_TimerInterruptSubPriority     HAL_INT_SUBPRIORITY_LEVEL2
 
 
 #endif // __eosConfig__
