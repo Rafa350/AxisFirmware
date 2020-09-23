@@ -354,9 +354,9 @@ void Motion::timerInitialize() {
     tmrInfo.options = HAL_TMR_MODE_16 | HAL_TMR_CLKDIV_1 | HAL_TMR_INTERRUPT_ENABLE;
     tmrInfo.period =  halSYSGetPeripheralClock1Frequency() / 32 / 100000;
 #endif
-    tmrInfo.irqPriority = AXIS_MOTION_TIMER_INT_PRIORITY_LEVEL;
-    tmrInfo.irqSubPriority = AXIS_MOTION_TIMER_INT_SUBPRIORITY_LEVEL;
-    tmrInfo.isrFunction = timerInterruptCallback;
+    tmrInfo.irqPriority = MotionService_TimerInterruptPriority;
+    tmrInfo.irqSubPriority = MotionService_TimerInterruptSubPriority;
+    tmrInfo.isrFunction = tmrInterruptFunction;
     tmrInfo.isrParams = this;
     halTMRInitialize(&tmrInfo);
     
@@ -385,9 +385,9 @@ void Motion::timerStop() {
 /// ----------------------------------------------------------------------
 /// \brief    Procesa la interrupcio del temporitzador.
 /// \param    timer: Handler del temporitzador.
-/// \param    param: Parametre. En aquest cas el punter this.
+/// \param    param: Handler del servei.
 ///
-void Motion::timerInterruptCallback(
+void Motion::tmrInterruptFunction(
     TMRTimer timer, 
     void* param) {
     

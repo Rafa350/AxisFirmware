@@ -11,7 +11,7 @@ using namespace axis;
 ///
 void appMain() {
 
-	Application *app = new AxisApplication();
+	Application* app = new AxisApplication();
 	app->run();
 	delete app;
 }

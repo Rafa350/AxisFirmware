@@ -6,8 +6,8 @@
                    projectFiles="true">
       <logicalFolder name="f1" displayName="App" projectFiles="true">
         <logicalFolder name="f2" displayName="Board" projectFiles="true">
-          <itemPath>../../../Include/Board/appBoard.h</itemPath>
-          <itemPath>../../../Include/Board/appBoard_PIC32_USB_STARTER_KIT_I.h</itemPath>
+          <itemPath>../../../Include/Board/eosBoard_Custom.h</itemPath>
+          <itemPath>../../../Include/Board/eosBoard_Custom_PIC32_USB_STARTER_KIT_I.h</itemPath>
         </logicalFolder>
         <logicalFolder name="f1" displayName="PIC32" projectFiles="true">
           <itemPath>../../../Include/PIC32/FreeRTOSConfig.h</itemPath>
@@ -156,7 +156,7 @@
         <targetDevice>PIC32MX460F512L</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>SKDEPIC32PlatformTool</platformTool>
+        <platformTool>noID</platformTool>
         <languageToolchain>XC32</languageToolchain>
         <languageToolchainVersion>2.41</languageToolchainVersion>
         <platform>3</platform>
@@ -208,7 +208,8 @@
         <property key="place-data-into-section" value="false"/>
         <property key="post-instruction-scheduling" value="default"/>
         <property key="pre-instruction-scheduling" value="default"/>
-        <property key="preprocessor-macros" value="HARDWARE_PIC32_USB_STARTER_KIT_I"/>
+        <property key="preprocessor-macros"
+                  value="HARDWARE_CUSTOM;HARDWARE_CUSTOM_PIC32_USB_STARTER_KIT_I"/>
         <property key="strict-ansi" value="false"/>
         <property key="support-ansi" value="false"/>
         <property key="toplevel-reordering" value=""/>
@@ -305,7 +306,8 @@
         <property key="place-data-into-section" value="false"/>
         <property key="post-instruction-scheduling" value="default"/>
         <property key="pre-instruction-scheduling" value="default"/>
-        <property key="preprocessor-macros" value="HARDWARE_PIC32_USB_STARTER_KIT_I"/>
+        <property key="preprocessor-macros"
+                  value="HARDWARE_CUSTOM;HARDWARE_CUSTOM_PIC32_USB_STARTER_KIT_I"/>
         <property key="rtti" value="false"/>
         <property key="strict-ansi" value="false"/>
         <property key="toplevel-reordering" value=""/>

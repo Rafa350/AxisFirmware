@@ -114,7 +114,8 @@ namespace axis {
             void start(const Vector& position);
             void stop();
             void loop();
-            static void timerInterruptCallback(TMRTimer timer, void* param);
+            
+            static void tmrInterruptFunction(TMRTimer timer, void* param);
     };
 }
 

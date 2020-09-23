@@ -12,6 +12,7 @@
 #include "axisMotionService.h"
 #include "axisMotion.h"
 #include "axisMotor.h"
+#include "HAL/PIC32/halGPIO.h"
 
 
 using namespace eos;
@@ -50,11 +51,11 @@ void AxisApplication::configureDigInputService() {
     // Inicialitza el temporitzador
     //
 	TMRInitializeInfo tmrInfo;
-	tmrInfo.timer = AXIS_INPUTS_TIMER;
+	tmrInfo.timer = DigInputService_Timer;
 	tmrInfo.isrFunction = NULL;
 #if defined(EOS_PIC32)
     tmrInfo.options = HAL_TMR_MODE_16 | HAL_TMR_CLKDIV_64;
-    tmrInfo.period = ((halSYSGetPeripheralClockFrequency() * AXIS_INPUTS_TIMER_PERIOD) / 64000) - 1; 
+    tmrInfo.period = ((halSYSGetPeripheralClockFrequency() * DigInputService_TimerPeriod) / 64000) - 1; 
 #elif defined(EOS_STM32F4) || defined(EOS_STM32F7)
     tmrInfo.options = HAL_TMR_MODE_16 | HAL_TMR_CLKDIV_1;
     tmrInfo.prescaler = (HAL_RCC_GetPCLK1Freq() / 1000000L) - 1; // 1MHz
@@ -63,12 +64,12 @@ void AxisApplication::configureDigInputService() {
     //#error CPU no soportada
 #endif   
 	halTMRInitialize(&tmrInfo);
-    halTMRSetInterruptPriority(AXIS_INPUTS_TIMER, AXIS_INPUTS_TIMER_INTERRUPT_PRIORITY, AXIS_INPUTS_TIMER_INTERRUPT_SUBPRIORITY);
+    halTMRSetInterruptPriority(DigInputService_Timer, DigInputService_TimerInterruptPriority, DigInputService_TimerInterruptPriority);
     
     // Inicialitza el servei
     //
     DigInputService::InitParams digInputServiceInit;
-    digInputServiceInit.timer = AXIS_INPUTS_TIMER;
+    digInputServiceInit.timer = DigInputService_Timer;
     digInputService = new DigInputService(this, digInputServiceInit);
     
     DigInput::InitParams digInputInit;
@@ -103,11 +104,11 @@ void AxisApplication::configureDigOutputService() {
     // Inicialitza el temporitzador
     //
 	TMRInitializeInfo tmrInfo;
-	tmrInfo.timer = AXIS_OUTPUTS_TIMER;
+	tmrInfo.timer = DigOutputService_Timer;
 	tmrInfo.isrFunction = NULL;
 #if defined(EOS_PIC32)
     tmrInfo.options = HAL_TMR_MODE_16 | HAL_TMR_CLKDIV_64;
-    tmrInfo.period = ((halSYSGetPeripheralClockFrequency() * AXIS_OUTPUTS_TIMER_PERIOD) / 64000) - 1; 
+    tmrInfo.period = ((halSYSGetPeripheralClockFrequency() * DigOutputService_TimerPeriod) / 64000) - 1; 
 #elif defined(EOS_STM32F4) || defined(EOS_STM32F7)
     tmrInfo.options = HAL_TMR_MODE_16 | HAL_TMR_CLKDIV_1;
     tmrInfo.prescaler = (HAL_RCC_GetPCLK1Freq() / 1000000L) - 1; // 1MHz
@@ -116,12 +117,12 @@ void AxisApplication::configureDigOutputService() {
     //#error CPU no soportada
 #endif   
 	halTMRInitialize(&tmrInfo);
-    halTMRSetInterruptPriority(AXIS_OUTPUTS_TIMER, AXIS_OUTPUTS_TIMER_INTERRUPT_PRIORITY, AXIS_OUTPUTS_TIMER_INTERRUPT_SUBPRIORITY);    
+    halTMRSetInterruptPriority(DigOutputService_Timer, DigOutputService_TimerInterruptPriority, DigOutputService_TimerInterruptSubPriority);    
     
     // Inicialitza el servei
     //
     DigOutputService::InitParams digOutputServiceInit;
-    digOutputServiceInit.timer = AXIS_OUTPUTS_TIMER;
+    digOutputServiceInit.timer = DigOutputService_Timer;
     digOutputService = new DigOutputService(this, digOutputServiceInit);
     
     DigOutput::InitParams digOutputInit;
@@ -141,41 +142,70 @@ void AxisApplication::configureMotionService() {
     
     // Inicialitza els ports
     //
+    GPIOInitializePinInfo gpioInit;
     
+    gpioInit.options = HAL_GPIO_MODE_OUTPUT_PP | HAL_GPIO_INIT_CLR;
+    gpioInit.alt = HAL_GPIO_AF_NONE;
+
+    gpioInit.port = MotionService_XMotorStepPort;
+    gpioInit.pin = MotionService_XMotorStepPin;
+    halGPIOInitializePins(&gpioInit, 1);
+
+    gpioInit.port = MotionService_XMotorDirectionPort;
+    gpioInit.pin = MotionService_XMotorDirectionPin;
+    halGPIOInitializePins(&gpioInit, 1);
+    
+    gpioInit.port = MotionService_YMotorStepPort;
+    gpioInit.pin = MotionService_YMotorStepPin;
+    halGPIOInitializePins(&gpioInit, 1);
+
+    gpioInit.port = MotionService_YMotorDirectionPort;
+    gpioInit.pin = MotionService_YMotorDirectionPin;
+    halGPIOInitializePins(&gpioInit, 1);
+
+    gpioInit.port = MotionService_ZMotorStepPort;
+    gpioInit.pin = MotionService_ZMotorStepPin;
+    halGPIOInitializePins(&gpioInit, 1);
+
+    gpioInit.port = MotionService_ZMotorDirectionPort;
+    gpioInit.pin = MotionService_ZMotorDirectionPin;
+    halGPIOInitializePins(&gpioInit, 1);
+
     // Inicialitza el temporitzador
     //
+    TMRInitializeInfo tmrInit;
     
     Motor::Configuration motorCfg;
     
     // Crea el motor del eix X
     //
-    motorCfg.stepPort = AXIS_MOTOR_X_STEP_PORT;
-    motorCfg.stepPin = AXIS_MOTOR_X_STEP_PIN;
-    motorCfg.directionPort = AXIS_MOTOR_X_DIRECTION_PORT;
-    motorCfg.directionPin = AXIS_MOTOR_X_DIRECTION_PIN;
-    motorCfg.enablePort = AXIS_MOTOR_X_ENABLE_PORT;
-    motorCfg.enablePin = AXIS_MOTOR_X_ENABLE_PIN;
+    motorCfg.stepPort = MotionService_XMotorStepPort;
+    motorCfg.stepPin = MotionService_XMotorStepPin;
+    motorCfg.directionPort = MotionService_XMotorDirectionPort;
+    motorCfg.directionPin = MotionService_XMotorDirectionPin;
+    motorCfg.enablePort = MotionService_XMotorEnablePort;
+    motorCfg.enablePin = MotionService_XMotorEnablePin;
 
     xMotor = new Motor(motorCfg);
 
     // Crea el motor del eix Y
     //
-    motorCfg.stepPort = AXIS_MOTOR_Y_STEP_PORT;
-    motorCfg.stepPin = AXIS_MOTOR_Y_STEP_PIN;
-    motorCfg.directionPort = AXIS_MOTOR_Y_DIRECTION_PORT;
-    motorCfg.directionPin = AXIS_MOTOR_Y_DIRECTION_PIN;
-    motorCfg.enablePort = AXIS_MOTOR_Y_ENABLE_PORT;
-    motorCfg.enablePin = AXIS_MOTOR_Y_ENABLE_PIN;
+    motorCfg.stepPort = MotionService_YMotorStepPort;
+    motorCfg.stepPin = MotionService_YMotorStepPort;
+    motorCfg.directionPort = MotionService_YMotorDirectionPort;
+    motorCfg.directionPin = MotionService_YMotorDirectionPin;
+    motorCfg.enablePort = MotionService_YMotorEnablePort;
+    motorCfg.enablePin = MotionService_YMotorEnablePin;
     yMotor = new Motor(motorCfg);
 
     // Crea el motor del eix Z
     //    
-    motorCfg.stepPort = AXIS_MOTOR_Z_STEP_PORT;
-    motorCfg.stepPin = AXIS_MOTOR_Z_STEP_PIN;
-    motorCfg.directionPort = AXIS_MOTOR_Z_DIRECTION_PORT;
-    motorCfg.directionPin = AXIS_MOTOR_Z_DIRECTION_PIN;
-    motorCfg.enablePort = AXIS_MOTOR_Z_ENABLE_PORT;
-    motorCfg.enablePin = AXIS_MOTOR_Z_ENABLE_PIN;
+    motorCfg.stepPort = MotionService_ZMotorStepPort;
+    motorCfg.stepPin = MotionService_ZMotorStepPin;
+    motorCfg.directionPort = MotionService_ZMotorDirectionPort;
+    motorCfg.directionPin = MotionService_ZMotorDirectionPin;
+    motorCfg.enablePort = MotionService_ZMotorEnablePort;
+    motorCfg.enablePin = MotionService_ZMotorEnablePin;
     zMotor = new Motor(motorCfg);
 
     // Crea el controlador de moviment
@@ -185,7 +215,7 @@ void AxisApplication::configureMotionService() {
     motionCfg.motors[0] = xMotor;
     motionCfg.motors[1] = yMotor;
     motionCfg.motors[2] = zMotor;
-    motionCfg.timer = AXIS_MOTION_TIMER;
+    motionCfg.timer = MotionService_Timer;
     motion = new Motion(motionCfg);      
     motion->setJerk(50000);
     motion->setMaxAcceleration(800000);
@@ -193,7 +223,7 @@ void AxisApplication::configureMotionService() {
     
     // Crea el servei de control de moviment
     //
-    motionService = new MotionService(this, motion);
+    //motionService = new MotionService(this, motion);
 }
 
 
