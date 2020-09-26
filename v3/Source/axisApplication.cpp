@@ -12,7 +12,6 @@
 #include "axisMotionService.h"
 #include "axisMotion.h"
 #include "axisMotor.h"
-#include "HAL/PIC32/halGPIO.h"
 
 
 using namespace eos;
@@ -22,12 +21,16 @@ using namespace axis;
 const int move = 32000;
 bool lock = false;
 
+
 /// ----------------------------------------------------------------------
 /// \brief    Constructor del objecte.
 ///
 AxisApplication::AxisApplication():
-    sw1EventCallback(this, &AxisApplication::sw1EventHandler),
-    sw2EventCallback(this, &AxisApplication::sw2EventHandler) {
+    sw1EventCallback(this, &AxisApplication::sw1EventHandler)
+#ifdef EXIST_SWITCHES_SW2
+    , sw2EventCallback(this, &AxisApplication::sw2EventHandler)
+#endif
+{
     
 }
 
@@ -40,12 +43,12 @@ void AxisApplication::configureDigInputService() {
     // Inicialitza el ports
     //
 #if defined(EOS_PIC32)
-    halGPIOInitializePin(SW_SW1_PORT, SW_SW1_PIN, HAL_GPIO_MODE_INPUT, HAL_GPIO_AF_NONE);
-    halCNInitializeLine(SW_SW1_CN, HAL_CN_PULL_UP);
-    halGPIOInitializePin(SW_SW2_PORT, SW_SW2_PIN, HAL_GPIO_MODE_INPUT, HAL_GPIO_AF_NONE);
-    halCNInitializeLine(SW_SW2_CN, HAL_CN_PULL_UP);
+    halGPIOInitializePin(SWITCHES_SW1_PORT, SWITCHES_SW1_PIN, HAL_GPIO_MODE_INPUT, HAL_GPIO_AF_NONE);
+    halCNInitializeLine(SWITCHES_SW1_CN, HAL_CN_PULL_UP);
+    halGPIOInitializePin(SWITCHES_SW2_PORT, SWITCHES_SW2_PIN, HAL_GPIO_MODE_INPUT, HAL_GPIO_AF_NONE);
+    halCNInitializeLine(SWITCHES_SW2_CN, HAL_CN_PULL_UP);
 #elif defined(EOS_STM32)
-    halGPIOInitializePin(SW_SW1_PORT, SW_SW1_PIN, HAL_GPIO_MODE_INPUT | HAL_GPIO_PULL_UP, HAL_GPIO_AF_NONE);
+    halGPIOInitializePin(SWITCHES_SW1_PORT, SWITCHES_SW1_PIN, HAL_GPIO_MODE_INPUT | HAL_GPIO_PULL_UP, HAL_GPIO_AF_NONE);
 #endif
     
     // Inicialitza el temporitzador
@@ -58,8 +61,8 @@ void AxisApplication::configureDigInputService() {
     tmrInfo.period = ((halSYSGetPeripheralClockFrequency() * DigInputService_TimerPeriod) / 64000) - 1; 
 #elif defined(EOS_STM32F4) || defined(EOS_STM32F7)
     tmrInfo.options = HAL_TMR_MODE_16 | HAL_TMR_CLKDIV_1;
-    tmrInfo.prescaler = (HAL_RCC_GetPCLK1Freq() / 1000000L) - 1; // 1MHz
-    tmrInfo.period = (1000 * AXIS_INPUTS_TIMER_PERIOD) - 1;
+    tmrInfo.prescaler = (DigOutputService_TimerSourceFrequency / 1000000L) - 1; // 1MHz
+    tmrInfo.period = (1000 * DigInputService_TimerPeriod) - 1;
 #else
     //#error CPU no soportada
 #endif   
@@ -77,17 +80,19 @@ void AxisApplication::configureDigInputService() {
     
     // Inicialitza la entrada SW_SW1
     //
-    digInputInit.port = SW_SW1_PORT;
-    digInputInit.pin = SW_SW1_PIN;
+    digInputInit.port = SWITCHES_SW1_PORT;
+    digInputInit.pin = SWITCHES_SW1_PIN;
     digInputInit.eventCallback = &sw1EventCallback;
     sw1 = new DigInput(digInputService, digInputInit);
 
     // Inicialitza la entrada SW_SW2
     //
-    digInputInit.port = SW_SW2_PORT;
-    digInputInit.pin = SW_SW2_PIN;
+#ifdef EXIST_SWITCHES_SW2
+    digInputInit.port = SWITCHES_SW2_PORT;
+    digInputInit.pin = SWITCHES_SW2_PIN;
     digInputInit.eventCallback = &sw2EventCallback;
     sw2 = new DigInput(digInputService, digInputInit);
+#endif
 }
 
 
@@ -98,7 +103,7 @@ void AxisApplication::configureDigOutputService() {
     
     // Inicialitza els ports
     //
-    halGPIOInitializePin(LED_LED3_PORT, LED_LED3_PIN,
+    halGPIOInitializePin(DigOutput_BusyLedPort, DigOutput_BusyLedPin,
         HAL_GPIO_MODE_OUTPUT_PP | HAL_GPIO_INIT_CLR, HAL_GPIO_AF_NONE);
     
     // Inicialitza el temporitzador
@@ -111,8 +116,8 @@ void AxisApplication::configureDigOutputService() {
     tmrInfo.period = ((halSYSGetPeripheralClockFrequency() * DigOutputService_TimerPeriod) / 64000) - 1; 
 #elif defined(EOS_STM32F4) || defined(EOS_STM32F7)
     tmrInfo.options = HAL_TMR_MODE_16 | HAL_TMR_CLKDIV_1;
-    tmrInfo.prescaler = (HAL_RCC_GetPCLK1Freq() / 1000000L) - 1; // 1MHz
-    tmrInfo.period = (1000 * AXIS_INPUTS_OUTPUTS_PERIOD) - 1;
+    tmrInfo.prescaler = (DigOutputService_TimerSourceFrequency / 1000000L) - 1; // 1MHz
+    tmrInfo.period = (1000 * DigOutputService_TimerPeriod) - 1;
 #else
     //#error CPU no soportada
 #endif   
@@ -129,8 +134,8 @@ void AxisApplication::configureDigOutputService() {
 
     // Inicialitza la sortida LED_LED3
     //
-    digOutputInit.port = LED_LED3_PORT;
-    digOutputInit.pin = LED_LED3_PIN;
+    digOutputInit.port = DigOutput_BusyLedPort;
+    digOutputInit.pin = DigOutput_BusyLedPin;
     led3 = new DigOutput(digOutputService, digOutputInit);
 }
 
@@ -216,7 +221,7 @@ void AxisApplication::configureMotionService() {
     motionCfg.motors[1] = yMotor;
     motionCfg.motors[2] = zMotor;
     motionCfg.timer = MotionService_Timer;
-    motion = new Motion(motionCfg);      
+    motion = new Motion(motionCfg);
     motion->setJerk(50000);
     motion->setMaxAcceleration(800000);
     motion->setMaxSpeed(800000);
@@ -249,6 +254,7 @@ void AxisApplication::sw1EventHandler(
 }
 
 
+#ifdef EXIST_SWITCHES_SW2
 void AxisApplication::sw2EventHandler(
     const DigInput::EventArgs& args) {
     
@@ -257,3 +263,5 @@ void AxisApplication::sw2EventHandler(
         motion->doMoveRel(0, -move);
     }
 }
+#endif
+

@@ -36,7 +36,9 @@ namespace axis {
             
             DigInputService* digInputService;
             DigInput* sw1;
+#ifdef EXIST_SWITCHES_SW2
             DigInput* sw2;
+#endif
             
             DigOutputService* digOutputService;
             DigOutput* led3;
@@ -44,7 +46,9 @@ namespace axis {
             //FsmService* fsmService;
             
             DigInputEventCallback sw1EventCallback;
+#ifdef EXIST_SWITCHES_SW2
             DigInputEventCallback sw2EventCallback;
+#endif
             
         private:
             void configureDigInputService();
@@ -54,7 +58,9 @@ namespace axis {
         protected:
             void onInitialize();
             void sw1EventHandler(const DigInput::EventArgs& args);
+#ifdef EXIST_SWITCHES_SW2
             void sw2EventHandler(const DigInput::EventArgs& args);
+#endif
 
         public:
             AxisApplication();

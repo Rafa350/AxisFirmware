@@ -26,30 +26,33 @@
 //
 #define DigInputService_Timer                         HAL_TMR_TIMER_2
 #define DigInputService_TimerInterruptPriority        HAL_INT_PRIORITY_LEVEL2
-#define DigInputService_TimerInterruptSubPriority     HAL_INT_SUBPRIORITY_LEVEL2
+#define DigInputService_TimerInterruptSubPriority     HAL_INT_SUBPRIORITY_LEVEL0
 #define DigInputService_TimerPeriod                   5
 
 // Opcions de configuracio del servei DigOutputs
 //
 #define DigOutputService_Timer                        HAL_TMR_TIMER_3
 #define DigOutputService_TimerInterruptPriority       HAL_INT_PRIORITY_LEVEL2
-#define DigOutputService_TimerInterruptSubPriority    HAL_INT_SUBPRIORITY_LEVEL2
+#define DigOutputService_TimerInterruptSubPriority    HAL_INT_SUBPRIORITY_LEVEL0
 #define DigOutputService_TimerPeriod                  1
+
+#define DigOutput_BusyLedPort                         LEDS_LED3_PORT
+#define DigOutput_BusyLedPin                          LEDS_LED3_PIN
 
 
 // Opcions de configuracio del servei MotionService
 //
-#define MotionService_XMotorStepPort             LED_LED1_PORT    // HAL_GPIO_PORT_D   
-#define MotionService_XMotorStepPin              LED_LED1_PIN     // HAL_GPIO_PIN_3   
+#define MotionService_XMotorStepPort             LEDS_LED1_PORT    // HAL_GPIO_PORT_D   
+#define MotionService_XMotorStepPin              LEDS_LED1_PIN     // HAL_GPIO_PIN_3   
 
-#define MotionService_XMotorDirectionPort        LED_LED2_PORT    // HAL_GPIO_PORT_D    
-#define MotionService_XMotorDirectionPin         LED_LED2_PIN     // HAL_GPIO_PIN_4
+#define MotionService_XMotorDirectionPort        LEDS_LED2_PORT    // HAL_GPIO_PORT_D    
+#define MotionService_XMotorDirectionPin         LEDS_LED2_PIN     // HAL_GPIO_PIN_4
 
 #define MotionService_XMotorEnablePort           MOTORS_MOTOR1_ENABLE_PORT
 #define MotionService_XMotorEnablePin            MOTORS_MOTOR1_ENABLE_PIN
 
-#define MotionService_XMotorHomePort             
-#define MotionService_XMotorHomePin              
+#define MotionService_XMotorHomePort             MOTORS_MOTOR1_HOME_PORT 
+#define MotionService_XMotorHomePin              MOTORS_MOTOR1_HOME_PIN
 
 #define MotionService_XMotorLimitPort            
 #define MotionService_XMotorLimitPin             
@@ -63,8 +66,8 @@
 #define MotionService_YMotorEnablePort           MOTORS_MOTOR2_ENABLE_PORT
 #define MotionService_YMotorEnablePin            MOTORS_MOTOR2_ENABLE_PIN
 
-#define MotionService_YMotorHomePort             
-#define MotionService_XMotorHomePin              
+#define MotionService_YMotorHomePort             MOTORS_MOTOR2_HOME_PORT 
+#define MotionService_YMotorHomePin              MOTORS_MOTOR2_HOME_PIN
 
 #define MotionService_YMotorLimitPort            
 #define MotionService_YMotorLimitPin            
@@ -78,8 +81,8 @@
 #define MotionService_ZMotorEnablePort           MOTORS_MOTOR3_ENABLE_PORT
 #define MotionService_ZMotorEnablePin            MOTORS_MOTOR3_ENABLE_PIN
 
-#define MotionService_ZMotorHomePort            
-#define MotionService_ZMotorHomePin          
+#define MotionService_ZMotorHomePort             MOTORS_MOTOR3_HOME_PORT 
+#define MotionService_ZMotorHomePin              MOTORS_MOTOR1_HOME_PIN
 
 #define MotionService_ZMotorLimitPort        
 #define MotionService_ZMotorLimitPin          

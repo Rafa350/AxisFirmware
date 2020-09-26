@@ -58,8 +58,8 @@ using namespace axis;
 Motion::Motion(
     const Configuration& cfg):
     
-    busy(false),
-    cfg(cfg) {
+	cfg(cfg),
+    busy(false) {
     
     for (int i = 0; i < cfg.numAxis; i++) {
         axisPos[i] = 0;
@@ -351,8 +351,9 @@ void Motion::timerInitialize() {
     tmrInfo.options = HAL_TMR_MODE_16 | HAL_TMR_CLKDIV_32 | HAL_TMR_INTERRUPT_ENABLE;
     tmrInfo.period =  halSYSGetPeripheralClockFrequency() / 32 / 100000;
 #elif defined(EOS_STM32F7)
-    tmrInfo.options = HAL_TMR_MODE_16 | HAL_TMR_CLKDIV_1 | HAL_TMR_INTERRUPT_ENABLE;
-    tmrInfo.period =  halSYSGetPeripheralClock1Frequency() / 32 / 100000;
+    tmrInfo.options = HAL_TMR_MODE_16 | HAL_TMR_CLKDIV_1;
+    tmrInfo.prescaler = (DigOutputService_TimerSourceFrequency / 1000000L) - 1; // 1MHz
+    tmrInfo.period = 10 - 1;
 #endif
     tmrInfo.irqPriority = MotionService_TimerInterruptPriority;
     tmrInfo.irqSubPriority = MotionService_TimerInterruptSubPriority;
@@ -360,15 +361,18 @@ void Motion::timerInitialize() {
     tmrInfo.isrParams = this;
     halTMRInitialize(&tmrInfo);
     
-    //halTMRSetInterruptFunction(cfg.timer, timerInterruptCallback, this);
+    halTMRSetInterruptPriority(MotionService_Timer, MotionService_TimerInterruptPriority, MotionService_TimerInterruptSubPriority);
+    halTMRSetInterruptFunction(MotionService_Timer, tmrInterruptFunction, this);
 }
 
 
 /// ----------------------------------------------------------------------
-/// \brief    Activa el temporitzador i comen�a a disparar interrupcions
+/// \brief    Activa el temporitzador i comença a disparar interrupcions
 ///
 void Motion::timerStart() {
     
+	halTMRClearInterruptFlag(cfg.timer);
+	halTMREnableInterrupt(cfg.timer);
     halTMRStartTimer(cfg.timer);
 }
 
@@ -379,6 +383,7 @@ void Motion::timerStart() {
 void Motion::timerStop() {
 
     halTMRStopTimer(cfg.timer);
+	halTMRDisableInterrupt(cfg.timer);
 }
 
 

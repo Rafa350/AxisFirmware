@@ -81,16 +81,6 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Include/axisMotor.h</locationURI>
 		</link>
 		<link>
-			<name>Inc/App/eosConfig.h</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Include/eosConfig.h</locationURI>
-		</link>
-		<link>
-			<name>Inc/App/eosConfig_STM32F746G_DISCO.h</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Include/eosConfig_STM32F746G_DISCO.h</locationURI>
-		</link>
-		<link>
 			<name>Inc/Framework/EOS</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
@@ -136,14 +126,14 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>Inc/App/Board/appBoard.h</name>
+			<name>Inc/App/Board/eosBoard_Custom.h</name>
 			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Include/Board/appBoard.h</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/Include/Board/eosBoard_Custom.h</locationURI>
 		</link>
 		<link>
-			<name>Inc/App/Board/appBoard_STM32F746G_DISCO.h</name>
+			<name>Inc/App/Board/eosBoard_Custom_STM32F746G_DISCO.h</name>
 			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Include/Board/appBoard_STM32F746G_DISCO.h</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/Include/Board/eosBoard_Custom_STM32F746G_DISCO.h</locationURI>
 		</link>
 		<link>
 			<name>Inc/App/STM32F7/FreeRTOSConfig.h</name>
@@ -194,6 +184,16 @@
 			<name>Src/App/STM32F7/appInitialize.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Source/STM32F7/appInitialize.cpp</locationURI>
+		</link>
+		<link>
+			<name>Src/App/STM32F7/stm32f7xx_hal_timebase_tim.c</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Source/STM32F7/stm32f7xx_hal_timebase_tim.c</locationURI>
+		</link>
+		<link>
+			<name>Src/App/STM32F7/stm32f7xx_it.c</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Source/STM32F7/stm32f7xx_it.c</locationURI>
 		</link>
 		<link>
 			<name>Src/Framework/EOS/HAL</name>
@@ -474,6 +474,11 @@
 			<name>Src/Framework/STM32/HAL/stm32f7xx_hal_tim.c</name>
 			<type>1</type>
 			<locationURI>PARENT-4-PROJECT_LOC/EOS/v2/Library/STM32F7/HAL/Src/stm32f7xx_hal_tim.c</locationURI>
+		</link>
+		<link>
+			<name>Src/Framework/STM32/HAL/stm32f7xx_hal_tim_ex.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/EOS/v2/Library/STM32F7/HAL/Src/stm32f7xx_hal_tim_ex.c</locationURI>
 		</link>
 		<link>
 			<name>Src/Framework/STM32/HAL/stm32f7xx_ll_fmc.c</name>

@@ -2,65 +2,94 @@
 #define __appBoard_STM32F746G_DISCO__
 
 
-#define AXIS_INPUTS_TIMER              HAL_TMR_TIMER_2
-#define AXIS_OUTPUTS_TIMER             HAL_TMR_TIMER_3
+#include "Board/eosBoard_STM32F746G_DISCO.h"
 
-// Opcions de configuracio del eix X
+
+// -----------------------------------------------------------------------
+// LEDS
 //
-#define AXIS_MOTOR_X_STEP_PORT         HAL_GPIO_PORT_I     // CN7-1
-#define AXIS_MOTOR_X_STEP_PIN          HAL_GPIO_PIN_2
+#ifdef USE_LEDS_LED2
+#define EXIST_LEDS_LED2
 
-#define AXIS_MOTOR_X_DIRECTION_PORT    HAL_GPIO_PORT_A     // CN7-2
-#define AXIS_MOTOR_X_DIRECTION_PIN     HAL_GPIO_PIN_15
+#define LEDS_LED2_PORT            ARDUINO_D0_PORT
+#define LEDS_LED2_PIN             ARDUINO_D0_PIN
 
-#define AXIS_MOTOR_X_ENABLE_PORT       0xFF
-#define AXIS_MOTOR_X_ENABLE_PIN        0xFF
+#endif
 
-#define AXIS_MOTOR_X_HOME_PORT         HAL_GPIO_PORT_C     // CN4-1
-#define AXIS_MOTOR_X_HOME_PIN          HAL_GPIO_PIN_7
+#ifdef USE_LEDS_LED3
+#define EXIST_LEDS_LED3
 
-#define AXIS_MOTOR_X_LIMIT_PORT        HAL_GPIO_PORT_C     // CN4-2
-#define AXIS_MOTOR_X_LIMIT_PIN         HAL_GPIO_PIN_6
+#define LEDS_LED3_PORT            ARDUINO_D1_PORT
+#define LEDS_LED3_PIN             ARDUINO_D1_PIN
 
-// Opcions de configuracio del eix Y
+#endif
+
+
+// -----------------------------------------------------------------------
+// SWITCHES
 //
-#define AXIS_MOTOR_Y_STEP_PORT         HAL_GPIO_PORT_A     // CN7-3
-#define AXIS_MOTOR_Y_STEP_PIN          HAL_GPIO_PIN_8
+#ifdef USE_SWITCHES_SW2
+#define EXIST_SWITCHES_SW2
 
-#define AXIS_MOTOR_Y_DIRECTION_PORT    HAL_GPIO_PORT_B     // CN7-4
-#define AXIS_MOTOR_Y_DIRECTION_PIN     HAL_GPIO_PIN_15
+#define SWITCHES_SW2_PORT
+#define SWITCHES_SW2_PIN
 
-#define AXIS_MOTOR_Y_ENABLE_PORT       0xFF
-#define AXIS_MOTOR_Y_ENABLE_PIN        0xFF
+#endif
 
-#define AXIS_MOTOR_Y_HOME_PORT         HAL_GPIO_PORT_G     // CN4-3
-#define AXIS_MOTOR_Y_HOME_PIN          HAL_GPIO_PIN_6
 
-#define AXIS_MOTOR_Y_LIMIT_PORT        HAL_GPIO_PORT_B     // CN4-4
-#define AXIS_MOTOR_Y_LIMIT_PIN         HAL_GPIO_PIN_4
-
-// Opcions de configuracio del eix Z
+// -----------------------------------------------------------------------
+// MOTORS
 //
-#define AXIS_MOTOR_Z_STEP_PORT         HAL_GPIO_PORT_B     // CN7-5
-#define AXIS_MOTOR_Z_STEP_PIN          HAL_GPIO_PIN_14
+#define EXIST_MOTORS_MOTOR1
 
-#define AXIS_MOTOR_Z_DIRECTION_PORT    HAL_GPIO_PORT_I     // CN7-6
-#define AXIS_MOTOR_Z_DIRECTION_PIN     HAL_GPIO_PIN_1
+#define MOTORS_MOTOR1_STEP_PORT        ARDUINO_D2_PORT
+#define MOTORS_MOTOR1_STEP_PIN         ARDUINO_D2_PIN
 
-#define AXIS_MOTOR_Z_ENABLE_PORT       0xFF
-#define AXIS_MOTOR_Z_ENABLE_PIN        0xFF
+#define MOTORS_MOTOR1_DIRECTION_PORT   ARDUINO_D3_PORT
+#define MOTORS_MOTOR1_DIRECTION_PIN    ARDUINO_D3_PIN
 
-#define AXIS_MOTOR_Z_HOME_PORT         HAL_GPIO_PORT_G     // CN4-5
-#define AXIS_MOTOR_Z_HOME_PIN          HAL_GPIO_PIN_7
+#define MOTORS_MOTOR1_ENABLE_PORT      HAL_GPIO_PORT_NONE
+#define MOTORS_MOTOR1_ENABLE_PIN       HAL_GPIO_PIN_NONE
 
-#define AXIS_MOTOR_Z_LIMIT_PORT        HAL_GPIO_PORT_I     // CN4-6
-#define AXIS_MOTOR_Z_LIMIT_PIN         HAL_GPIO_PIN_0
+#define MOTORS_MOTOR1_HOME_PORT        HAL_GPIO_PORT_C     // CN4-1
+#define MOTORS_MOTOR1_HOME_PIN         HAL_GPIO_PIN_7
 
-// Opcions de configuracio del timer
-//
-#define AXIS_MOTION_TIMER                        HAL_TMR_TIMER_4
-#define AXIS_MOTION_TIMER_INT_PRIORITY_LEVEL     HAL_INT_PRIORITY_LEVEL5
-#define AXIS_MOTION_TIMER_INT_SUBPRIORITY_LEVEL  HAL_INT_SUBPRIORITY_LEVEL0
+#define MOTORS_MOTOR1_LIMIT_PORT       HAL_GPIO_PORT_C     // CN4-2
+#define MOTORS_MOTOR1_LIMIT_PIN        HAL_GPIO_PIN_6
+
+#define EXIST_MOTORS_MOTOR2
+
+#define MOTORS_MOTOR2_STEP_PORT        HAL_GPIO_PORT_A     // CN7-3
+#define MOTORS_MOTOR2_STEP_PIN         HAL_GPIO_PIN_8
+
+#define MOTORS_MOTOR2_DIRECTION_PORT   HAL_GPIO_PORT_B     // CN7-4
+#define MOTORS_MOTOR2_DIRECTION_PIN    HAL_GPIO_PIN_15
+
+#define MOTORS_MOTOR2_ENABLE_PORT      HAL_GPIO_PORT_NONE
+#define MOTORS_MOTOR2_ENABLE_PIN       HAL_GPIO_PIN_NONE
+
+#define MOTORS_MOTOR2_HOME_PORT        HAL_GPIO_PORT_G     // CN4-3
+#define MOTORS_MOTOR2_HOME_PIN         HAL_GPIO_PIN_6
+
+#define MOTORS_MOTOR2_LIMIT_PORT       HAL_GPIO_PORT_B     // CN4-4
+#define MOTORS_MOTOR2_LIMIT_PIN        HAL_GPIO_PIN_4
+
+#define EXIST_MOTORS_MOTOR3
+
+#define MOTORS_MOTOR3_STEP_PORT        HAL_GPIO_PORT_B     // CN7-5
+#define MOTORS_MOTOR3_STEP_PIN         HAL_GPIO_PIN_14
+
+#define MOTORS_MOTOR3_DIRECTION_PORT   HAL_GPIO_PORT_I     // CN7-6
+#define MOTORS_MOTOR3_DIRECTION_PIN    HAL_GPIO_PIN_1
+
+#define MOTORS_MOTOR3_ENABLE_PORT      HAL_GPIO_PORT_NONE
+#define MOTORS_MOTOR3_ENABLE_PIN       HAL_GPIO_PIN_NONE
+
+#define MOTORS_MOTOR3_HOME_PORT        HAL_GPIO_PORT_G     // CN4-5
+#define MOTORS_MOTOR3_HOME_PIN         HAL_GPIO_PIN_7
+
+#define MOTORS_MOTOR3_LIMIT_PORT       HAL_GPIO_PORT_I     // CN4-6
+#define MOTORS_MOTOR3_LIMIT_PIN        HAL_GPIO_PIN_0
 
 
 #endif // __appBoard_STM32F746G_DISCO__
