@@ -25,6 +25,8 @@
 // Opcions de configuracio del servei DigInputs
 //
 #define DigInputService_Timer                         HAL_TMR_TIMER_2
+#define DigInputService_TimerClockFrequency           halSYSGetPeripheralClockFrequency()
+#define DigInputService_TimerInterruptVector          HAL_INT_VECTOR_TMR2
 #define DigInputService_TimerInterruptPriority        HAL_INT_PRIORITY_LEVEL2
 #define DigInputService_TimerInterruptSubPriority     HAL_INT_SUBPRIORITY_LEVEL0
 #define DigInputService_TimerPeriod                   5
@@ -32,6 +34,8 @@
 // Opcions de configuracio del servei DigOutputs
 //
 #define DigOutputService_Timer                        HAL_TMR_TIMER_3
+#define DigOutputService_TimerClockFrequency          halSYSGetPeripheralClockFrequency()
+#define DigOutputService_TimerInterruptVector         HAL_INT_VECTOR_TMR3
 #define DigOutputService_TimerInterruptPriority       HAL_INT_PRIORITY_LEVEL2
 #define DigOutputService_TimerInterruptSubPriority    HAL_INT_SUBPRIORITY_LEVEL0
 #define DigOutputService_TimerPeriod                  1
@@ -88,6 +92,8 @@
 #define MotionService_ZMotorLimitPin          
 
 #define MotionService_Timer                      HAL_TMR_TIMER_4
+#define MotionService_TimerClockFrequency        halSYSGetPeripheralClockFrequency()
+#define MotionService_TimerInterruptVector       HAL_INT_VECTOR_TMR4
 #define MotionService_TimerInterruptPriority     HAL_INT_PRIORITY_LEVEL5    
 #define MotionService_TimerInterruptSubPriority  HAL_INT_SUBPRIORITY_LEVEL0
 

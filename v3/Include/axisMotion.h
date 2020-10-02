@@ -37,7 +37,7 @@ namespace axis {
             struct Configuration {
                 int numAxis;
                 Motors motors;
-                TMRTimer timer;
+                TMRHandler hTimer;
             };
             
         private:
@@ -115,7 +115,7 @@ namespace axis {
             void stop();
             void loop();
             
-            static void tmrInterruptFunction(TMRTimer timer, void* param);
+            static void tmrInterruptFunction(TMRHandler handler, void* param);
     };
 }
 

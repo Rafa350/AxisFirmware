@@ -12,7 +12,10 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Rafael/Documents/Projectes/Embedded/Axis/v3/Source/PIC32/appInitialize.cpp</file>
+            <file>file:/C:/Users/Rafael/Documents/Projectes/Embedded/EOS/v2/Include/HAL/PIC32/halGPIO.h</file>
+            <file>file:/C:/Users/Rafael/Documents/Projectes/Embedded/Axis/v3/Source/PIC32/appInterrupts.cpp</file>
+            <file>file:/C:/Users/Rafael/Documents/Projectes/Embedded/EOS/v2/Include/Board/eosBoard_PIC32_USB_STARTER_KIT_I.h</file>
+            <file>file:/C:/Users/Rafael/Documents/Projectes/Embedded/EOS/v2/Include/HAL/PIC32/halINT.h</file>
         </group>
     </open-files>
 </project-private>

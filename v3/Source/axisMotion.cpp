@@ -38,6 +38,18 @@
 #define MOTION_DEF_JERK           50000
 
 
+#if defined(EOS_STM32)
+#define clearInterruptSourceFlag(hTimer)    halTMRClearInterruptSourceFlag(hTimer, HAL_TMR_EVENT_UP)
+#define enableInterruptSource(hTimer)       halTMREnableInterruptSources(hTimer, HAL_TMR_EVENT_UP)
+#define disableInterruptSource(hTimer)      halTMRDisableInterruptSources(hTimer, HAL_TMR_EVENT_UP)
+#elif defined(EOS_PIC32)
+#define clearInterruptSourceFlag(hTimer)    halTMRClearInterruptSourceFlag(hTimer)
+#define enableInterruptSource(hTimer)       halTMREnableInterruptSource(hTimer)
+#define disableInterruptSource(hTimer)      halTMRDisableInterruptSource(hTimer)
+#endif
+
+
+
 using namespace eos;
 using namespace axis;
 
@@ -344,25 +356,7 @@ void Motion::doStop() {
 ///
 void Motion::timerInitialize() {
 
-    TMRInitializeInfo tmrInfo;
-    
-    tmrInfo.timer = cfg.timer;
-#if defined(EOS_PIC32)
-    tmrInfo.options = HAL_TMR_MODE_16 | HAL_TMR_CLKDIV_32 | HAL_TMR_INTERRUPT_ENABLE;
-    tmrInfo.period =  halSYSGetPeripheralClockFrequency() / 32 / 100000;
-#elif defined(EOS_STM32F7)
-    tmrInfo.options = HAL_TMR_MODE_16 | HAL_TMR_CLKDIV_1;
-    tmrInfo.prescaler = (DigOutputService_TimerSourceFrequency / 1000000L) - 1; // 1MHz
-    tmrInfo.period = 10 - 1;
-#endif
-    tmrInfo.irqPriority = MotionService_TimerInterruptPriority;
-    tmrInfo.irqSubPriority = MotionService_TimerInterruptSubPriority;
-    tmrInfo.isrFunction = tmrInterruptFunction;
-    tmrInfo.isrParams = this;
-    halTMRInitialize(&tmrInfo);
-    
-    halTMRSetInterruptPriority(MotionService_Timer, MotionService_TimerInterruptPriority, MotionService_TimerInterruptSubPriority);
-    halTMRSetInterruptFunction(MotionService_Timer, tmrInterruptFunction, this);
+    halTMRSetInterruptFunction(cfg.hTimer, tmrInterruptFunction, this);
 }
 
 
@@ -371,9 +365,9 @@ void Motion::timerInitialize() {
 ///
 void Motion::timerStart() {
     
-	halTMRClearInterruptFlag(cfg.timer);
-	halTMREnableInterrupt(cfg.timer);
-    halTMRStartTimer(cfg.timer);
+	clearInterruptSourceFlag(cfg.hTimer);
+	enableInterruptSource(cfg.hTimer);
+    halTMRStartTimer(cfg.hTimer);
 }
 
 
@@ -382,18 +376,18 @@ void Motion::timerStart() {
 ///
 void Motion::timerStop() {
 
-    halTMRStopTimer(cfg.timer);
-	halTMRDisableInterrupt(cfg.timer);
+    halTMRStopTimer(cfg.hTimer);
+	disableInterruptSource(cfg.hTimer);
 }
 
 
 /// ----------------------------------------------------------------------
 /// \brief    Procesa la interrupcio del temporitzador.
-/// \param    timer: Handler del temporitzador.
+/// \param    handler: Handler del temporitzador.
 /// \param    param: Handler del servei.
 ///
 void Motion::tmrInterruptFunction(
-    TMRTimer timer, 
+    TMRHandler handler,
     void* param) {
     
     Motion* motion = static_cast<Motion*>(param);

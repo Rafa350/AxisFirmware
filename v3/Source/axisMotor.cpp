@@ -12,9 +12,9 @@ using namespace axis;
 /// \param    configuration: Parametres de configuracio.
 ///
 Motor::Motor(
-    const Configuration& cfg) {
+    const Configuration& cfg):
 
-    this->cfg = cfg;
+    cfg(cfg) {
     
     initialize();
 }

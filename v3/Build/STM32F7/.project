@@ -276,6 +276,11 @@
 			<locationURI>PARENT-4-PROJECT_LOC/EOS/v2/Include/HAL/halSYS.h</locationURI>
 		</link>
 		<link>
+			<name>Inc/Framework/EOS/HAL/halTMR.h</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/EOS/v2/Include/HAL/halTMR.h</locationURI>
+		</link>
+		<link>
 			<name>Inc/Framework/EOS/Services/eosDigInputService.h</name>
 			<type>1</type>
 			<locationURI>PARENT-4-PROJECT_LOC/EOS/v2/Include/Services/eosDigInputService.h</locationURI>
@@ -514,6 +519,11 @@
 			<name>Inc/Framework/EOS/HAL/STM32/halSYS.h</name>
 			<type>1</type>
 			<locationURI>PARENT-4-PROJECT_LOC/EOS/v2/Include/HAL/STM32/halSYS.h</locationURI>
+		</link>
+		<link>
+			<name>Inc/Framework/EOS/HAL/STM32/halTMR.h</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/EOS/v2/Include/HAL/STM32/halTMR.h</locationURI>
 		</link>
 		<link>
 			<name>Src/Framework/EOS/HAL/STM32/halGPIO.c</name>
