@@ -10,7 +10,7 @@
 #include "Services/eosDigOutputService.h"
 #include "axisApplication.h"
 #include "axisMotionService.h"
-#include "axisMotion.h"
+#include "axisP2PMotion.h"
 #include "axisMotor.h"
 
 
@@ -18,13 +18,13 @@ using namespace eos;
 using namespace axis;
 
 
-TMRData digInputTimer;
-TMRData digOutputTimer;
-TMRData motionTimer;
+static TMRData digInputTimerData;      // Dades del temporitzador pel servei DigInput
+static TMRData digOutputTimerData;     // Dades del temporitzador pel servei DigOutput
+static TMRData motionTimerData;        // Dades del temporitzador pel control de moviment
 
-
-const int move = 32000;
-bool lock = false;
+TMRHandler hDigInputTimer;             // Handler del temporitzador
+TMRHandler hDigOutputTimer;            // Handler del temporitzador
+TMRHandler hMotionTimer;               // Handler del temporitzador
 
 
 /// ----------------------------------------------------------------------
@@ -35,8 +35,11 @@ AxisApplication::AxisApplication():
 #ifdef EXIST_SWITCHES_SW2
     , sw2EventCallback(this, &AxisApplication::sw2EventHandler)
 #endif
+#ifdef EXIST_SWITCHES_SW3
+    , sw3EventCallback(this, &AxisApplication::sw3EventHandler)
+#endif
 {
-    
+
 }
 
 
@@ -44,7 +47,7 @@ AxisApplication::AxisApplication():
 /// \brief    Inicialitza el servei d'entrades digitals.
 ///
 void AxisApplication::configureDigInputService() {
-    
+
     // Inicialitza el ports
     //
 #if defined(EOS_PIC32)
@@ -59,24 +62,24 @@ void AxisApplication::configureDigInputService() {
 #ifdef EXIST_SWITCHES_SW2
 #endif
 #endif
-    
+
     // Inicialitza el temporitzador
     //
 	TMRInitializeInfo tmrInfo;
 	tmrInfo.timer = DigInputService_Timer;
 #if defined(EOS_PIC32)
     tmrInfo.options = HAL_TMR_MODE_16 | HAL_TMR_CLKDIV_64;
-    tmrInfo.period = ((DigInputService_TimerClockFrequency * DigInputService_TimerPeriod) / 64000) - 1; 
+    tmrInfo.period = ((DigInputService_TimerClockFrequency * DigInputService_TimerPeriod) / 64000) - 1;
 #elif defined(EOS_STM32F4) || defined(EOS_STM32F7)
     tmrInfo.options = HAL_TMR_MODE_16 | HAL_TMR_CLKDIV_1;
     tmrInfo.prescaler = (DigInputService_TimerClockFrequency / 1000000L) - 1;
     tmrInfo.period = (1000 * DigInputService_TimerPeriod) - 1;
 #else
     //#error CPU no soportada
-#endif   
-	halTMRInitialize(&digInputTimer, &tmrInfo);
+#endif
+	hDigInputTimer = halTMRInitialize(&digInputTimerData, &tmrInfo);
 
-	// Inicialitza les interrupcions asociades al temporitzador
+	// Inicialitza les interrupcions associades al temporitzador
 	//
     halINTSetInterruptVectorPriority(DigInputService_TimerInterruptVector, DigInputService_TimerInterruptPriority, DigInputService_TimerInterruptSubPriority);
     halINTEnableInterruptVector(DigInputService_TimerInterruptVector);
@@ -84,13 +87,13 @@ void AxisApplication::configureDigInputService() {
     // Inicialitza el servei
     //
     DigInputService::InitParams digInputServiceInit;
-    digInputServiceInit.hTimer = &digInputTimer;
+    digInputServiceInit.hTimer = hDigInputTimer;
     digInputService = new DigInputService(this, digInputServiceInit);
-    
+
 
     DigInput::InitParams digInputInit;
     digInputInit.eventParam = nullptr;
-    
+
     // Inicialitza la entrada SW_SW1
     //
     digInputInit.port = SWITCHES_SW1_PORT;
@@ -113,29 +116,29 @@ void AxisApplication::configureDigInputService() {
 /// \brief    Inicialitza el servei de sortides digitals.
 ///
 void AxisApplication::configureDigOutputService() {
-    
+
     // Inicialitza els ports
     //
     halGPIOInitializePin(DigOutput_BusyLedPort, DigOutput_BusyLedPin,
         HAL_GPIO_MODE_OUTPUT_PP | HAL_GPIO_INIT_CLR, HAL_GPIO_AF_NONE);
-    
+
     // Inicialitza el temporitzador
     //
 	TMRInitializeInfo tmrInfo;
 	tmrInfo.timer = DigOutputService_Timer;
 #if defined(EOS_PIC32)
     tmrInfo.options = HAL_TMR_MODE_16 | HAL_TMR_CLKDIV_64;
-    tmrInfo.period = ((DigOutputService_TimerClockFrequency * DigOutputService_TimerPeriod) / 64000) - 1; 
+    tmrInfo.period = ((DigOutputService_TimerClockFrequency * DigOutputService_TimerPeriod) / 64000) - 1;
 #elif defined(EOS_STM32F4) || defined(EOS_STM32F7)
     tmrInfo.options = HAL_TMR_MODE_16 | HAL_TMR_CLKDIV_1;
     tmrInfo.prescaler = (DigOutputService_TimerClockFrequency / 1000000L) - 1;
     tmrInfo.period = (1000 * DigOutputService_TimerPeriod) - 1;
 #else
     //#error CPU no soportada
-#endif   
-	halTMRInitialize(&digOutputTimer, &tmrInfo);
+#endif
+	hDigOutputTimer = halTMRInitialize(&digOutputTimerData, &tmrInfo);
 
-	// Inicialitza les interrupcions asociades al temporitzador
+	// Inicialitza les interrupcions associades al temporitzador
 	//
 	halINTSetInterruptVectorPriority(DigOutputService_TimerInterruptVector, DigOutputService_TimerInterruptPriority, DigOutputService_TimerInterruptSubPriority);
     halINTEnableInterruptVector(DigOutputService_TimerInterruptVector);
@@ -143,16 +146,16 @@ void AxisApplication::configureDigOutputService() {
     // Inicialitza el servei
     //
     DigOutputService::InitParams digOutputServiceInit;
-    digOutputServiceInit.hTimer = &digOutputTimer;
+    digOutputServiceInit.hTimer = hDigOutputTimer;
     digOutputService = new DigOutputService(this, digOutputServiceInit);
-    
+
     DigOutput::InitParams digOutputInit;
 
     // Inicialitza la sortida LED_LED3
     //
     digOutputInit.port = DigOutput_BusyLedPort;
     digOutputInit.pin = DigOutput_BusyLedPin;
-    led3 = new DigOutput(digOutputService, digOutputInit);
+    led1 = new DigOutput(digOutputService, digOutputInit);
 }
 
 
@@ -160,11 +163,11 @@ void AxisApplication::configureDigOutputService() {
 /// \brief    Inicialitza el servei de control de moviment.
 ///
 void AxisApplication::configureMotionService() {
-    
+
     // Inicialitza els ports
     //
     GPIOInitializePinInfo gpioInit;
-    
+
     gpioInit.options = HAL_GPIO_MODE_OUTPUT_PP | HAL_GPIO_INIT_CLR;
     gpioInit.alt = HAL_GPIO_AF_NONE;
 
@@ -175,7 +178,7 @@ void AxisApplication::configureMotionService() {
     gpioInit.port = MotionService_XMotorDirectionPort;
     gpioInit.pin = MotionService_XMotorDirectionPin;
     halGPIOInitializePins(&gpioInit, 1);
-    
+
     gpioInit.port = MotionService_YMotorStepPort;
     gpioInit.pin = MotionService_YMotorStepPin;
     halGPIOInitializePins(&gpioInit, 1);
@@ -195,7 +198,7 @@ void AxisApplication::configureMotionService() {
     // Inicialitza el temporitzador
     //
     TMRInitializeInfo tmrInit;
-    
+
     tmrInit.timer = MotionService_Timer;
 #if defined(EOS_PIC32)
     tmrInit.options = HAL_TMR_MODE_16 | HAL_TMR_CLKDIV_32;
@@ -205,15 +208,15 @@ void AxisApplication::configureMotionService() {
     tmrInit.prescaler = (MotionService_TimerClockFrequency / 1000000L) - 1;
     tmrInit.period = 10 - 1;
 #endif
-    halTMRInitialize(&motionTimer, &tmrInit);
+    hMotionTimer = halTMRInitialize(&motionTimerData, &tmrInit);
 
-	// Inicialitza les interrupcions asiciades al temporitzador
+	// Inicialitza les interrupcions associades al temporitzador
 	//
     halINTSetInterruptVectorPriority(MotionService_TimerInterruptVector, MotionService_TimerInterruptPriority, MotionService_TimerInterruptSubPriority);
     halINTEnableInterruptVector(MotionService_TimerInterruptVector);
-    
+
     Motor::Configuration motorCfg;
-    
+
     // Crea el motor del eix X
     //
     motorCfg.stepPort = MotionService_XMotorStepPort;
@@ -236,7 +239,7 @@ void AxisApplication::configureMotionService() {
     yMotor = new Motor(motorCfg);
 
     // Crea el motor del eix Z
-    //    
+    //
     motorCfg.stepPort = MotionService_ZMotorStepPort;
     motorCfg.stepPin = MotionService_ZMotorStepPin;
     motorCfg.directionPort = MotionService_ZMotorDirectionPort;
@@ -247,20 +250,20 @@ void AxisApplication::configureMotionService() {
 
     // Crea el controlador de moviment
     //
-    Motion::Configuration motionCfg;
+    P2PMotion::Configuration motionCfg;
     motionCfg.numAxis = 3;
     motionCfg.motors[0] = xMotor;
     motionCfg.motors[1] = yMotor;
     motionCfg.motors[2] = zMotor;
-    motionCfg.hTimer = &motionTimer;
-    motion = new Motion(motionCfg);
+    motionCfg.hTimer = hMotionTimer;
+    motion = new P2PMotion(motionCfg);
     motion->setJerk(50000);
     motion->setMaxAcceleration(800000);
     motion->setMaxSpeed(800000);
-    
+
     // Crea el servei de control de moviment
     //
-    //motionService = new MotionService(this, motion);
+    motionService = new MotionService(this, motion);
 }
 
 
@@ -268,7 +271,7 @@ void AxisApplication::configureMotionService() {
 /// \brief    Inicialitza l'aplicacio.
 ///
 void AxisApplication::onInitialize() {
-       
+
     configureMotionService();
     //fsmService = new FsmService(this, nullptr);
     configureDigInputService();
@@ -278,10 +281,10 @@ void AxisApplication::onInitialize() {
 
 void AxisApplication::sw1EventHandler(
     const DigInput::EventArgs& args) {
-    
+
     if (sw1->read() == SWITCHES_STATE_ON) {
-        led3->pulse(250);
-        motion->doMoveRel(0, move);
+        led1->pulse(250);
+        motionService->moveAbs(0, 0, 0);
     }
 }
 
@@ -289,37 +292,22 @@ void AxisApplication::sw1EventHandler(
 #ifdef EXIST_SWITCHES_SW2
 void AxisApplication::sw2EventHandler(
     const DigInput::EventArgs& args) {
-    
+
     if (sw2->read() == SWITCHES_STATE_ON) {
-    	led3->pulse(250);
-        motion->doMoveRel(0, -move);
+    	led1->pulse(250);
+        motionService->moveRel(0, 0, 0);
     }
 }
 #endif
 
 
-/// ----------------------------------------------------------------------
-/// \brief    Procesa la interrupcio TIM2_IRQn
-///
-extern "C" void TIM2_IRQHandler() {
+#ifdef EXIST_SWITCHES_SW3
+void AxisApplication::sw3EventHandler(
+    const DigInput::EventArgs& args) {
 
-	halTMRInterruptHandler(&digInputTimer);
+    if (sw3->read() == SWITCHES_STATE_ON) {
+    	led1->pulse(250);
+        motionService->stop();
+    }
 }
-
-
-/// ----------------------------------------------------------------------
-/// \brief    Procesa la interrupcio TIM3_IRQn
-///
-extern "C" void TIM3_IRQHandler() {
-
-	halTMRInterruptHandler(&digOutputTimer);
-}
-
-
-/// ----------------------------------------------------------------------
-/// \brief    Procesa la interrupcio TIM4_IRQn
-///
-extern "C" void TIM4_IRQHandler() {
-
-	halTMRInterruptHandler(&motionTimer);
-}
+#endif

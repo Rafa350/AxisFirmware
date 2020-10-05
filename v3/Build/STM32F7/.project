@@ -186,6 +186,11 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Source/STM32F7/appInitialize.cpp</locationURI>
 		</link>
 		<link>
+			<name>Src/App/STM32F7/appInterrupts.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Source/STM32F7/appInterrupts.cpp</locationURI>
+		</link>
+		<link>
 			<name>Src/App/STM32F7/stm32f7xx_hal_timebase_tim.c</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Source/STM32F7/stm32f7xx_hal_timebase_tim.c</locationURI>

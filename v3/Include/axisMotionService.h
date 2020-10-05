@@ -4,28 +4,54 @@
 
 #include "eos.h"
 #include "Services/eosService.h"
+#include "System/Core/eosQueue.h"
 
-#include "axisMotion.h"
+#include "axisP2PMotion.h"
 
 
 namespace eos {
-    
+
     class Application;
 }
 
 
 namespace axis {
-    
+
     class MotionService: public eos::Service {
         private:
-            Motion* motion;
-            
+            enum class OpCode {
+                stop,
+                moveHome,
+                moveAbs,
+                moveRel
+            };
+            struct Command {
+                OpCode opCode;
+            };
+            typedef eos::Queue<Command> CommandQueue;
+
+        private:
+            const unsigned commandQueueSize = 10;
+            CommandQueue commandQueue;
+            P2PMotion* motion;
+
+        private:
+            void cmdStop();
+            void cmdMoveHome();
+            void cmdMoveAbs();
+            void cmdMoveRel();
+
         protected:
             void onInitialize() override;
             void onTask() override;
-            
+
         public:
-            MotionService(eos::Application *application, Motion* motion);
+            MotionService(eos::Application *application, P2PMotion* motion);
+
+            void moveHome();
+            void moveAbs(int x, int y, int z);
+            void moveRel(int dx, int dy, int dz);
+            void stop();
     };
 }
 

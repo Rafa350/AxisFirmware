@@ -8,7 +8,10 @@
 #include "stm32746g_discovery_sdram.h"
 
 
-static void CLKInitialize() {
+/// ----------------------------------------------------------------------
+/// \brief    Inicialitza el clock del sistema
+///
+static void initializeClock() {
 
 	RCC_ClkInitTypeDef clkInit;
 	RCC_OscInitTypeDef oscInit;
@@ -39,7 +42,10 @@ static void CLKInitialize() {
 }
 
 
-static void SDRAMInitialize() {
+/// ----------------------------------------------------------------------
+/// \brief    Inicialitza la ram SD
+///
+static void initializeSDRam() {
 
 	BSP_SDRAM_Init();
 	BSP_SDRAM_Initialization_sequence(REFRESH_COUNT);
@@ -55,11 +61,12 @@ void appInitialize() {
     SCB_EnableDCache();
 
     halSYSInitialize();
-	CLKInitialize();
-	SDRAMInitialize();
 
-	__HAL_FREEZE_TIM2_DBGMCU();
-	__HAL_FREEZE_TIM3_DBGMCU();
-	__HAL_FREEZE_TIM4_DBGMCU();
+    initializeClock();
+	initializeSDRam();
+
+	//__HAL_FREEZE_TIM2_DBGMCU();
+	//__HAL_FREEZE_TIM3_DBGMCU();
+	//__HAL_FREEZE_TIM4_DBGMCU();
 	__HAL_FREEZE_TIM6_DBGMCU();
 }

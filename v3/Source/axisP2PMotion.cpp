@@ -1,16 +1,16 @@
 #include "eos.h"
+#include "eosAssert.h"
 #include "HAL/halSYS.h"
 #include "HAL/halTMR.h"
 #include "HAL/halINT.h"
 #include "System/eosMath.h"
 #include "System/Core/eosTask.h"
 
-#include "axisMotion.h"
+#include "axisP2PMotion.h"
 #include "axisMotor.h"
 
 #include "limits.h"
 #include "math.h"
-//#include "sys/attribs.h"
 
 
 #define HZ                        100000.0L
@@ -39,13 +39,13 @@
 
 
 #if defined(EOS_STM32)
-#define clearInterruptSourceFlag(hTimer)    halTMRClearInterruptSourceFlag(hTimer, HAL_TMR_EVENT_UP)
-#define enableInterruptSource(hTimer)       halTMREnableInterruptSources(hTimer, HAL_TMR_EVENT_UP)
-#define disableInterruptSource(hTimer)      halTMRDisableInterruptSources(hTimer, HAL_TMR_EVENT_UP)
+#define __halTMRClearInterruptFlags(hTimer)      halTMRClearInterruptFlags(hTimer, HAL_TMR_EVENT_UP)
+#define __halTMREnableInterrupts(hTimer)         halTMREnableInterrupts(hTimer, HAL_TMR_EVENT_UP)
+#define __halTMRDisableInterrupts(hTimer)        halTMRDisableInterrupts(hTimer, HAL_TMR_EVENT_UP)
 #elif defined(EOS_PIC32)
-#define clearInterruptSourceFlag(hTimer)    halTMRClearInterruptSourceFlag(hTimer)
-#define enableInterruptSource(hTimer)       halTMREnableInterruptSource(hTimer)
-#define disableInterruptSource(hTimer)      halTMRDisableInterruptSource(hTimer)
+#define __halTMRClearInterruptFlags(hTimer)      halTMRClearInterruptFlags(hTimer)
+#define __halTMREnableInterrupts(hTimer)         halTMREnableInterrupts(hTimer)
+#define __halTMRDisableInterrupts(hTimer)        halTMRDisableInterrupts(hTimer)
 #endif
 
 
@@ -56,29 +56,29 @@ using namespace axis;
 
 // Macros per facilitar els calculs d'esponencials i arrels
 //
-#define exp2(a)     ((a) * (a))             
-#define exp3(a)     ((a) * (a) * (a))       
-#define exp4(a)     ((a) * (a) * (a) * (a)) 
-#define rt2(a)      sqrtl(a)                
-#define rt3(a)      cbrtl(a)                
+#define exp2(a)     ((a) * (a))
+#define exp3(a)     ((a) * (a) * (a))
+#define exp4(a)     ((a) * (a) * (a) * (a))
+#define rt2(a)      sqrtl(a)
+#define rt3(a)      cbrtl(a)
 
 
 /// ----------------------------------------------------------------------
 /// \brief    Constructor.
 /// \param    cfg: Parametres de configuracio.
 ///
-Motion::Motion(
+P2PMotion::P2PMotion(
     const Configuration& cfg):
-    
+
 	cfg(cfg),
     busy(false) {
-    
+
     for (int i = 0; i < cfg.numAxis; i++) {
         axisPos[i] = 0;
         axisMax[i] = INT_MAX;
         axisMin[i] = INT_MIN;
     }
-    
+
     jerk = MOTION_DEF_JERK;
     maxAcceleration = MOTION_DEF_ACCELERATION;
     maxSpeed = MOTION_DEF_SPEED;
@@ -90,7 +90,7 @@ Motion::Motion(
 /// ----------------------------------------------------------------------
 /// \brief    Destructor.
 ///
-Motion::~Motion() {
+P2PMotion::~P2PMotion() {
 }
 
 
@@ -98,21 +98,23 @@ Motion::~Motion() {
 /// \brief    Assigna la velocitat maxima.
 /// \param    speed: El nou valor.
 ///
-void Motion::setMaxSpeed(
+void P2PMotion::setMaxSpeed(
     int speed) {
+
+    eosAssert(speed > 0);
 
     // Si es ocupat no fa res
     //
-    if (busy) 
+    if (busy)
         return;
-      
+
     // Ajusta limits
     //
-    if (speed < MOTION_MIN_SPEED) 
-        speed = MOTION_MIN_SPEED;        
+    if (speed < MOTION_MIN_SPEED)
+        speed = MOTION_MIN_SPEED;
     else if (speed > MOTION_MAX_SPEED)
         speed = MOTION_MAX_SPEED;
-        
+
     // Canvia la velocitat maxima
     //
     this->maxSpeed = speed;
@@ -123,17 +125,19 @@ void Motion::setMaxSpeed(
 /// \brief    Assigna l'aceleracio maxima.
 /// \param    acceleration: El nou valor.
 ///
-void Motion::setMaxAcceleration(
+void P2PMotion::setMaxAcceleration(
     int acceleration) {
+
+	eosAssert(acceleration > 0);
 
     // Si es ocupat no fa res
     //
-    if (busy) 
+    if (busy)
         return;
-    
+
     // Ajusta els limits
     //
-    if (acceleration < MOTION_MIN_ACCELERATION) 
+    if (acceleration < MOTION_MIN_ACCELERATION)
         acceleration = MOTION_MIN_ACCELERATION;
     else if (acceleration > MOTION_MAX_ACCELERATION)
         acceleration = MOTION_MAX_ACCELERATION;
@@ -148,17 +152,19 @@ void Motion::setMaxAcceleration(
 /// \brief    Asigna el impuls.
 /// \param    jerk: El valor del impuls.
 ///
-void Motion::setJerk(
+void P2PMotion::setJerk(
     int jerk) {
+
+	eosAssert(jerk > 0);
 
     // Si es ocupat no fa res
     //
-    if (busy) 
+    if (busy)
         return;
-      
+
     // Ajusta els limits
     //
-    if (jerk < MOTION_MIN_JERK) 
+    if (jerk < MOTION_MIN_JERK)
         jerk = MOTION_MIN_JERK;
     else if (jerk > MOTION_MAX_JERK)
         jerk = MOTION_MAX_JERK;
@@ -169,16 +175,22 @@ void Motion::setJerk(
 }
 
 
-void Motion::setMaxPosition(
+/// ----------------------------------------------------------------------
+/// \brief    Asigna el limit superior.
+///
+void P2PMotion::setMaxPosition(
     const Vector& position) {
-    
+
     axisMax = position;
 }
 
 
-void Motion::setMinPosition(
+/// ----------------------------------------------------------------------
+/// \brief    Asigna el limit inferior.
+///
+void P2PMotion::setMinPosition(
     const Vector& position) {
-    
+
     axisMin = position;
 }
 
@@ -186,8 +198,8 @@ void Motion::setMinPosition(
 /// ----------------------------------------------------------------------
 /// \bried    Asigna la posicio actual com la posicio HOME.
 ///
-void Motion::setHome() {
-    
+void P2PMotion::setHome() {
+
     int v[] = {0, 0, 0};
     axisPos = Vector(v);
 }
@@ -198,9 +210,11 @@ void Motion::setHome() {
 /// \param    axis: Identificador del eix.
 /// \return   Posicio del eix
 ///
-int Motion::getAxis(
+int P2PMotion::getAxis(
     int axis) const {
-    
+
+	eosAssert(axis >= 0);
+
     int position = -1;
 
     if (axis <= cfg.numAxis) {
@@ -208,7 +222,7 @@ int Motion::getAxis(
         position = axisPos[axis];
         Task::exitCriticalSection();
     }
-    
+
     return position;
 }
 
@@ -217,7 +231,7 @@ int Motion::getAxis(
 /// \brief    Obte la posicio dels eixos.
 /// \return   La posicio.
 ///
-Motion::Vector Motion::getPosition() const {
+P2PMotion::Vector P2PMotion::getPosition() const {
 
     Vector position;
     Task::enterCriticalSection();
@@ -231,19 +245,19 @@ Motion::Vector Motion::getPosition() const {
 /// \brief    Realitza un moviment absolut a la posicio especificada
 /// \param    position: Posicio
 ///
-void Motion::doMoveAbs(
+void P2PMotion::doMoveAbs(
     const Vector& position) {
 
     // Si es ocupat no fa res
     //
-    if (busy) 
+    if (busy)
         return;
 
     // Ajusta els limits
     //
     Vector newPosition(position);
     for (int i = 0; i < cfg.numAxis; i++) {
-        if (position[i] < axisMin[i]) 
+        if (position[i] < axisMin[i])
             newPosition[i] = axisMin[i];
         else if (position[i] > axisMax[i])
             newPosition[i] = axisMax[i];
@@ -265,7 +279,7 @@ void Motion::doMoveAbs(
 /// \param    axis: Eix a moure
 /// \param    position: Nova posicio
 ///
-void Motion::doMoveAbs(
+void P2PMotion::doMoveAbs(
     int axis,
     int position) {
 
@@ -293,9 +307,9 @@ void Motion::doMoveAbs(
 /// \brief    Realitza un moviment relatiu a la posicio actual
 /// \param    delta: Increment de posicio
 ///
-void Motion::doMoveRel(
+void P2PMotion::doMoveRel(
     const Vector& delta) {
-    
+
     Vector position;
     for (int i = 0; i < cfg.numAxis; i++)
         position[i] = axisPos[i] + delta[i];
@@ -308,10 +322,10 @@ void Motion::doMoveRel(
 /// \param    axis: L'eix a moure.
 /// \param    delte: Distancia.
 ///
-void Motion::doMoveRel(
-    int axis, 
+void P2PMotion::doMoveRel(
+    int axis,
     int delta) {
-    
+
     // Comprova si els parametres son valids
     //
     if (axis >= cfg.numAxis)
@@ -335,7 +349,7 @@ void Motion::doMoveRel(
 /// ----------------------------------------------------------------------
 /// \brief    Realitza un moviment a la posicio HOME
 ///
-void Motion::doMoveHome() {
+void P2PMotion::doMoveHome() {
 
     int v[] = {0, 0, 0};
     doMoveAbs(v);
@@ -345,7 +359,7 @@ void Motion::doMoveHome() {
 /// ---------------------------------------------------------------------
 /// \brief    Atura el moviment inmediatament
 ///
-void Motion::doStop() {
+void P2PMotion::doStop() {
 
     stop();
 }
@@ -354,7 +368,7 @@ void Motion::doStop() {
 /// ---------------------------------------------------------------------
 /// \brief    Initialitza el temporitzador
 ///
-void Motion::timerInitialize() {
+void P2PMotion::timerInitialize() {
 
     halTMRSetInterruptFunction(cfg.hTimer, tmrInterruptFunction, this);
 }
@@ -363,10 +377,10 @@ void Motion::timerInitialize() {
 /// ----------------------------------------------------------------------
 /// \brief    Activa el temporitzador i comença a disparar interrupcions
 ///
-void Motion::timerStart() {
-    
-	clearInterruptSourceFlag(cfg.hTimer);
-	enableInterruptSource(cfg.hTimer);
+void P2PMotion::timerStart() {
+
+	__halTMRClearInterruptFlags(cfg.hTimer);
+	__halTMREnableInterrupts(cfg.hTimer);
     halTMRStartTimer(cfg.hTimer);
 }
 
@@ -374,10 +388,10 @@ void Motion::timerStart() {
 /// ----------------------------------------------------------------------
 /// \brief    Para el temporitzador
 ///
-void Motion::timerStop() {
+void P2PMotion::timerStop() {
 
     halTMRStopTimer(cfg.hTimer);
-	disableInterruptSource(cfg.hTimer);
+	__halTMRDisableInterrupts(cfg.hTimer);
 }
 
 
@@ -386,11 +400,11 @@ void Motion::timerStop() {
 /// \param    handler: Handler del temporitzador.
 /// \param    param: Handler del servei.
 ///
-void Motion::tmrInterruptFunction(
+void P2PMotion::tmrInterruptFunction(
     TMRHandler handler,
     void* param) {
-    
-    Motion* motion = static_cast<Motion*>(param);
+
+    P2PMotion* motion = static_cast<P2PMotion*>(param);
     motion->loop();
 }
 
@@ -400,7 +414,7 @@ void Motion::tmrInterruptFunction(
 /// \param    position: Coordinades absolutes del desti del moviment.
 /// \remarks  Es calcula suposant que la velocitat inicial i final es 0.
 ///
-void Motion::start(
+void P2PMotion::start(
     const Vector& position) {
 
     // Posa el controlador en modus ocupat
@@ -439,8 +453,8 @@ void Motion::start(
     stepNumber = deltaMax;
 
     // Realitza les operacions de calcul del perfil de velocitat. Interesa
-    // calcular el temps dels tram de les fases I i II (T1 i T2 respectivament), 
-    // el reste s'interpolen per simetries. El temps, en realitat, es el numero
+    // calcular el temps dels tram de les fases I i II (T1 i T2 respectivament),
+    // el reste s'interpolen per simetries. El temps, en realitat, es el nombre
     // d'interrupcions, per tant contar interrupcions es contar el temps.
     //
     long double S1, S2, S3;
@@ -455,10 +469,10 @@ void Motion::start(
     jrk = jerk;
     distance = stepNumber;
     halfDistance = 0.5L * distance;
-    
-    T1 = acceleration / jrk;     
-    V1 = 0.5L * jrk * exp2(T1);   
-    
+
+    T1 = acceleration / jrk;
+    V1 = 0.5L * jrk * exp2(T1);
+
     if (V1 > halfSpeed) {
 
         T1 = rt2(speed / jrk);
@@ -469,7 +483,7 @@ void Motion::start(
 
         T3 = T1;
         V3 = speed;
-        
+
         S1 = (jrk * exp3(T1)) / 6.0L;
         S2 = 0.0L;
         S3 = (V2 * T3) + (0.5L * jrk * T1 * exp2(T3)) - (jrk * exp3(T3) / 6.0L);
@@ -481,7 +495,7 @@ void Motion::start(
 
         T3 = T1;
         V3 = speed;
-        
+
         S1 = jrk * exp3(T1) / 6.0L;
         S2 = (V1 * T2) + (0.5L * acceleration * exp2(T2));
         S3 = (V2 * T3) + (0.5L * acceleration * exp2(T3)) - (jrk * exp3(T3) / 6.0L);
@@ -502,7 +516,7 @@ void Motion::start(
 
             T1 = acceleration / jrk;
             V1 = 0.5L * jrk * exp2(T1);
-            
+
             T2 = (1.0L / (2.0L * jrk * T1)) *
                  (-3.0L * jrk * exp2(T1) + rt2(exp2(jrk) * exp4(T1) + 4.0L * jrk * T1 * distance));
             V2 = V1 + (T2 * acceleration);
@@ -535,9 +549,10 @@ void Motion::start(
 /// ----------------------------------------------------------------------
 /// \brief    Finalitza el moviment inmediatament.
 ///
-void Motion::stop() {
-    
+void P2PMotion::stop() {
+
     // Desactiva el temporitzador, i deixa de generar interrupcions.
+    //
     timerStop();
 
     // Posa els pins de control dels motors en estat desactivat.
@@ -545,7 +560,7 @@ void Motion::stop() {
     for (int i = 0; i < cfg.numAxis; i++)
         cfg.motors[i]->setStep(Motor::Step::idle);
 
-    // Indica que el controladior esta lliure per un altre moviment.
+    // Indica que el controlador esta lliure per un altre moviment.
     //
     busy = false;
 }
@@ -554,10 +569,10 @@ void Motion::stop() {
 /// ----------------------------------------------------------------------
 /// \brief    Executa un pas del moviment.
 ///
-void Motion::loop() {
+void P2PMotion::loop() {
 
     bool doStep = false;
-    
+
     for (int i = 0; i < cfg.numAxis; i++)
         cfg.motors[i]->setStep(Motor::Step::idle);
 
@@ -576,7 +591,7 @@ void Motion::loop() {
                 }
                 count++;
             }
-            
+
             if (count >= timeSAccel) {
                 count = 0;
                 phase = Phase::phase_II;
@@ -595,7 +610,7 @@ void Motion::loop() {
                 }
                 count++;
             }
-            
+
             if (count >= timeSConst) {
                 count = 0;
                 phase = Phase::phase_III;
@@ -615,7 +630,7 @@ void Motion::loop() {
                 }
                 count++;
             }
-            
+
             if (count >= timeSAccel) {
                 count = 0;
                 phase = Phase::phase_IV;
@@ -637,7 +652,7 @@ void Motion::loop() {
                     count++; // Esta aqui perque conta distancia (pasos)
                 }
             }
-            
+
             if (count >= stepSFlat) {
                 count = 0;
                 phase = Phase::phase_V;
@@ -655,7 +670,7 @@ void Motion::loop() {
                 }
                 count++;
             }
-            
+
             if (count >= timeSAccel) {
                 count = 0;
                 phase = Phase::phase_VI;
@@ -672,7 +687,7 @@ void Motion::loop() {
                 }
                 count++;
             }
-            
+
             if (count >= timeSConst) {
                 count = 0;
                 phase = Phase::phase_VII;
@@ -701,7 +716,7 @@ void Motion::loop() {
     // Realitza un pas de la trajectoria utilitzan Besenham
     //
     if (doStep) {
-        
+
         int ma = mainAxis;
         for (int i = 0; i < cfg.numAxis; i++) {
             if (i != ma) {
@@ -713,16 +728,16 @@ void Motion::loop() {
                 error[i] += ddelta[i];
             }
         }
-        axisPos[ma] += inc[ma];        
+        axisPos[ma] += inc[ma];
         cfg.motors[ma]->setStep(Motor::Step::active);
 
         // Incrementa el contador de pasos
         //
         stepCounter += 1;
-        
+
         // Si ha acabat, finalitza el moviment
         //
-        if (stepCounter == stepNumber) 
+        if (stepCounter == stepNumber)
             stop();
     }
 }

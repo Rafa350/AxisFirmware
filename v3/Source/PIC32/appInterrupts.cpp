@@ -25,7 +25,7 @@ extern "C" void __ISR(_TIMER_5_VECTOR, IPL2SOFT) isrTMR5Wrapper(void);
 ///
 #ifdef _TMR1
 extern "C" void isrTMR1Handler(void) {
-    
+
 }
 #endif
 
@@ -36,11 +36,11 @@ extern "C" void isrTMR1Handler(void) {
 #ifdef _TMR2
 extern "C" void isrTMR2Handler(void) {
 
-    extern TMRData digInputTimer;
-    
-    halTMRInterruptHandler(&digInputTimer);
+    extern TMRHandler hDigInputTimer;
+
+    halTMRInterruptHandler(hDigInputTimer);
 }
-#endif            
+#endif
 
 
 /// ----------------------------------------------------------------------
@@ -49,11 +49,11 @@ extern "C" void isrTMR2Handler(void) {
 #ifdef _TMR3
 extern "C" void isrTMR3Handler(void) {
 
-    extern TMRData digOutputTimer;
-    
-    halTMRInterruptHandler(&digOutputTimer);
+    extern TMRHandler hDigOutputTimer;
+
+    halTMRInterruptHandler(hDigOutputTimer);
 }
-#endif            
+#endif
 
 
 /// ----------------------------------------------------------------------
@@ -62,11 +62,11 @@ extern "C" void isrTMR3Handler(void) {
 #ifdef _TMR4
 extern "C" void isrTMR4Handler(void) {
 
-    extern TMRData motionTimer;
-    
-    halTMRInterruptHandler(&motionTimer);
+    extern TMRHandler hMotionTimer;
+
+    halTMRInterruptHandler(hMotionTimer);
 }
-#endif            
+#endif
 
 
 /// ----------------------------------------------------------------------
@@ -75,4 +75,4 @@ extern "C" void isrTMR4Handler(void) {
 #ifdef _TMR5
 extern "C" void isrTMR5Handler(void) {
 }
-#endif            
+#endif

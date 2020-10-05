@@ -1,11 +1,10 @@
-#ifndef __axisMotion__
-#define __axisMotion__
+#ifndef __axisP2PMotion__
+#define __axisP2PMotion__
 
 
 #include "eos.h"
 #include "HAL/halTMR.h"
 #include "System/Collections/eosStaticArray.h"
-#include "System/Collections/eosCircularQueue.h"
 #include "axisMotor.h"
 
 
@@ -13,24 +12,10 @@
 #define MOTION_MAX_AXIS 3
 #endif
 
-#ifndef MOTION_QUEUE_SIZE
-#define MOTION_QUEUE_SIZE 20
-#endif
-
 
 namespace axis {
-    
-    class Motion {        
-        private:
-            struct Block {
-                int64_t timeAccelUp;
-                int64_t timeConstUp;
-                int64_t stepsFlat;
-                int64_t timeAccelDown;
-                int64_t timeConstDown;
-            };
-            typedef eos::CircularQueue<Block*, MOTION_QUEUE_SIZE> BlockQueue;
-            
+
+    class P2PMotion {
         public:
             typedef eos::StaticArray<Motor*, MOTION_MAX_AXIS> Motors;
             typedef eos::StaticArray<int, MOTION_MAX_AXIS> Vector;
@@ -39,7 +24,7 @@ namespace axis {
                 Motors motors;
                 TMRHandler hTimer;
             };
-            
+
         private:
             enum class Phase {                 // Fase del perfil 'S'
                 phase_I,
@@ -50,7 +35,7 @@ namespace axis {
                 phase_VI,
                 phase_VII
             };
-            
+
         private:
             Configuration cfg;
             Vector axisMax;                    // -Valor maxim de cada eix
@@ -63,7 +48,7 @@ namespace axis {
             //BlockQueue queue;                // -Cua de blocs
             //Block* lastBlock;                // -Ultim bloc afeigit
             //Block* currentBlock;             // -Blocc actual
-            
+
             // Control del perfil de velocitat
             //
             Phase phase;                       // -Fase del perfil en la que es troba
@@ -74,7 +59,7 @@ namespace axis {
             int64_t curJerk;                   // -Impuls actual
             int64_t curAcceleration;           // -Acceleracio actual
             int64_t curSpeed;                  // -Velocitat actual
-            int64_t curPosition;               // -Posicio actual            
+            int64_t curPosition;               // -Posicio actual
 
             // Control de la trajectoria
             //
@@ -84,10 +69,10 @@ namespace axis {
             Vector error;                      // -Error acumulat
             Vector ddelta;                     // -Deltas * 2
             Vector inc;                        // -Increments dels eixos per cada pas
-            
+
         public:
-            Motion(const Configuration& cfg);
-            ~Motion();
+            P2PMotion(const Configuration& cfg);
+            ~P2PMotion();
 
             void setMaxSpeed(int speed);
             void setMaxAcceleration(int acceleration);
@@ -106,18 +91,18 @@ namespace axis {
             void doMoveRel(int axis, int delta);
             void doMoveHome();
             void doStop();
-            
-        private:            
+
+        private:
             void timerInitialize();
             void timerStart();
             void timerStop();
             void start(const Vector& position);
             void stop();
             void loop();
-            
+
             static void tmrInterruptFunction(TMRHandler handler, void* param);
     };
 }
 
 
-#endif // __axisMotion__
+#endif // __axisP2PMotion__

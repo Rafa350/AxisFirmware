@@ -7,7 +7,7 @@
 #define configUSE_TICKLESS_IDLE                 0
 #define configCPU_CLOCK_HZ                      (80000000UL)
 #define configPERIPHERAL_CLOCK_HZ               (80000000UL)
-#define configTICK_RATE_HZ                      ((TickType_t) 500)
+#define configTICK_RATE_HZ                      ((TickType_t) 250)
 #define configMAX_PRIORITIES                    (6UL)
 #define configMINIMAL_STACK_SIZE                (512)
 #define configISR_STACK_SIZE                    (512)
@@ -62,7 +62,7 @@
 /* The priority at which the tick interrupt runs.  This should probably be kept at 1. */
 #define configKERNEL_INTERRUPT_PRIORITY         1
 
-/* The maximum interrupt priority from which FreeRTOS.org API functions can be called.  
+/* The maximum interrupt priority from which FreeRTOS.org API functions can be called.
 Only API functions that end in ...FromISR() can be used within interrupts. */
 #define configMAX_SYSCALL_INTERRUPT_PRIORITY    3
 
