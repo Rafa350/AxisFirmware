@@ -231,7 +231,7 @@ void AxisApplication::configureMotionService() {
     // Crea el motor del eix Y
     //
     motorCfg.stepPort = MotionService_YMotorStepPort;
-    motorCfg.stepPin = MotionService_YMotorStepPort;
+    motorCfg.stepPin = MotionService_YMotorStepPin;
     motorCfg.directionPort = MotionService_YMotorDirectionPort;
     motorCfg.directionPin = MotionService_YMotorDirectionPin;
     motorCfg.enablePort = MotionService_YMotorEnablePort;
@@ -284,7 +284,7 @@ void AxisApplication::sw1EventHandler(
 
     if (sw1->read() == SWITCHES_STATE_ON) {
         led1->pulse(250);
-        motionService->moveAbs(0, 0, 0);
+        motionService->moveRel(32000, 320, 0);
     }
 }
 
@@ -295,7 +295,7 @@ void AxisApplication::sw2EventHandler(
 
     if (sw2->read() == SWITCHES_STATE_ON) {
     	led1->pulse(250);
-        motionService->moveRel(0, 0, 0);
+        motionService->moveRel(-32000, 0, 0);
     }
 }
 #endif

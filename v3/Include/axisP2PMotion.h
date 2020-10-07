@@ -5,6 +5,7 @@
 #include "eos.h"
 #include "HAL/halTMR.h"
 #include "System/Collections/eosStaticArray.h"
+#include "System/Core/eosSemaphore.h"
 #include "axisMotor.h"
 
 
@@ -45,9 +46,7 @@ namespace axis {
             int maxAcceleration;               // -Acceleracio maxima
             int jerk;                          // -Impuls
             bool busy;                         // -Ocupat en un moviment
-            //BlockQueue queue;                // -Cua de blocs
-            //Block* lastBlock;                // -Ultim bloc afeigit
-            //Block* currentBlock;             // -Blocc actual
+            eos::Semaphore finished;           // -Semaforo per esperar el final
 
             // Control del perfil de velocitat
             //
@@ -65,6 +64,7 @@ namespace axis {
             //
             int stepNumber;                    // -Numero de pasos a realitzar
             int stepCounter;                   // -Contador de pasos realitzats
+            int widthCounter;                  // -Contasdor per amplada de puls
             int mainAxis;                      // -Eix principal (El mes llarg)
             Vector error;                      // -Error acumulat
             Vector ddelta;                     // -Deltas * 2
@@ -91,6 +91,8 @@ namespace axis {
             void doMoveRel(int axis, int delta);
             void doMoveHome();
             void doStop();
+
+            bool waitForFinish(unsigned blockTime);
 
         private:
             void timerInitialize();

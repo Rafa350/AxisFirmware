@@ -53,11 +53,11 @@ void MotionService::onTask() {
                 break;
 
             case OpCode::moveAbs:
-                cmdMoveAbs();
+                cmdMoveAbs(cmd.x, cmd.y, cmd.z);
                 break;
 
             case OpCode::moveRel:
-                cmdMoveRel();
+                cmdMoveRel(cmd.x, cmd.y, cmd.z);
                 break;
         }
     }
@@ -78,25 +78,38 @@ void MotionService::cmdStop() {
 ///
 void MotionService::cmdMoveHome() {
 
-    motion->doMoveHome();
+    if (motion->waitForFinish(unsigned(-1)))
+        motion->doMoveHome();
 }
 
 
 /// ----------------------------------------------------------------------
 /// \brief    Procesa la comanda 'moveAbs'.
 ///
-void MotionService::cmdMoveAbs() {
+void MotionService::cmdMoveAbs(
+    int x,
+    int y,
+    int z) {
 
-    motion->doMoveAbs(0, 32000);
+    if (motion->waitForFinish(unsigned(-1))) {
+        int v[3] = {x, y, z};
+        motion->doMoveAbs(v);
+    }
 }
 
 
 /// ----------------------------------------------------------------------
 /// \brief    Procesa la comanda 'moveRel'.
 ///
-void MotionService::cmdMoveRel() {
+void MotionService::cmdMoveRel(
+    int dx,
+    int dy,
+    int dz) {
 
-    motion->doMoveRel(0, -32000);
+    if (motion->waitForFinish(unsigned(-1))) {
+        int v[3] = {dx, dy, dz};
+        motion->doMoveRel(v);
+    }
 }
 
 
@@ -122,6 +135,9 @@ void MotionService::moveAbs(
 
     Command cmd;
     cmd.opCode = OpCode::moveAbs;
+    cmd.x = x;
+    cmd.y = y;
+    cmd.z = z;
 
     commandQueue.push(cmd, unsigned(-1));
 }
@@ -131,12 +147,15 @@ void MotionService::moveAbs(
 /// \brief    Moviment a la posicio relativaespecificada.
 ///
 void MotionService::moveRel(
-    int x,
-    int y,
-    int z) {
+    int dx,
+    int dy,
+    int dz) {
 
     Command cmd;
     cmd.opCode = OpCode::moveRel;
+    cmd.x = dx;
+    cmd.y = dy;
+    cmd.z = dz;
 
     commandQueue.push(cmd, unsigned(-1));
 }

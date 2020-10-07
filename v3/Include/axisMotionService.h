@@ -27,6 +27,9 @@ namespace axis {
             };
             struct Command {
                 OpCode opCode;
+                int x;
+                int y;
+                int z;
             };
             typedef eos::Queue<Command> CommandQueue;
 
@@ -38,8 +41,8 @@ namespace axis {
         private:
             void cmdStop();
             void cmdMoveHome();
-            void cmdMoveAbs();
-            void cmdMoveRel();
+            void cmdMoveAbs(int x, int y, int z);
+            void cmdMoveRel(int dx, int dy, int dz);
 
         protected:
             void onInitialize() override;

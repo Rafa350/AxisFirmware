@@ -1,6 +1,7 @@
 #include "eos.h"
 #include "eosAssert.h"
 #include "hal/halSYS.h"
+#include "hal/halINT.h"
 #include "stm32f7xx_hal.h"
 #include "stm32f7xx_hal_rcc.h"
 #include "stm32f7xx_hal_flash_ex.h"
@@ -57,6 +58,8 @@ static void initializeSDRam() {
 ///
 void appInitialize() {
 
+	//__halINTDisableInterrupts();
+
     SCB_EnableICache();
     SCB_EnableDCache();
 
@@ -65,8 +68,10 @@ void appInitialize() {
     initializeClock();
 	initializeSDRam();
 
-	//__HAL_FREEZE_TIM2_DBGMCU();
-	//__HAL_FREEZE_TIM3_DBGMCU();
+	__HAL_FREEZE_TIM2_DBGMCU();
+	__HAL_FREEZE_TIM3_DBGMCU();
 	//__HAL_FREEZE_TIM4_DBGMCU();
 	__HAL_FREEZE_TIM6_DBGMCU();
+
+	//__halINTEnableInterrupts();
 }

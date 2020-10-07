@@ -18,6 +18,8 @@
 #define FRACTIONAL_BITS           48
 #define FRACTIONAL_MASK           (((uint64_t)1 << FRACTIONAL_BITS) - 1)
 
+#define PULSE_WIDTH               1
+
 
 // Valors minims
 //
@@ -54,13 +56,60 @@ using namespace eos;
 using namespace axis;
 
 
-// Macros per facilitar els calculs d'esponencials i arrels
+// Macros per facilitar els calculs de potencies i arrels
 //
-#define exp2(a)     ((a) * (a))
-#define exp3(a)     ((a) * (a) * (a))
-#define exp4(a)     ((a) * (a) * (a) * (a))
-#define rt2(a)      sqrtl(a)
-#define rt3(a)      cbrtl(a)
+#define pw2(a)     ((a) * (a))
+#define pw3(a)     ((a) * (a) * (a))
+#define pw4(a)     ((a) * (a) * (a) * (a))
+#define rt2(a)     sqrtl(a)
+#define rt3(a)     cbrtl(a)
+
+
+// Opcions: Jerk
+#define PHASE_JERK_pos       0
+#define PHASE_JERK_bits      0b11
+#define PHASE_JERK_mask      (PHASE_JERK_bits << PHASE_JERK_pos)
+
+#define PHASE_JERK_FIX       (0 << PHASE_JERK_pos)
+#define PHASE_JERK_INC       (1 << PHASE_JERK_pos)
+#define PHASE_JERK_DEC       (2 << PHASE_JERK_pos)
+
+// Opcions: Acceleration
+#define PHASE_ACCEL_pos      2
+#define PHASE_ACCEL_bits     0b11
+#define PHASE_ACCEL_mask     (PHASE_ACCEL_bits << PHASE_ACCEL_pos)
+
+#define PHASE_ACCEL_FIX      (0 << PHASE_ACCEL_pos)
+#define PHASE_ACCEL_INC      (1 << PHASE_ACCEL_pos)
+#define PHASE_ACCEL_DEC      (2 << PHASE_ACCEL_pos)
+
+// Opcions: Speed
+#define PHASE_SPEED_pos      4
+#define PHASE_SPEED_bits     0b11
+#define PHASE_SPEED_mask     (PHASE_SPEED_bits << PHASE_SPEED_pos)
+
+#define PHASE_SPEED_FIX      (0 << PHASE_SPEED_pos)
+#define PHASE_SPEED_INC      (1 << PHASE_SPEED_pos)
+#define PHASE_SPEED_DEC      (2 << PHASE_SPEED_pos)
+
+// Opcions: Mode
+#define PHASE_MODE_pos       6
+#define PHASE_MODE_bits      0b1
+#define PHASE_MODE_mask      (PHASE_MODE_bits << PHASE_MODE_pos)
+
+#define PHASE_MODE_TIME      (0 << PHASE_MODE_pos)
+#define PHASE_MODE_DIST      (1 << PHASE_MODE_pos)
+
+
+static const uint32_t phaseTbl[7] {
+	PHASE_JERK_FIX | PHASE_ACCEL_INC | PHASE_SPEED_INC | PHASE_MODE_TIME,
+	PHASE_JERK_FIX | PHASE_ACCEL_FIX | PHASE_SPEED_INC | PHASE_MODE_TIME,
+	PHASE_JERK_FIX | PHASE_ACCEL_DEC | PHASE_SPEED_INC | PHASE_MODE_TIME,
+	PHASE_JERK_FIX | PHASE_ACCEL_FIX | PHASE_SPEED_FIX | PHASE_MODE_DIST,
+	PHASE_JERK_FIX | PHASE_ACCEL_INC | PHASE_SPEED_DEC | PHASE_MODE_TIME,
+	PHASE_JERK_FIX | PHASE_ACCEL_FIX | PHASE_SPEED_DEC | PHASE_MODE_TIME,
+	PHASE_JERK_FIX | PHASE_ACCEL_DEC | PHASE_SPEED_DEC | PHASE_MODE_TIME,
+};
 
 
 /// ----------------------------------------------------------------------
@@ -71,7 +120,8 @@ P2PMotion::P2PMotion(
     const Configuration& cfg):
 
 	cfg(cfg),
-    busy(false) {
+    busy(false),
+    finished() {
 
     for (int i = 0; i < cfg.numAxis; i++) {
         axisPos[i] = 0;
@@ -83,6 +133,12 @@ P2PMotion::P2PMotion(
     maxAcceleration = MOTION_DEF_ACCELERATION;
     maxSpeed = MOTION_DEF_SPEED;
 
+    // Allivera el semafor
+    //
+    finished.release();
+
+    // Inicialitza el temporitzador
+    //
     timerInitialize();
 }
 
@@ -362,6 +418,21 @@ void P2PMotion::doMoveHome() {
 void P2PMotion::doStop() {
 
     stop();
+
+    finished.release();
+}
+
+
+/// ----------------------------------------------------------------------
+/// \brief    Espera que finalitzi el moviment actual.
+/// \param    blockTime: Temps de bloqueig maxim.
+/// \return   True si ha finalitzat, false si ha acabat el temps de
+///           bloqueig sense finalitzar.
+///
+bool P2PMotion::waitForFinish(
+    unsigned blockTime) {
+
+    return finished.wait(blockTime);
 }
 
 
@@ -406,6 +477,8 @@ void P2PMotion::tmrInterruptFunction(
 
     P2PMotion* motion = static_cast<P2PMotion*>(param);
     motion->loop();
+    if (!motion->busy)
+        motion->finished.releaseISR();
 }
 
 
@@ -451,6 +524,7 @@ void P2PMotion::start(
     }
     stepCounter = 0;
     stepNumber = deltaMax;
+    widthCounter = PULSE_WIDTH;
 
     // Realitza les operacions de calcul del perfil de velocitat. Interesa
     // calcular el temps dels tram de les fases I i II (T1 i T2 respectivament),
@@ -470,8 +544,10 @@ void P2PMotion::start(
     distance = stepNumber;
     halfDistance = 0.5L * distance;
 
+    // Calcula els temps de vol T1 i T2
+    //
     T1 = acceleration / jrk;
-    V1 = 0.5L * jrk * exp2(T1);
+    V1 = 0.5L * jrk * pw2(T1);
 
     if (V1 > halfSpeed) {
 
@@ -484,9 +560,9 @@ void P2PMotion::start(
         T3 = T1;
         V3 = speed;
 
-        S1 = (jrk * exp3(T1)) / 6.0L;
+        S1 = (jrk * pw3(T1)) / 6.0L;
         S2 = 0.0L;
-        S3 = (V2 * T3) + (0.5L * jrk * T1 * exp2(T3)) - (jrk * exp3(T3) / 6.0L);
+        S3 = (V2 * T3) + (0.5L * jrk * T1 * pw2(T3)) - (jrk * pw3(T3) / 6.0L);
     }
     else {
 
@@ -496,16 +572,16 @@ void P2PMotion::start(
         T3 = T1;
         V3 = speed;
 
-        S1 = jrk * exp3(T1) / 6.0L;
-        S2 = (V1 * T2) + (0.5L * acceleration * exp2(T2));
-        S3 = (V2 * T3) + (0.5L * acceleration * exp2(T3)) - (jrk * exp3(T3) / 6.0L);
+        S1 = jrk * pw3(T1) / 6.0L;
+        S2 = (V1 * T2) + (0.5L * acceleration * pw2(T2));
+        S3 = (V2 * T3) + (0.5L * acceleration * pw2(T3)) - (jrk * pw3(T3) / 6.0L);
     }
 
     if ((S1 + S2 + S3) > halfDistance) {
         if ((S1 + S3) > halfDistance) {
 
             T1 = rt3(halfDistance / jrk);
-            V1 = 0.5L * jrk * exp2(T1);
+            V1 = 0.5L * jrk * pw2(T1);
 
             T2 = 0.0L;
             V2 = V1;
@@ -515,10 +591,10 @@ void P2PMotion::start(
         else {
 
             T1 = acceleration / jrk;
-            V1 = 0.5L * jrk * exp2(T1);
+            V1 = 0.5L * jrk * pw2(T1);
 
             T2 = (1.0L / (2.0L * jrk * T1)) *
-                 (-3.0L * jrk * exp2(T1) + rt2(exp2(jrk) * exp4(T1) + 4.0L * jrk * T1 * distance));
+                 (-3.0L * jrk * pw2(T1) + rt2(pw2(jrk) * pw4(T1) + 4.0L * jrk * T1 * distance));
             V2 = V1 + (T2 * acceleration);
 
             T3 = T1;
@@ -535,7 +611,7 @@ void P2PMotion::start(
     //
     count = 0;
     phase = Phase::phase_I;
-    curJerk = (int64_t) (jrk * 281474976710656.0L / exp3(HZ));
+    curJerk = (int64_t) (jrk * 281474976710656.0L / pw3(HZ));
     curAcceleration = 0;
     curSpeed = 0;
     curPosition = 0;
@@ -573,8 +649,11 @@ void P2PMotion::loop() {
 
     bool doStep = false;
 
-    for (int i = 0; i < cfg.numAxis; i++)
-        cfg.motors[i]->setStep(Motor::Step::idle);
+    if (!--widthCounter) {
+		for (int i = 0; i < cfg.numAxis; i++)
+			cfg.motors[i]->setStep(Motor::Step::idle);
+		widthCounter = PULSE_WIDTH;
+    }
 
     switch (phase) {
 

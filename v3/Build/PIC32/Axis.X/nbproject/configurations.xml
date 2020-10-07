@@ -32,11 +32,13 @@
               <itemPath>../../../../../EOS/v2/Include/HAL/PIC32/halTMR.h</itemPath>
               <itemPath>../../../../../EOS/v2/Include/HAL/PIC32/halINT.h</itemPath>
               <itemPath>../../../../../EOS/v2/Include/HAL/PIC32/halCN.h</itemPath>
+              <itemPath>../../../../../EOS/v2/Include/HAL/PIC32/halUART.h</itemPath>
             </logicalFolder>
             <itemPath>../../../../../EOS/v2/Include/HAL/halSYS.h</itemPath>
             <itemPath>../../../../../EOS/v2/Include/HAL/halGPIO.h</itemPath>
             <itemPath>../../../../../EOS/v2/Include/HAL/halTMR.h</itemPath>
             <itemPath>../../../../../EOS/v2/Include/HAL/halINT.h</itemPath>
+            <itemPath>../../../../../EOS/v2/Include/HAL/halUART.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f3" displayName="Services" projectFiles="true">
             <itemPath>../../../../../EOS/v2/Include/Services/eosService.h</itemPath>
@@ -49,6 +51,10 @@
               <itemPath>../../../../../EOS/v2/Include/System/Collections/eosStaticArray.h</itemPath>
               <itemPath>../../../../../EOS/v2/Include/System/Collections/eosDynamicArray.h</itemPath>
               <itemPath>../../../../../EOS/v2/Include/System/Collections/eosCircularQueue.h</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f2" displayName="Core" projectFiles="true">
+              <itemPath>../../../../../EOS/v2/Include/System/Core/eosSemaphore.h</itemPath>
+              <itemPath>../../../../../EOS/v2/Include/System/Core/eosQueue.h</itemPath>
             </logicalFolder>
             <itemPath>../../../../../EOS/v2/Include/System/eosApplication.h</itemPath>
             <itemPath>../../../../../EOS/v2/Include/System/eosCallbacks.h</itemPath>
@@ -87,6 +93,7 @@
               <itemPath>../../../../../EOS/v2/Source/HAL/PIC32/halCN.c</itemPath>
               <itemPath>../../../../../EOS/v2/Source/HAL/PIC32/halCNInterruptWrapper.S</itemPath>
               <itemPath>../../../../../EOS/v2/Source/HAL/PIC32/halINT.c</itemPath>
+              <itemPath>../../../../../EOS/v2/Source/HAL/PIC32/halUART.c</itemPath>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f5" displayName="OSAL" projectFiles="true">

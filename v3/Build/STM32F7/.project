@@ -66,11 +66,6 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Include/axisApplication.h</locationURI>
 		</link>
 		<link>
-			<name>Inc/App/axisMotion.h</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Include/axisMotion.h</locationURI>
-		</link>
-		<link>
 			<name>Inc/App/axisMotionService.h</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Include/axisMotionService.h</locationURI>
@@ -79,6 +74,11 @@
 			<name>Inc/App/axisMotor.h</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Include/axisMotor.h</locationURI>
+		</link>
+		<link>
+			<name>Inc/App/axisP2PMotion.h</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Include/axisP2PMotion.h</locationURI>
 		</link>
 		<link>
 			<name>Inc/Framework/EOS</name>
@@ -101,11 +101,6 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Source/axisMain.cpp</locationURI>
 		</link>
 		<link>
-			<name>Src/App/axisMotion.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Source/axisMotion.cpp</locationURI>
-		</link>
-		<link>
 			<name>Src/App/axisMotionService.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Source/axisMotionService.cpp</locationURI>
@@ -114,6 +109,11 @@
 			<name>Src/App/axisMotor.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Source/axisMotor.cpp</locationURI>
+		</link>
+		<link>
+			<name>Src/App/axisP2PMotion.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Source/axisP2PMotion.cpp</locationURI>
 		</link>
 		<link>
 			<name>Src/Framework/EOS</name>
@@ -331,34 +331,9 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>Src/Framework/EOS/OSAL/osalHeap.c</name>
-			<type>1</type>
-			<locationURI>PARENT-4-PROJECT_LOC/EOS/v2/Source/OSAL/FreeRTOS/osalHeap.c</locationURI>
-		</link>
-		<link>
-			<name>Src/Framework/EOS/OSAL/osalKernel.c</name>
-			<type>1</type>
-			<locationURI>PARENT-4-PROJECT_LOC/EOS/v2/Source/OSAL/FreeRTOS/osalKernel.c</locationURI>
-		</link>
-		<link>
-			<name>Src/Framework/EOS/OSAL/osalQueue.c</name>
-			<type>1</type>
-			<locationURI>PARENT-4-PROJECT_LOC/EOS/v2/Source/OSAL/FreeRTOS/osalQueue.c</locationURI>
-		</link>
-		<link>
-			<name>Src/Framework/EOS/OSAL/osalSemaphore.c</name>
-			<type>1</type>
-			<locationURI>PARENT-4-PROJECT_LOC/EOS/v2/Source/OSAL/FreeRTOS/osalSemaphore.c</locationURI>
-		</link>
-		<link>
-			<name>Src/Framework/EOS/OSAL/osalTask.c</name>
-			<type>1</type>
-			<locationURI>PARENT-4-PROJECT_LOC/EOS/v2/Source/OSAL/FreeRTOS/osalTask.c</locationURI>
-		</link>
-		<link>
-			<name>Src/Framework/EOS/OSAL/rtos_hooks.c</name>
-			<type>1</type>
-			<locationURI>PARENT-4-PROJECT_LOC/EOS/v2/Source/OSAL/FreeRTOS/rtos_hooks.c</locationURI>
+			<name>Src/Framework/EOS/OSAL/FreeRTOS</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
 			<name>Src/Framework/EOS/Services/eosDigInputService.cpp</name>
@@ -491,6 +466,11 @@
 			<locationURI>PARENT-4-PROJECT_LOC/EOS/v2/Library/STM32F7/HAL/Src/stm32f7xx_hal_tim_ex.c</locationURI>
 		</link>
 		<link>
+			<name>Src/Framework/STM32/HAL/stm32f7xx_hal_uart.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/EOS/v2/Library/STM32F7/HAL/Src/stm32f7xx_hal_uart.c</locationURI>
+		</link>
+		<link>
 			<name>Src/Framework/STM32/HAL/stm32f7xx_ll_fmc.c</name>
 			<type>1</type>
 			<locationURI>PARENT-4-PROJECT_LOC/EOS/v2/Library/STM32F7/HAL/Src/stm32f7xx_ll_fmc.c</locationURI>
@@ -531,6 +511,11 @@
 			<locationURI>PARENT-4-PROJECT_LOC/EOS/v2/Include/HAL/STM32/halTMR.h</locationURI>
 		</link>
 		<link>
+			<name>Inc/Framework/EOS/HAL/STM32/halUART.h</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/EOS/v2/Include/HAL/STM32/halUART.h</locationURI>
+		</link>
+		<link>
 			<name>Src/Framework/EOS/HAL/STM32/halGPIO.c</name>
 			<type>1</type>
 			<locationURI>PARENT-4-PROJECT_LOC/EOS/v2/Source/HAL/STM32/halGPIO.c</locationURI>
@@ -549,6 +534,41 @@
 			<name>Src/Framework/EOS/HAL/STM32/halTMR.c</name>
 			<type>1</type>
 			<locationURI>PARENT-4-PROJECT_LOC/EOS/v2/Source/HAL/STM32/halTMR.c</locationURI>
+		</link>
+		<link>
+			<name>Src/Framework/EOS/HAL/STM32/halUART.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/EOS/v2/Source/HAL/STM32/halUART.c</locationURI>
+		</link>
+		<link>
+			<name>Src/Framework/EOS/OSAL/FreeRTOS/osalHeap.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/EOS/v2/Source/OSAL/FreeRTOS/osalHeap.c</locationURI>
+		</link>
+		<link>
+			<name>Src/Framework/EOS/OSAL/FreeRTOS/osalKernel.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/EOS/v2/Source/OSAL/FreeRTOS/osalKernel.c</locationURI>
+		</link>
+		<link>
+			<name>Src/Framework/EOS/OSAL/FreeRTOS/osalQueue.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/EOS/v2/Source/OSAL/FreeRTOS/osalQueue.c</locationURI>
+		</link>
+		<link>
+			<name>Src/Framework/EOS/OSAL/FreeRTOS/osalSemaphore.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/EOS/v2/Source/OSAL/FreeRTOS/osalSemaphore.c</locationURI>
+		</link>
+		<link>
+			<name>Src/Framework/EOS/OSAL/FreeRTOS/osalTask.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/EOS/v2/Source/OSAL/FreeRTOS/osalTask.c</locationURI>
+		</link>
+		<link>
+			<name>Src/Framework/EOS/OSAL/FreeRTOS/rtos_hooks.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/EOS/v2/Source/OSAL/FreeRTOS/rtos_hooks.c</locationURI>
 		</link>
 		<link>
 			<name>Src/Framework/EOS/System/Collections/eosContainer.cpp</name>
