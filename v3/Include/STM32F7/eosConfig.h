@@ -1,5 +1,5 @@
-#ifndef __eosConfig__
-#define __eosConfig__
+#ifndef __STM32F7_eosConfig__
+#define __STM32F7_eosConfig__
 
 
 #define USE_LEDS_LED1
@@ -99,5 +99,7 @@
 #define MotionService_TimerInterruptPriority          HAL_INT_PRIORITY_6
 #define MotionService_TimerInterruptSubPriority       HAL_INT_SUBPRIORITY_0
 
+#define MotionService_CommandQueueSize                10
 
-#endif // __eosConfig__
+
+#endif // __STM32F7_eosConfig__

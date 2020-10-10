@@ -64,11 +64,14 @@ namespace axis {
             //
             int stepNumber;                    // -Numero de pasos a realitzar
             int stepCounter;                   // -Contador de pasos realitzats
-            int widthCounter;                  // -Contasdor per amplada de puls
             int mainAxis;                      // -Eix principal (El mes llarg)
             Vector error;                      // -Error acumulat
             Vector ddelta;                     // -Deltas * 2
             Vector inc;                        // -Increments dels eixos per cada pas
+
+            // Control de la generacio de pulsos
+            //
+            int widthCounter;                  // -Contador per amplada de puls
 
         public:
             P2PMotion(const Configuration& cfg);
@@ -101,6 +104,8 @@ namespace axis {
             void start(const Vector& position);
             void stop();
             void loop();
+            void lineStart(const Vector& position);
+            bool lineStep();
 
             static void tmrInterruptFunction(TMRHandler handler, void* param);
     };

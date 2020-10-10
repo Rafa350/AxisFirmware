@@ -4,6 +4,7 @@
 
 #include "eos.h"
 #include "Services/eosService.h"
+#include "System/eosCallbacks.h"
 #include "System/Core/eosQueue.h"
 
 #include "axisP2PMotion.h"
@@ -33,10 +34,24 @@ namespace axis {
             };
             typedef eos::Queue<Command> CommandQueue;
 
+        public:
+            struct EventArgs {
+                MotionService* service;
+                void* param;
+            };
+            typedef eos::ICallbackP1<const EventArgs&> IEventCallback;
+            struct InitParams {
+            	P2PMotion* motion;
+            	IEventCallback* eventCallback;
+            	void* eventParam;
+            };
+
         private:
-            const unsigned commandQueueSize = 10;
+            const unsigned commandQueueSize = MotionService_CommandQueueSize;
             CommandQueue commandQueue;
             P2PMotion* motion;
+            IEventCallback* eventCallback;
+            void* eventParam;
 
         private:
             void cmdStop();
@@ -49,7 +64,7 @@ namespace axis {
             void onTask() override;
 
         public:
-            MotionService(eos::Application *application, P2PMotion* motion);
+            MotionService(eos::Application *application, const InitParams& initParams);
 
             void moveHome();
             void moveAbs(int x, int y, int z);

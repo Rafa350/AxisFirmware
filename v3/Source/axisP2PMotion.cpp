@@ -25,19 +25,19 @@
 //
 #define MOTION_MIN_SPEED          10
 #define MOTION_MIN_ACCELERATION   10
-#define MOTION_MIN_JERK           100
+#define MOTION_MIN_JERK           1000
 
 // Valors maxims
 //
-#define MOTION_MAX_SPEED          1500000
-#define MOTION_MAX_ACCELERATION   1500000
-#define MOTION_MAX_JERK           1500000
+#define MOTION_MAX_SPEED          (    32 * 1000)
+#define MOTION_MAX_ACCELERATION   (500000 * 1000)
+#define MOTION_MAX_JERK           (500000 * 1000)
 
 // Valors per defecte
 //
-#define MOTION_DEF_SPEED          500000
-#define MOTION_DEF_ACCELERATION   500000
-#define MOTION_DEF_JERK           50000
+#define MOTION_DEF_SPEED          (    24 * 1000)
+#define MOTION_DEF_ACCELERATION   (  6000 * 1000)
+#define MOTION_DEF_JERK           (  2000 * 1000)
 
 
 #if defined(EOS_STM32)
@@ -65,53 +65,6 @@ using namespace axis;
 #define rt3(a)     cbrtl(a)
 
 
-// Opcions: Jerk
-#define PHASE_JERK_pos       0
-#define PHASE_JERK_bits      0b11
-#define PHASE_JERK_mask      (PHASE_JERK_bits << PHASE_JERK_pos)
-
-#define PHASE_JERK_FIX       (0 << PHASE_JERK_pos)
-#define PHASE_JERK_INC       (1 << PHASE_JERK_pos)
-#define PHASE_JERK_DEC       (2 << PHASE_JERK_pos)
-
-// Opcions: Acceleration
-#define PHASE_ACCEL_pos      2
-#define PHASE_ACCEL_bits     0b11
-#define PHASE_ACCEL_mask     (PHASE_ACCEL_bits << PHASE_ACCEL_pos)
-
-#define PHASE_ACCEL_FIX      (0 << PHASE_ACCEL_pos)
-#define PHASE_ACCEL_INC      (1 << PHASE_ACCEL_pos)
-#define PHASE_ACCEL_DEC      (2 << PHASE_ACCEL_pos)
-
-// Opcions: Speed
-#define PHASE_SPEED_pos      4
-#define PHASE_SPEED_bits     0b11
-#define PHASE_SPEED_mask     (PHASE_SPEED_bits << PHASE_SPEED_pos)
-
-#define PHASE_SPEED_FIX      (0 << PHASE_SPEED_pos)
-#define PHASE_SPEED_INC      (1 << PHASE_SPEED_pos)
-#define PHASE_SPEED_DEC      (2 << PHASE_SPEED_pos)
-
-// Opcions: Mode
-#define PHASE_MODE_pos       6
-#define PHASE_MODE_bits      0b1
-#define PHASE_MODE_mask      (PHASE_MODE_bits << PHASE_MODE_pos)
-
-#define PHASE_MODE_TIME      (0 << PHASE_MODE_pos)
-#define PHASE_MODE_DIST      (1 << PHASE_MODE_pos)
-
-
-static const uint32_t phaseTbl[7] {
-	PHASE_JERK_FIX | PHASE_ACCEL_INC | PHASE_SPEED_INC | PHASE_MODE_TIME,
-	PHASE_JERK_FIX | PHASE_ACCEL_FIX | PHASE_SPEED_INC | PHASE_MODE_TIME,
-	PHASE_JERK_FIX | PHASE_ACCEL_DEC | PHASE_SPEED_INC | PHASE_MODE_TIME,
-	PHASE_JERK_FIX | PHASE_ACCEL_FIX | PHASE_SPEED_FIX | PHASE_MODE_DIST,
-	PHASE_JERK_FIX | PHASE_ACCEL_INC | PHASE_SPEED_DEC | PHASE_MODE_TIME,
-	PHASE_JERK_FIX | PHASE_ACCEL_FIX | PHASE_SPEED_DEC | PHASE_MODE_TIME,
-	PHASE_JERK_FIX | PHASE_ACCEL_DEC | PHASE_SPEED_DEC | PHASE_MODE_TIME,
-};
-
-
 /// ----------------------------------------------------------------------
 /// \brief    Constructor.
 /// \param    cfg: Parametres de configuracio.
@@ -129,9 +82,9 @@ P2PMotion::P2PMotion(
         axisMin[i] = INT_MIN;
     }
 
-    jerk = MOTION_DEF_JERK;
-    maxAcceleration = MOTION_DEF_ACCELERATION;
-    maxSpeed = MOTION_DEF_SPEED;
+    jerk = Math::min(MOTION_DEF_JERK, MOTION_MAX_JERK);
+    maxAcceleration = Math::min(MOTION_DEF_ACCELERATION, MOTION_MAX_ACCELERATION);
+    maxSpeed = Math::min(MOTION_DEF_SPEED, MOTION_MAX_SPEED);
 
     // Allivera el semafor
     //
@@ -173,7 +126,7 @@ void P2PMotion::setMaxSpeed(
 
     // Canvia la velocitat maxima
     //
-    this->maxSpeed = speed;
+    maxSpeed = speed;
 }
 
 
@@ -200,7 +153,7 @@ void P2PMotion::setMaxAcceleration(
 
     // Canvia l'acceleracio maxima
     //
-    this->maxAcceleration = acceleration;
+    maxAcceleration = acceleration;
 }
 
 
@@ -483,16 +436,11 @@ void P2PMotion::tmrInterruptFunction(
 
 
 /// ----------------------------------------------------------------------
-/// \brief    Inicialitzacio del moviment.
-/// \param    position: Coordinades absolutes del desti del moviment.
-/// \remarks  Es calcula suposant que la velocitat inicial i final es 0.
+/// \brief    Procesa el inicia de la interpolacio de linies.
+/// \param    position: Posicio final de la linia.
 ///
-void P2PMotion::start(
-    const Vector& position) {
-
-    // Posa el controlador en modus ocupat
-    //
-    busy = true;
+void P2PMotion::lineStart(
+	const Vector& position) {
 
     // Realitza les operacions de calcul de trajectoria
     //
@@ -522,8 +470,53 @@ void P2PMotion::start(
         ddelta[i] = delta[i] * 2;
         error[i] = ddelta[i] - deltaMax;
     }
+
     stepCounter = 0;
     stepNumber = deltaMax;
+}
+
+
+/// ----------------------------------------------------------------------
+/// \brief    Procesa un pas de la interpolacio de linies
+/// \return   True si ha harribat al final.
+//
+bool P2PMotion::lineStep() {
+
+	int ma = mainAxis;
+    for (int i = 0; i < cfg.numAxis; i++) {
+        if (i != ma) {
+            if (error[i] > 0) {
+                error[i] -= ddelta[ma];
+                axisPos[i] += inc[i];
+                cfg.motors[i]->setStep(Motor::Step::active);
+            }
+            error[i] += ddelta[i];
+        }
+    }
+    axisPos[ma] += inc[ma];
+    cfg.motors[ma]->setStep(Motor::Step::active);
+
+    stepCounter++;
+
+    return stepCounter == stepNumber;
+}
+
+
+/// ----------------------------------------------------------------------
+/// \brief    Inicialitzacio del moviment.
+/// \param    position: Coordinades absolutes del desti del moviment.
+/// \remarks  Es calcula suposant que la velocitat inicial i final es 0.
+///
+void P2PMotion::start(
+    const Vector& position) {
+
+    // Posa el controlador en modus ocupat
+    //
+    busy = true;
+
+    // Realitza les operacions de calcul de trajectoria
+    //
+    lineStart(position);
     widthCounter = PULSE_WIDTH;
 
     // Realitza les operacions de calcul del perfil de velocitat. Interesa
@@ -710,6 +703,9 @@ void P2PMotion::loop() {
                 count++;
             }
 
+            // Com la parada es simetrica, calcula els pasos de
+            // la seccio central de la corva
+            //
             if (count >= timeSAccel) {
                 count = 0;
                 phase = Phase::phase_IV;
@@ -774,7 +770,10 @@ void P2PMotion::loop() {
             break;
 
         case Phase::phase_VII:
-            if (stepCounter < stepNumber) { // Tots els pasos que resten
+        	// Per posibles errors de arrodoniment, fa tots els passos que
+        	// resten, independentment del temps de vol calculat.
+        	//
+            if (stepCounter < stepNumber) {
 
                 // Evita que la velocitat sigui negativa
                 //
@@ -792,31 +791,152 @@ void P2PMotion::loop() {
             break;
     }
 
-    // Realitza un pas de la trajectoria utilitzan Besenham
+    // Realitza un pas de la trajectoria
     //
     if (doStep) {
-
-        int ma = mainAxis;
-        for (int i = 0; i < cfg.numAxis; i++) {
-            if (i != ma) {
-                if (error[i] > 0) {
-                    error[i] -= ddelta[ma];
-                    axisPos[i] += inc[i];
-                    cfg.motors[i]->setStep(Motor::Step::active);
-                }
-                error[i] += ddelta[i];
-            }
-        }
-        axisPos[ma] += inc[ma];
-        cfg.motors[ma]->setStep(Motor::Step::active);
-
-        // Incrementa el contador de pasos
-        //
-        stepCounter += 1;
-
-        // Si ha acabat, finalitza el moviment
-        //
-        if (stepCounter == stepNumber)
+    	if (lineStep())
             stop();
     }
 }
+
+
+#if 0
+
+
+#define CONTROL_JERK_pos     0
+#define CONTROL_JERK_bits    0b11
+#define CONTROL_JERK_mask    (CONTROL_JERK_bits << CONTROL_JERK_pos)
+
+#define CONTROL_JERK_CONST   (0 << CONTROL_JERK_pos)
+#define CONTROL_JERK_INC	 (1 << CONTROL_JERK_pos)
+#define CONTROL_JERK_DEC	 (2 << CONTROL_JERK_pos)
+
+#define CONTROL_ACCEL_pos    2
+#define CONTROL_ACCEL_bits   0b11
+#define CONTROL_ACCEL_mask   (CONTROL_ACCEL_bits << CONTROL_ACCEL_pos)
+
+#define CONTROL_ACCEL_CONST  (0 << CONTROL_ACCEL_pos)
+#define CONTROL_ACCEL_INC    (1 << CONTROL_ACCEL_pos)
+#define CONTROL_ACCEL_DEC    (2 << CONTROL_ACCEL_pos)
+
+#define CONTROL_SPEED_pos    4
+#define CONTROL_SPEED_bits   0b11
+#define CONTROL_SPEED_mask   (CONTROL_SPEED_bits << CONTROL_SPEED_pos)
+
+#define CONTROL_SPEED_CONST  (0 << CONTROL_SPEED_pos)
+#define CONTROL_SPEED_INC    (1 << CONTROL_SPEED_pos)
+#define CONTROL_SPEED_DEC    (2 << CONTROL_SPEED_pos)
+
+#define CONTROL_MODE_pos     6
+#define CONTROL_MODE_bits    0b1
+#define CONTROL_MODE_mask    (CONTROL_MODE_bits << CONTROL_MODE_pos)
+
+#define CONTROL_MODE_TIME    (0 << CONTROL_MODE_pos)
+#define CONTROL_MODE_DIST    (1 << CONTROL_MODE_pos)
+
+typedef struct {
+	uint32_t control;
+	int64_t limit;
+} Phase;
+
+Phase phaseTbl[];
+
+void P2PMotion::loop() {
+
+	bool doStep = false;
+
+	uint32_t count = 0;
+
+	uint64_t limit = phases[phase].limit;
+	uint32_t control = phases[phase].control;
+
+	if (count < limit) {
+
+		// Actualitza l'acceleracio
+		//
+		switch (control & CONTROL_ACCEL_mask) {
+			case CONTROL_ACCEL_INC:
+				curAcceleration += jerk;
+				break;
+
+			case CONTROL_ACCEL_DEC:
+				curAcceleration -= jerk;
+				break;
+		}
+
+		// Actualitza la velocitat
+		//
+		switch (constrol & CONTROL_SPEED_mask) {
+			case CONTROL_SPEED_INC:
+				curSpeed += curAcceleration;
+				break;
+
+			case CONTROL_SPEED_DEC:
+				curSpeed -= curAcceleration;
+				break;
+		}
+
+		// Actualitza la posicio
+		//
+		curPosition += curSpeed;
+
+		// Genera un pas, si cal
+		//
+		if (curPosition & ~FRACTIONAL_MASK) {
+			curPosition &= FRACTIONAL_MASK;
+			doStep = true;
+
+			// Si conta distancia, incrementa el contador
+			//
+			if ((control & CONTROL_MODE_mask) == CONTROL_MODE_DIST)
+				count++;
+		}
+
+		// Si conta temps, incrementa el contador.
+		//
+		if ((control & CONTROL_MODE_mask) == PHASE_CONTROL_TIME)
+			count++;
+	}
+
+	if (count >= limit) {
+		// Canvi de fase i de limits
+		//
+		phase += 1;
+		limit = 10000;
+		count = 0;
+	}
+}
+#endif
+
+
+#if 0
+
+
+void loop() {
+
+	// Incrementa la posicio
+	//
+	curAcceleration += jerk;
+	curSpeed += curAcceleration;
+	curPosition += curSpeed;
+
+	// Genera un pas, si cal
+	//
+	if (curPosition & ~FRACTIONAL_MASK) {
+		curPosition &= FRACTIONAL_MASK;
+
+		// Afegeix un pas als motors
+		//
+
+		// Si conta distancia, incrementa el contador de distancia
+		//
+		if ((control & CONTROL_MODE_mask) == CONTROL_MODE_DIST)
+			count++;
+	}
+
+	// Si conta temps, incrementa el contador de temps.
+	//
+	if ((control & CONTROL_MODE_mask) == PHASE_CONTROL_TIME)
+		count++;
+}
+#endif

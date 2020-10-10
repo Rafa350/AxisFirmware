@@ -81,6 +81,11 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Include/axisP2PMotion.h</locationURI>
 		</link>
 		<link>
+			<name>Inc/App/eosConfig.h</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Include/eosConfig.h</locationURI>
+		</link>
+		<link>
 			<name>Inc/Framework/EOS</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
@@ -157,6 +162,11 @@
 		</link>
 		<link>
 			<name>Inc/Framework/EOS/HAL</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>Inc/Framework/EOS/OSAL</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
@@ -299,6 +309,11 @@
 			<name>Inc/Framework/EOS/Services/eosService.h</name>
 			<type>1</type>
 			<locationURI>PARENT-4-PROJECT_LOC/EOS/v2/Include/Services/eosService.h</locationURI>
+		</link>
+		<link>
+			<name>Inc/Framework/EOS/System/Core</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
 			<name>Inc/Framework/EOS/System/eosApplication.h</name>
@@ -514,6 +529,11 @@
 			<name>Inc/Framework/EOS/HAL/STM32/halUART.h</name>
 			<type>1</type>
 			<locationURI>PARENT-4-PROJECT_LOC/EOS/v2/Include/HAL/STM32/halUART.h</locationURI>
+		</link>
+		<link>
+			<name>Inc/Framework/EOS/System/Core/eosQueue.h</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/EOS/v2/Include/System/Core/eosQueue.h</locationURI>
 		</link>
 		<link>
 			<name>Src/Framework/EOS/HAL/STM32/halGPIO.c</name>

@@ -8,7 +8,7 @@
 
 
 namespace axis {
-       
+
     class Motor {
         public:
             struct Configuration {
@@ -26,7 +26,7 @@ namespace axis {
                 int maxAccel;
                 int maxSpeed;
             };
-            
+
             enum class Direction {
                 forward = 0,
                 backward = 1
@@ -42,10 +42,10 @@ namespace axis {
                 disabled = 0,
                 enabled = 1
             };
-        
+
         private:
             Configuration cfg;
-        
+
         public:
             Motor(const Configuration& cfg);
             void setState(State state) const;
@@ -53,7 +53,7 @@ namespace axis {
             void setStep(Step step) const;
             bool getHome() const;
             bool getLimit() const;
-            
+
         private:
             void initialize();
     };

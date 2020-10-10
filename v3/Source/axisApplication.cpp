@@ -31,13 +31,14 @@ TMRHandler hMotionTimer;               // Handler del temporitzador
 /// \brief    Constructor del objecte.
 ///
 AxisApplication::AxisApplication():
-    sw1EventCallback(this, &AxisApplication::sw1EventHandler)
+    sw1EventCallback(this, &AxisApplication::sw1EventHandler),
 #ifdef EXIST_SWITCHES_SW2
-    , sw2EventCallback(this, &AxisApplication::sw2EventHandler)
+    sw2EventCallback(this, &AxisApplication::sw2EventHandler),
 #endif
 #ifdef EXIST_SWITCHES_SW3
-    , sw3EventCallback(this, &AxisApplication::sw3EventHandler)
+    sw3EventCallback(this, &AxisApplication::sw3EventHandler),
 #endif
+	motionServiceEventCallback(this, &AxisApplication::motionServiceEventHandler)
 {
 
 }
@@ -257,13 +258,17 @@ void AxisApplication::configureMotionService() {
     motionCfg.motors[2] = zMotor;
     motionCfg.hTimer = hMotionTimer;
     motion = new P2PMotion(motionCfg);
-    motion->setJerk(50000);
-    motion->setMaxAcceleration(800000);
-    motion->setMaxSpeed(800000);
+    //motion->setJerk(500000);
+    //motion->setMaxAcceleration(800000);
+    //motion->setMaxSpeed(800000);
 
     // Crea el servei de control de moviment
     //
-    motionService = new MotionService(this, motion);
+    MotionService::InitParams motionServiceInit;
+    motionServiceInit.motion = motion;
+    motionServiceInit.eventCallback = &motionServiceEventCallback;
+    motionServiceInit.eventParam = nullptr;
+    motionService = new MotionService(this, motionServiceInit);
 }
 
 
@@ -279,12 +284,26 @@ void AxisApplication::onInitialize() {
 }
 
 
+/// ----------------------------------------------------------------------
+/// \brief    Procesa els events del servei de control de mocioment.
+/// \param    args: Arguments del event.
+///
+void AxisApplication::motionServiceEventHandler(
+	const MotionService::EventArgs& args) {
+
+}
+
+
 void AxisApplication::sw1EventHandler(
     const DigInput::EventArgs& args) {
 
+	static int sign = 1;
+	static int dist = 4 * 3200;
+
     if (sw1->read() == SWITCHES_STATE_ON) {
         led1->pulse(250);
-        motionService->moveRel(32000, 320, 0);
+        motionService->moveRel(sign * dist, 320, 0);
+        sign *= -1;
     }
 }
 
@@ -295,7 +314,7 @@ void AxisApplication::sw2EventHandler(
 
     if (sw2->read() == SWITCHES_STATE_ON) {
     	led1->pulse(250);
-        motionService->moveRel(-32000, 0, 0);
+        motionService->moveRel(-3200, 0, 0);
     }
 }
 #endif

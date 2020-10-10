@@ -16,13 +16,14 @@ using namespace axis;
 ///
 MotionService::MotionService(
     Application* application,
-    P2PMotion* motion):
+    const InitParams& initParams):
 
     Service(application),
     commandQueue(commandQueueSize),
-    motion(motion) {
+    motion(initParams.motion),
+	eventCallback(initParams.eventCallback),
+	eventParam(initParams.eventParam) {
 
-    eosAssert(motion != nullptr);
 }
 
 
@@ -43,6 +44,20 @@ void MotionService::onTask() {
     Command cmd;
     while (commandQueue.pop(cmd, unsigned(-1))) {
 
+    	// Notifica que la cua es buida, abans de processar la comanda,
+    	// per donar la oportunitat a carregar-la.
+    	//
+    	if (commandQueue.isEmpty()) {
+    		if (eventCallback != nullptr) {
+				EventArgs args;
+				args.service = this;
+				args.param = eventParam;
+				eventCallback->execute(args);
+    		}
+    	}
+
+    	// Procesa la comanda
+    	//
         switch (cmd.opCode) {
             case OpCode::stop:
                 cmdStop();

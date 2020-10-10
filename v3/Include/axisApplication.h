@@ -7,6 +7,7 @@
 #include "Services/eosDigOutputService.h"
 #include "System/eosApplication.h"
 #include "System/eosCallbacks.h"
+#include "axisMotionService.h"
 #include "axisMotor.h"
 #include "axisP2PMotion.h"
 
@@ -19,13 +20,12 @@ namespace eos {
 
 namespace axis {
 
-    class MotionService;
-
     using namespace eos;
 
     class AxisApplication: public Application {
         private:
             typedef CallbackP1<AxisApplication, const DigInput::EventArgs&> DigInputEventCallback;
+            typedef CallbackP1<AxisApplication, const MotionService::EventArgs&> MotionServiceEventCallback;
 
         private:
             Motor* xMotor;
@@ -55,6 +55,7 @@ namespace axis {
 #ifdef EXIST_SWITCHES_SW3
             DigInputEventCallback sw3EventCallback;
 #endif
+            MotionServiceEventCallback motionServiceEventCallback;
 
         private:
             void configureDigInputService();
@@ -63,6 +64,7 @@ namespace axis {
 
         protected:
             void onInitialize();
+            void motionServiceEventHandler(const MotionService::EventArgs& args);
             void sw1EventHandler(const DigInput::EventArgs& args);
 #ifdef EXIST_SWITCHES_SW2
             void sw2EventHandler(const DigInput::EventArgs& args);
