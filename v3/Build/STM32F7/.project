@@ -66,6 +66,11 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Include/axisApplication.h</locationURI>
 		</link>
 		<link>
+			<name>Inc/App/axisConfig.h</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Include/axisConfig.h</locationURI>
+		</link>
+		<link>
 			<name>Inc/App/axisMotionService.h</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Include/axisMotionService.h</locationURI>

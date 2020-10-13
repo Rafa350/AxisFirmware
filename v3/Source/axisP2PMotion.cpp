@@ -30,11 +30,12 @@
 // Valors maxims
 //
 #define MOTION_MAX_SPEED          (    32 * 1000)
-#define MOTION_MAX_ACCELERATION   (500000 * 1000)
-#define MOTION_MAX_JERK           (500000 * 1000)
+#define MOTION_MAX_ACCELERATION   ( 25000 * 1000)
+#define MOTION_MAX_JERK           ( 50000 * 1000)
 
 // Valors per defecte
 //
+#define MOTION_DEF_HOMING_SPEED   (     5 * 1000)
 #define MOTION_DEF_SPEED          (    24 * 1000)
 #define MOTION_DEF_ACCELERATION   (  6000 * 1000)
 #define MOTION_DEF_JERK           (  2000 * 1000)
@@ -72,19 +73,22 @@ using namespace axis;
 P2PMotion::P2PMotion(
     const Configuration& cfg):
 
-	cfg(cfg),
+	numAxis(cfg.numAxis),
+	hTimer(cfg.hTimer),
     busy(false),
     finished() {
 
     for (int i = 0; i < cfg.numAxis; i++) {
-        axisPos[i] = 0;
-        axisMax[i] = INT_MAX;
-        axisMin[i] = INT_MIN;
+    	axisData[i].motor = cfg.motors[i];
+        axisData[i].position = 0;
+        axisData[i].maxPosition = INT_MAX;
+        axisData[i].minPosition = INT_MIN;
     }
 
     jerk = Math::min(MOTION_DEF_JERK, MOTION_MAX_JERK);
     maxAcceleration = Math::min(MOTION_DEF_ACCELERATION, MOTION_MAX_ACCELERATION);
     maxSpeed = Math::min(MOTION_DEF_SPEED, MOTION_MAX_SPEED);
+    homingSpeed = MOTION_DEF_HOMING_SPEED;
 
     // Allivera el semafor
     //
@@ -190,7 +194,8 @@ void P2PMotion::setJerk(
 void P2PMotion::setMaxPosition(
     const Vector& position) {
 
-    axisMax = position;
+	for (int i = 0; i < numAxis; i++)
+		axisData[i].maxPosition = position[i];
 }
 
 
@@ -200,7 +205,8 @@ void P2PMotion::setMaxPosition(
 void P2PMotion::setMinPosition(
     const Vector& position) {
 
-    axisMin = position;
+	for (int i = 0; i < numAxis; i++)
+		axisData[i].minPosition = position[i];
 }
 
 
@@ -209,8 +215,8 @@ void P2PMotion::setMinPosition(
 ///
 void P2PMotion::setHome() {
 
-    int v[] = {0, 0, 0};
-    axisPos = Vector(v);
+	for (int i = 0; i < numAxis; i++)
+		axisData[i].position = 0;
 }
 
 
@@ -226,9 +232,9 @@ int P2PMotion::getAxis(
 
     int position = -1;
 
-    if (axis <= cfg.numAxis) {
+    if (axis <= numAxis) {
         Task::enterCriticalSection();
-        position = axisPos[axis];
+        position = axisData[axis].position;
         Task::exitCriticalSection();
     }
 
@@ -244,7 +250,8 @@ P2PMotion::Vector P2PMotion::getPosition() const {
 
     Vector position;
     Task::enterCriticalSection();
-    position = axisPos;
+    for (int i = 0; i < numAxis; i++)
+    	position[i] = axisData[i].position;
     Task::enterCriticalSection();
     return position;
 }
@@ -265,17 +272,17 @@ void P2PMotion::doMoveAbs(
     // Ajusta els limits
     //
     Vector newPosition(position);
-    for (int i = 0; i < cfg.numAxis; i++) {
-        if (position[i] < axisMin[i])
-            newPosition[i] = axisMin[i];
-        else if (position[i] > axisMax[i])
-            newPosition[i] = axisMax[i];
+    for (int i = 0; i < numAxis; i++) {
+        if (position[i] < axisData[i].minPosition)
+            newPosition[i] = axisData[i].minPosition;
+        else if (position[i] > axisData[i].maxPosition)
+            newPosition[i] = axisData[i].maxPosition;
     }
 
     // Si cal moure, ho fa
     //
-    for (int i = 0; i < cfg.numAxis; i++) {
-        if (newPosition[i] != axisPos[i]) {
+    for (int i = 0; i < numAxis; i++) {
+        if (newPosition[i] != axisData[i].position) {
             start(newPosition);
             break;
         }
@@ -294,17 +301,17 @@ void P2PMotion::doMoveAbs(
 
     // Comprova si els parametres son valids
     //
-    if (axis >= cfg.numAxis)
+    if (axis >= numAxis)
         return;
 
     // Calcula el moviment a realitzar
     //
     Vector newPosition;
-    for (int i = 0; i < cfg.numAxis; i++)
+    for (int i = 0; i < numAxis; i++)
         if (i == axis)
             newPosition[i] = position;
         else
-            newPosition[i] = axisPos[i];
+            newPosition[i] = axisData[i].position;
 
     // Realitza el moviment
     //
@@ -320,8 +327,8 @@ void P2PMotion::doMoveRel(
     const Vector& delta) {
 
     Vector position;
-    for (int i = 0; i < cfg.numAxis; i++)
-        position[i] = axisPos[i] + delta[i];
+    for (int i = 0; i < numAxis; i++)
+        position[i] = axisData[i].position + delta[i];
     doMoveAbs(position);
 }
 
@@ -337,13 +344,13 @@ void P2PMotion::doMoveRel(
 
     // Comprova si els parametres son valids
     //
-    if (axis >= cfg.numAxis)
+    if (axis >= numAxis)
         return;
 
     // Calcula el moviment a realitzar
     //
     Vector newDelta;
-    for (int i = 0; i < cfg.numAxis; i++)
+    for (int i = 0; i < numAxis; i++)
         if (i == axis)
             newDelta[i] = delta;
         else
@@ -377,6 +384,45 @@ void P2PMotion::doStop() {
 
 
 /// ----------------------------------------------------------------------
+/// \brief    Operacio homing.
+///
+void P2PMotion::doHoming() {
+
+	int oldMaxSpeed = maxSpeed;
+	maxSpeed = homingSpeed;
+
+	// Busca el limit ingerior de cada eix
+	//
+	for (int i = 0; i < numAxis; i++) {
+
+		// Mou cap a l'esquerra fins al limit
+		//
+		if (!axisData[i].motor->getHome()) {
+
+			// Busca el limit per la dreta
+			//
+			doMoveRel(i, -32000); // 10 voltes a l'esquerra
+			while (isBusy())
+				continue;
+
+			// Busca un posicio que no detecti
+			//
+			doMoveRel(i, 1600);   // Mou mitja volta a la dreta
+			while (isBusy())
+				continue;
+
+			// Asigna la posicio zero
+			//
+			axisData[i].position = 0;
+			axisData[i].minPosition = 0;
+		}
+	}
+
+	maxSpeed = oldMaxSpeed;
+}
+
+
+/// ----------------------------------------------------------------------
 /// \brief    Espera que finalitzi el moviment actual.
 /// \param    blockTime: Temps de bloqueig maxim.
 /// \return   True si ha finalitzat, false si ha acabat el temps de
@@ -394,7 +440,7 @@ bool P2PMotion::waitForFinish(
 ///
 void P2PMotion::timerInitialize() {
 
-    halTMRSetInterruptFunction(cfg.hTimer, tmrInterruptFunction, this);
+    halTMRSetInterruptFunction(hTimer, tmrInterruptFunction, this);
 }
 
 
@@ -403,9 +449,9 @@ void P2PMotion::timerInitialize() {
 ///
 void P2PMotion::timerStart() {
 
-	__halTMRClearInterruptFlags(cfg.hTimer);
-	__halTMREnableInterrupts(cfg.hTimer);
-    halTMRStartTimer(cfg.hTimer);
+	__halTMRClearInterruptFlags(hTimer);
+	__halTMREnableInterrupts(hTimer);
+    halTMRStartTimer(hTimer);
 }
 
 
@@ -414,8 +460,8 @@ void P2PMotion::timerStart() {
 ///
 void P2PMotion::timerStop() {
 
-    halTMRStopTimer(cfg.hTimer);
-	__halTMRDisableInterrupts(cfg.hTimer);
+    halTMRStopTimer(hTimer);
+	__halTMRDisableInterrupts(hTimer);
 }
 
 
@@ -439,37 +485,34 @@ void P2PMotion::tmrInterruptFunction(
 /// \brief    Procesa el inicia de la interpolacio de linies.
 /// \param    position: Posicio final de la linia.
 ///
-void P2PMotion::lineStart(
+void P2PMotion::motionStart(
 	const Vector& position) {
 
-    // Realitza les operacions de calcul de trajectoria
-    //
-    int delta[MOTION_MAX_AXIS];
-    for (int i = 0; i < cfg.numAxis; i++) {
-        int d = position[i] - axisPos[i];
-        if (d < 0) {
-            d = -d;
-            inc[i] = -1;
-            cfg.motors[i]->setDirection(Motor::Direction::backward);
+    int deltaMax = INT_MIN;
+
+    for (int i = 0; i < numAxis; i++) {
+
+        int delta = position[i] - axisData[i].position;
+        if (delta < 0) {
+            delta = -delta;
+            motionData[i].inc = -1;
+            axisData[i].motor->setDirection(Motor::Direction::backward);
         }
         else {
-            inc[i] = 1;
-            cfg.motors[i]->setDirection(Motor::Direction::forward);
+            motionData[i].inc = 1;
+            axisData[i].motor->setDirection(Motor::Direction::forward);
         }
-        delta[i] = d;
-    }
 
-    int deltaMax = INT_MIN;
-    for (int i = 0; i < cfg.numAxis; i++) {
-        if (delta[i] > deltaMax) {
-            deltaMax = delta[i];
+        motionData[i].ddelta = delta * 2;
+
+        if (delta > deltaMax) {
+            deltaMax = delta;
             mainAxis = i;
         }
     }
-    for (int i = 0; i < cfg.numAxis; i++) {
-        ddelta[i] = delta[i] * 2;
-        error[i] = ddelta[i] - deltaMax;
-    }
+
+    for (int i = 0; i < numAxis; i++)
+        motionData[i].error = motionData[i].ddelta - deltaMax;
 
     stepCounter = 0;
     stepNumber = deltaMax;
@@ -478,27 +521,95 @@ void P2PMotion::lineStart(
 
 /// ----------------------------------------------------------------------
 /// \brief    Procesa un pas de la interpolacio de linies
-/// \return   True si ha harribat al final.
+/// \return   True si ha arribat al final, o al limit.
 //
-bool P2PMotion::lineStep() {
+bool P2PMotion::motionStep() {
 
+	// Comprova limits
+	//
+	for (int i = 0; i < numAxis; i++) {
+		// Si va a la dreta i detecta home finalitza el moviment
+		//
+		if ((motionData[i].inc == -1) && axisData[i].motor->getHome())
+        	return true;
+
+		// Si va a l'esquerra i detecta limit, finalitza el moviment
+		//
+        else if ((motionData[i].inc == 1) && axisData[i].motor->getLimit())
+        	return true;
+	}
+
+	// Realitza un pas del moviment
+	//
 	int ma = mainAxis;
-    for (int i = 0; i < cfg.numAxis; i++) {
+    for (int i = 0; i < numAxis; i++) {
         if (i != ma) {
-            if (error[i] > 0) {
-                error[i] -= ddelta[ma];
-                axisPos[i] += inc[i];
-                cfg.motors[i]->setStep(Motor::Step::active);
+            if (motionData[i].error > 0) {
+                motionData[i].error -= motionData[ma].ddelta;
+                axisData[i].position += motionData[i].inc;
+
+                axisData[i].motor->setStep(Motor::Step::active);
             }
-            error[i] += ddelta[i];
+            motionData[i].error += motionData[i].ddelta;
         }
     }
-    axisPos[ma] += inc[ma];
-    cfg.motors[ma]->setStep(Motor::Step::active);
+    axisData[ma].position += motionData[ma].inc;
+
+    axisData[ma].motor->setStep(Motor::Step::active);
 
     stepCounter++;
 
+    // Indica si ha finalitzat el moviment
+    //
     return stepCounter == stepNumber;
+}
+
+
+/// ----------------------------------------------------------------------
+/// \brief    Calcula la velocitat maxima efectiva per la posicio final
+///           del moviment.
+/// \param    position: Posicio final del moviment.
+/// \return   La velocitat maxima efectiva, que no superara mai la velocitat
+///           maxima del motor mes lent.
+///
+int P2PMotion::computeMaxSpeed(
+	const Vector& position) const {
+
+    int speed = maxSpeed;
+
+    for (int i = 0; i < numAxis; i++) {
+    	if (position[i] != axisData[i].position) {
+    		int motorMaxSpeed = axisData[i].motor->getMaxSpeed();
+    		if (maxSpeed > motorMaxSpeed)
+    			speed = motorMaxSpeed;
+    	}
+    }
+
+    return speed;
+}
+
+
+/// ----------------------------------------------------------------------
+/// \brief    Calcula l'acceleracio maxima efectiva per la posicio final
+///           del moviment.
+/// \param    position: Posicio final del moviment.
+/// \return   L'acceleracio maxima efectiva, que no superara mai la
+///           del motor mes lent.
+///
+int P2PMotion::computeMaxAcceleration(
+	const Vector& position) const {
+
+    int acceleration = maxAcceleration;
+
+    for (int i = 0; i < numAxis; i++) {
+    	if (position[i] != axisData[i].position) {
+    		int motorMaxAcceleration = axisData[i].motor->getMaxAcceleration();
+    		if (maxAcceleration > motorMaxAcceleration)
+    			acceleration = motorMaxAcceleration;
+    	}
+    }
+
+    return acceleration;
 }
 
 
@@ -516,7 +627,7 @@ void P2PMotion::start(
 
     // Realitza les operacions de calcul de trajectoria
     //
-    lineStart(position);
+    motionStart(position);
     widthCounter = PULSE_WIDTH;
 
     // Realitza les operacions de calcul del perfil de velocitat. Interesa
@@ -626,8 +737,8 @@ void P2PMotion::stop() {
 
     // Posa els pins de control dels motors en estat desactivat.
     //
-    for (int i = 0; i < cfg.numAxis; i++)
-        cfg.motors[i]->setStep(Motor::Step::idle);
+    for (int i = 0; i < numAxis; i++)
+        axisData[i].motor->setStep(Motor::Step::idle);
 
     // Indica que el controlador esta lliure per un altre moviment.
     //
@@ -643,8 +754,8 @@ void P2PMotion::loop() {
     bool doStep = false;
 
     if (!--widthCounter) {
-		for (int i = 0; i < cfg.numAxis; i++)
-			cfg.motors[i]->setStep(Motor::Step::idle);
+		for (int i = 0; i < numAxis; i++)
+			axisData[i].motor->setStep(Motor::Step::idle);
 		widthCounter = PULSE_WIDTH;
     }
 
@@ -794,7 +905,7 @@ void P2PMotion::loop() {
     // Realitza un pas de la trajectoria
     //
     if (doStep) {
-    	if (lineStep())
+    	if (motionStep())
             stop();
     }
 }

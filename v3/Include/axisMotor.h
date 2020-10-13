@@ -23,7 +23,7 @@ namespace axis {
                 GPIOPort limitPort;
                 GPIOPin limitPin;
                 int maxJerk;
-                int maxAccel;
+                int maxAcceleration;
                 int maxSpeed;
             };
 
@@ -48,11 +48,17 @@ namespace axis {
 
         public:
             Motor(const Configuration& cfg);
+
             void setState(State state) const;
             void setDirection(Direction direction) const;
             void setStep(Step step) const;
+
             bool getHome() const;
             bool getLimit() const;
+
+            inline int getMaxJerk() const { return cfg.maxJerk; }
+            inline int getMaxSpeed() const { return cfg.maxSpeed; }
+            inline int getMaxAcceleration() const { return cfg.maxAcceleration; }
 
         private:
             void initialize();

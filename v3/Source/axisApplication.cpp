@@ -8,6 +8,7 @@
 #endif
 #include "Services/eosDigInputService.h"
 #include "Services/eosDigOutputService.h"
+#include "axisConfig.h"
 #include "axisApplication.h"
 #include "axisMotionService.h"
 #include "axisP2PMotion.h"
@@ -196,6 +197,32 @@ void AxisApplication::configureMotionService() {
     gpioInit.pin = MotionService_ZMotorDirectionPin;
     halGPIOInitializePins(&gpioInit, 1);
 
+    gpioInit.options = HAL_GPIO_MODE_INPUT | HAL_GPIO_PULL_UP;
+
+    gpioInit.port = MotionService_XMotorHomePort;
+    gpioInit.pin = MotionService_XMotorHomePin;
+    halGPIOInitializePins(&gpioInit, 1);
+
+    gpioInit.port = MotionService_XMotorLimitPort;
+    gpioInit.pin = MotionService_XMotorLimitPin;
+    halGPIOInitializePins(&gpioInit, 1);
+
+    gpioInit.port = MotionService_YMotorHomePort;
+    gpioInit.pin = MotionService_YMotorHomePin;
+    halGPIOInitializePins(&gpioInit, 1);
+
+    gpioInit.port = MotionService_YMotorLimitPort;
+    gpioInit.pin = MotionService_YMotorLimitPin;
+    halGPIOInitializePins(&gpioInit, 1);
+
+    gpioInit.port = MotionService_ZMotorHomePort;
+    gpioInit.pin = MotionService_ZMotorHomePin;
+    halGPIOInitializePins(&gpioInit, 1);
+
+    gpioInit.port = MotionService_ZMotorLimitPort;
+    gpioInit.pin = MotionService_ZMotorLimitPin;
+    halGPIOInitializePins(&gpioInit, 1);
+
     // Inicialitza el temporitzador
     //
     TMRInitializeInfo tmrInit;
@@ -226,6 +253,12 @@ void AxisApplication::configureMotionService() {
     motorCfg.directionPin = MotionService_XMotorDirectionPin;
     motorCfg.enablePort = MotionService_XMotorEnablePort;
     motorCfg.enablePin = MotionService_XMotorEnablePin;
+    motorCfg.homePort = MotionService_XMotorHomePort;
+    motorCfg.homePin = MotionService_XMotorHomePin;
+    motorCfg.limitPort = MotionService_XMotorLimitPort;
+    motorCfg.limitPin = MotionService_XMotorLimitPin;
+    motorCfg.maxAcceleration = Axis_X_MaxAcceleration;
+    motorCfg.maxSpeed = Axis_X_MaxSpeed;
 
     xMotor = new Motor(motorCfg);
 
@@ -237,6 +270,12 @@ void AxisApplication::configureMotionService() {
     motorCfg.directionPin = MotionService_YMotorDirectionPin;
     motorCfg.enablePort = MotionService_YMotorEnablePort;
     motorCfg.enablePin = MotionService_YMotorEnablePin;
+    motorCfg.homePort = MotionService_YMotorHomePort;
+    motorCfg.homePin = MotionService_YMotorHomePin;
+    motorCfg.limitPort = MotionService_YMotorLimitPort;
+    motorCfg.limitPin = MotionService_YMotorLimitPin;
+    motorCfg.maxAcceleration = Axis_Y_MaxAcceleration;
+    motorCfg.maxSpeed = Axis_Y_MaxSpeed;
     yMotor = new Motor(motorCfg);
 
     // Crea el motor del eix Z
@@ -247,6 +286,10 @@ void AxisApplication::configureMotionService() {
     motorCfg.directionPin = MotionService_ZMotorDirectionPin;
     motorCfg.enablePort = MotionService_ZMotorEnablePort;
     motorCfg.enablePin = MotionService_ZMotorEnablePin;
+    motorCfg.homePort = MotionService_XMotorHomePort;
+    motorCfg.homePin = MotionService_XMotorHomePin;
+    motorCfg.limitPort = MotionService_XMotorLimitPort;
+    motorCfg.limitPin = MotionService_XMotorLimitPin;
     zMotor = new Motor(motorCfg);
 
     // Crea el controlador de moviment
@@ -258,6 +301,7 @@ void AxisApplication::configureMotionService() {
     motionCfg.motors[2] = zMotor;
     motionCfg.hTimer = hMotionTimer;
     motion = new P2PMotion(motionCfg);
+
     //motion->setJerk(500000);
     //motion->setMaxAcceleration(800000);
     //motion->setMaxSpeed(800000);
@@ -285,7 +329,7 @@ void AxisApplication::onInitialize() {
 
 
 /// ----------------------------------------------------------------------
-/// \brief    Procesa els events del servei de control de mocioment.
+/// \brief    Procesa els events del servei de control de movioment.
 /// \param    args: Arguments del event.
 ///
 void AxisApplication::motionServiceEventHandler(
@@ -298,12 +342,15 @@ void AxisApplication::sw1EventHandler(
     const DigInput::EventArgs& args) {
 
 	static int sign = 1;
-	static int dist = 4 * 3200;
+	static int dist1 = 4 * 3200;
+	static int dist2 = 0 * 3200;
 
     if (sw1->read() == SWITCHES_STATE_ON) {
         led1->pulse(250);
-        motionService->moveRel(sign * dist, 320, 0);
-        sign *= -1;
+
+        motion->doHoming();
+        //motionService->moveRel(sign * dist1, dist2 * sign, 0);
+        //sign *= -1;
     }
 }
 

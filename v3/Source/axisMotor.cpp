@@ -15,16 +15,16 @@ Motor::Motor(
     const Configuration& cfg):
 
     cfg(cfg) {
-    
+
     initialize();
 }
 
 
 /// ----------------------------------------------------------------------
 /// \brief    Inicialitzacio.
-/// 
+///
 void Motor::initialize() {
-    
+
 }
 
 
@@ -62,11 +62,11 @@ void Motor::setStep(
         case Step::idle:
             halGPIOClearPin(cfg.stepPort, cfg.stepPin);
             break;
-            
+
         case Step::active:
             halGPIOSetPin(cfg.stepPort, cfg.stepPin);
             break;
-            
+
         case Step::toggle:
             halGPIOTogglePin(cfg.stepPort, cfg.stepPin);
             break;
@@ -79,8 +79,8 @@ void Motor::setStep(
 /// \return   L'estat del sensor.
 ///
 bool Motor::getHome() const {
-    
-    return halGPIOReadPin(cfg.homePort, cfg.homePin);
+
+    return halGPIOReadPin(cfg.homePort, cfg.homePin) == 0;
 }
 
 
@@ -90,5 +90,5 @@ bool Motor::getHome() const {
 ///
 bool Motor::getLimit() const {
 
-    return halGPIOReadPin(cfg.limitPort, cfg.limitPin);
+    return halGPIOReadPin(cfg.limitPort, cfg.limitPin) == 0;
 }

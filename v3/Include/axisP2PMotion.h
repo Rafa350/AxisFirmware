@@ -36,12 +36,25 @@ namespace axis {
                 phase_VI,
                 phase_VII
             };
+            struct AxisDataElement {        // Informacio de cada eix
+            	Motor* motor;               // -Motor
+            	int position;               // -Posicio actual
+            	int maxPosition;            // -Posicio minima
+            	int minPosition;            // -Posicio maxima
+            };
+            typedef eos::StaticArray<AxisDataElement, MOTION_MAX_AXIS> AxisData;
+            struct MotionDataElement {      // Informacio de moviment de cada eix
+            	int error;                  // -Error acumulat
+            	int ddelta;                 // -Delta * 2
+            	int inc;                    // -Increment
+            };
+            typedef eos::StaticArray<MotionDataElement, MOTION_MAX_AXIS> MotionData;
 
         private:
-            Configuration cfg;
-            Vector axisMax;                    // -Valor maxim de cada eix
-            Vector axisMin;                    // -Valor minim de cada eix
-            Vector axisPos;                    // -Posicio de cada eix
+            int numAxis;                       // -Nombre d'eixos
+            AxisData axisData;                 // -Dades de cada eix
+            TMRHandler hTimer;                 // -Temporitzador
+            int homingSpeed;                   // -Velocitat de homming
             int maxSpeed;                      // -Velocitat maxima
             int maxAcceleration;               // -Acceleracio maxima
             int jerk;                          // -Impuls
@@ -64,10 +77,8 @@ namespace axis {
             //
             int stepNumber;                    // -Numero de pasos a realitzar
             int stepCounter;                   // -Contador de pasos realitzats
-            int mainAxis;                      // -Eix principal (El mes llarg)
-            Vector error;                      // -Error acumulat
-            Vector ddelta;                     // -Deltas * 2
-            Vector inc;                        // -Increments dels eixos per cada pas
+            int mainAxis;                      // -Eix principal (El que es mou a mes distancia)
+            MotionData motionData;             // -Dades de moviment
 
             // Control de la generacio de pulsos
             //
@@ -78,6 +89,7 @@ namespace axis {
             ~P2PMotion();
 
             void setMaxSpeed(int speed);
+            void setHomingSpeed(int speed);
             void setMaxAcceleration(int acceleration);
             void setJerk(int jerk);
             void setMaxPosition(const Vector& position);
@@ -88,6 +100,7 @@ namespace axis {
             int getAxis(int axis) const;
             Vector getPosition() const;
 
+            void doHoming();
             void doMoveAbs(int axis, int position);
             void doMoveAbs(const Vector& position);
             void doMoveRel(const Vector& delta);
@@ -104,8 +117,10 @@ namespace axis {
             void start(const Vector& position);
             void stop();
             void loop();
-            void lineStart(const Vector& position);
-            bool lineStep();
+            void motionStart(const Vector& position);
+            bool motionStep();
+            int computeMaxSpeed(const Vector& position) const;
+            int computeMaxAcceleration(const Vector& position) const;
 
             static void tmrInterruptFunction(TMRHandler handler, void* param);
     };
