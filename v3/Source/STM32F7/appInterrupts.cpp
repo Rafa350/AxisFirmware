@@ -9,7 +9,8 @@ extern "C" void TIM2_IRQHandler() {
 
 	extern TMRHandler hDigInputTimer;
 
-	halTMRInterruptHandler(hDigInputTimer);
+	if (hDigInputTimer != nullptr)
+		halTMRInterruptHandler(hDigInputTimer);
 }
 
 
@@ -20,7 +21,8 @@ extern "C" void TIM3_IRQHandler() {
 
 	extern TMRHandler hDigOutputTimer;
 
-	halTMRInterruptHandler(hDigOutputTimer);
+	if (hDigOutputTimer != nullptr)
+		halTMRInterruptHandler(hDigOutputTimer);
 }
 
 
@@ -31,5 +33,6 @@ extern "C" void TIM4_IRQHandler() {
 
 	extern TMRHandler hMotionTimer;
 
-	halTMRInterruptHandler(hMotionTimer);
+	if (hMotionTimer != nullptr)
+		halTMRInterruptHandler(hMotionTimer);
 }

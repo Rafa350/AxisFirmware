@@ -58,8 +58,6 @@ static void initializeSDRam() {
 ///
 void appInitialize() {
 
-	//__halINTDisableInterrupts();
-
     SCB_EnableICache();
     SCB_EnableDCache();
 
@@ -68,10 +66,11 @@ void appInitialize() {
     initializeClock();
 	initializeSDRam();
 
-	__HAL_FREEZE_TIM2_DBGMCU();
-	__HAL_FREEZE_TIM3_DBGMCU();
-	//__HAL_FREEZE_TIM4_DBGMCU();
-	__HAL_FREEZE_TIM6_DBGMCU();
+#ifdef EOS_DEBUG
+	__HAL_DBGMCU_FREEZE_TIM2();
+	__HAL_DBGMCU_FREEZE_TIM3();
+	//__HAL_DBGMCU_FREEZE_TIM4();
 
-	//__halINTEnableInterrupts();
+	__HAL_DBGMCU_FREEZE_TIM6();
+#endif
 }

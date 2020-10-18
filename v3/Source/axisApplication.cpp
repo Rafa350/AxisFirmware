@@ -23,9 +23,9 @@ static TMRData digInputTimerData;      // Dades del temporitzador pel servei Dig
 static TMRData digOutputTimerData;     // Dades del temporitzador pel servei DigOutput
 static TMRData motionTimerData;        // Dades del temporitzador pel control de moviment
 
-TMRHandler hDigInputTimer;             // Handler del temporitzador
-TMRHandler hDigOutputTimer;            // Handler del temporitzador
-TMRHandler hMotionTimer;               // Handler del temporitzador
+TMRHandler hDigInputTimer = nullptr;   // Handler del temporitzador
+TMRHandler hDigOutputTimer = nullptr;  // Handler del temporitzador
+TMRHandler hMotionTimer = nullptr;     // Handler del temporitzador
 
 
 /// ----------------------------------------------------------------------
@@ -259,7 +259,7 @@ void AxisApplication::configureMotionService() {
     motorCfg.limitPin = MotionService_XMotorLimitPin;
     motorCfg.maxAcceleration = Axis_X_MaxAcceleration;
     motorCfg.maxSpeed = Axis_X_MaxSpeed;
-
+    motorCfg.stepsByRev = Axis_X_StepsByRev;
     xMotor = new Motor(motorCfg);
 
     // Crea el motor del eix Y
@@ -276,6 +276,7 @@ void AxisApplication::configureMotionService() {
     motorCfg.limitPin = MotionService_YMotorLimitPin;
     motorCfg.maxAcceleration = Axis_Y_MaxAcceleration;
     motorCfg.maxSpeed = Axis_Y_MaxSpeed;
+    motorCfg.stepsByRev = Axis_Y_StepsByRev;
     yMotor = new Motor(motorCfg);
 
     // Crea el motor del eix Z
@@ -290,6 +291,7 @@ void AxisApplication::configureMotionService() {
     motorCfg.homePin = MotionService_XMotorHomePin;
     motorCfg.limitPort = MotionService_XMotorLimitPort;
     motorCfg.limitPin = MotionService_XMotorLimitPin;
+    motorCfg.stepsByRev = Axis_Y_StepsByRev;
     zMotor = new Motor(motorCfg);
 
     // Crea el controlador de moviment
@@ -343,7 +345,7 @@ void AxisApplication::sw1EventHandler(
 
 	static int sign = 1;
 	static int dist1 = 4 * 3200;
-	static int dist2 = 0 * 3200;
+	static int dist2 = 2 * 3200;
 
     if (sw1->read() == SWITCHES_STATE_ON) {
         led1->pulse(250);

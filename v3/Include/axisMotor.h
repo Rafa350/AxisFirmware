@@ -25,6 +25,7 @@ namespace axis {
                 int maxJerk;
                 int maxAcceleration;
                 int maxSpeed;
+                int stepsByRev;
             };
 
             enum class Direction {
@@ -59,6 +60,7 @@ namespace axis {
             inline int getMaxJerk() const { return cfg.maxJerk; }
             inline int getMaxSpeed() const { return cfg.maxSpeed; }
             inline int getMaxAcceleration() const { return cfg.maxAcceleration; }
+            inline int getStepsByRev() const { return cfg.stepsByRev; }
 
         private:
             void initialize();

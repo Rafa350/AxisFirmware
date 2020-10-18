@@ -17,6 +17,8 @@
         <itemPath>../../../Include/axisMotionService.h</itemPath>
         <itemPath>../../../Include/axisMotor.h</itemPath>
         <itemPath>../../../Include/axisP2PMotion.h</itemPath>
+        <itemPath>../../../Include/eosConfig.h</itemPath>
+        <itemPath>../../../Include/axisConfig.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="Framework" projectFiles="true">
         <logicalFolder name="f1" displayName="EOS" projectFiles="true">

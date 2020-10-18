@@ -111,7 +111,6 @@ namespace axis {
             bool waitForFinish(unsigned blockTime);
 
         private:
-            void timerInitialize();
             void timerStart();
             void timerStop();
             void start(const Vector& position);

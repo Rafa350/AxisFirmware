@@ -391,6 +391,11 @@
 			<locationURI>PARENT-4-PROJECT_LOC/EOS/v2/Source/System/eosApplication.cpp</locationURI>
 		</link>
 		<link>
+			<name>Src/Framework/EOS/System/eosDebug.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/EOS/v2/Source/System/eosDebug.cpp</locationURI>
+		</link>
+		<link>
 			<name>Src/Framework/EOS/System/eosString.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-4-PROJECT_LOC/EOS/v2/Source/System/eosString.cpp</locationURI>

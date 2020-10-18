@@ -93,10 +93,6 @@ P2PMotion::P2PMotion(
     // Allivera el semafor
     //
     finished.release();
-
-    // Inicialitza el temporitzador
-    //
-    timerInitialize();
 }
 
 
@@ -395,27 +391,26 @@ void P2PMotion::doHoming() {
 	//
 	for (int i = 0; i < numAxis; i++) {
 
-		// Mou cap a l'esquerra fins al limit
+		// Si ja esta en home, mou a la dreta.
 		//
-		if (!axisData[i].motor->getHome()) {
-
-			// Busca el limit per la dreta
-			//
-			doMoveRel(i, -32000); // 10 voltes a l'esquerra
-			while (isBusy())
-				continue;
-
-			// Busca un posicio que no detecti
-			//
-			doMoveRel(i, 1600);   // Mou mitja volta a la dreta
-			while (isBusy())
-				continue;
-
-			// Asigna la posicio zero
-			//
-			axisData[i].position = 0;
-			axisData[i].minPosition = 0;
+		if (axisData[i].motor->getHome()) {
+			doMoveRel(i, axisData[i].motor->getStepsByRev());   // Mou una volta a la dreta
+			waitForFinish(unsigned(-1));
 		}
+
+		// Busca el limit per la dreta
+		//
+		doMoveRel(i, -1 * axisData[i].motor->getStepsByRev() * 2); // 10 voltes a l'esquerra
+		waitForFinish(unsigned(-1));
+
+		// Busca un posicio que no detecti
+		//
+		doMoveRel(i, axisData[i].motor->getStepsByRev() / 2);   // Mou mitja volta a la dreta
+		waitForFinish(unsigned(-1));
+
+		// Asigna la posicio zero
+		//
+		axisData[i].position = 0;
 	}
 
 	maxSpeed = oldMaxSpeed;
@@ -435,15 +430,6 @@ bool P2PMotion::waitForFinish(
 }
 
 
-/// ---------------------------------------------------------------------
-/// \brief    Initialitza el temporitzador
-///
-void P2PMotion::timerInitialize() {
-
-    halTMRSetInterruptFunction(hTimer, tmrInterruptFunction, this);
-}
-
-
 /// ----------------------------------------------------------------------
 /// \brief    Activa el temporitzador i comença a disparar interrupcions
 ///
@@ -451,6 +437,8 @@ void P2PMotion::timerStart() {
 
 	__halTMRClearInterruptFlags(hTimer);
 	__halTMREnableInterrupts(hTimer);
+    halTMRSetInterruptFunction(hTimer, tmrInterruptFunction, this);
+
     halTMRStartTimer(hTimer);
 }
 
@@ -461,6 +449,7 @@ void P2PMotion::timerStart() {
 void P2PMotion::timerStop() {
 
     halTMRStopTimer(hTimer);
+
 	__halTMRDisableInterrupts(hTimer);
 }
 
@@ -482,7 +471,7 @@ void P2PMotion::tmrInterruptFunction(
 
 
 /// ----------------------------------------------------------------------
-/// \brief    Procesa el inicia de la interpolacio de linies.
+/// \brief    Prepara el moviment.
 /// \param    position: Posicio final de la linia.
 ///
 void P2PMotion::motionStart(
@@ -498,10 +487,12 @@ void P2PMotion::motionStart(
             motionData[i].inc = -1;
             axisData[i].motor->setDirection(Motor::Direction::backward);
         }
-        else {
+        else if (delta > 0) {
             motionData[i].inc = 1;
             axisData[i].motor->setDirection(Motor::Direction::forward);
         }
+        else
+            motionData[i].inc = 0;
 
         motionData[i].ddelta = delta * 2;
 
@@ -520,7 +511,7 @@ void P2PMotion::motionStart(
 
 
 /// ----------------------------------------------------------------------
-/// \brief    Procesa un pas de la interpolacio de linies
+/// \brief    Avança un pas del moviment.
 /// \return   True si ha arribat al final, o al limit.
 //
 bool P2PMotion::motionStep() {
@@ -528,15 +519,16 @@ bool P2PMotion::motionStep() {
 	// Comprova limits
 	//
 	for (int i = 0; i < numAxis; i++) {
+
 		// Si va a la dreta i detecta home finalitza el moviment
 		//
 		if ((motionData[i].inc == -1) && axisData[i].motor->getHome())
-        	return true;
+			return true;
 
 		// Si va a l'esquerra i detecta limit, finalitza el moviment
 		//
-        else if ((motionData[i].inc == 1) && axisData[i].motor->getLimit())
-        	return true;
+		else if ((motionData[i].inc == 1) && axisData[i].motor->getLimit())
+			return true;
 	}
 
 	// Realitza un pas del moviment
