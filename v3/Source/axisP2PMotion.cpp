@@ -41,18 +41,6 @@
 #define MOTION_DEF_JERK           (  2000 * 1000)
 
 
-#if defined(EOS_STM32)
-#define __halTMRClearInterruptFlags(hTimer)      halTMRClearInterruptFlags(hTimer, HAL_TMR_EVENT_UP)
-#define __halTMREnableInterrupts(hTimer)         halTMREnableInterrupts(hTimer, HAL_TMR_EVENT_UP)
-#define __halTMRDisableInterrupts(hTimer)        halTMRDisableInterrupts(hTimer, HAL_TMR_EVENT_UP)
-#elif defined(EOS_PIC32)
-#define __halTMRClearInterruptFlags(hTimer)      halTMRClearInterruptFlags(hTimer)
-#define __halTMREnableInterrupts(hTimer)         halTMREnableInterrupts(hTimer)
-#define __halTMRDisableInterrupts(hTimer)        halTMRDisableInterrupts(hTimer)
-#endif
-
-
-
 using namespace eos;
 using namespace axis;
 
@@ -387,7 +375,7 @@ void P2PMotion::doHoming() {
 	int oldMaxSpeed = maxSpeed;
 	maxSpeed = homingSpeed;
 
-	// Busca el limit ingerior de cada eix
+	// Busca el limit inferior de cada eix
 	//
 	for (int i = 0; i < numAxis; i++) {
 
@@ -435,8 +423,8 @@ bool P2PMotion::waitForFinish(
 ///
 void P2PMotion::timerStart() {
 
-	__halTMRClearInterruptFlags(hTimer);
-	__halTMREnableInterrupts(hTimer);
+	halTMRClearInterruptFlags(hTimer, HAL_TMR_EVENT_UPDATE);
+	halTMREnableInterrupts(hTimer, HAL_TMR_EVENT_UPDATE);
     halTMRSetInterruptFunction(hTimer, tmrInterruptFunction, this);
 
     halTMRStartTimer(hTimer);
@@ -450,7 +438,7 @@ void P2PMotion::timerStop() {
 
     halTMRStopTimer(hTimer);
 
-	__halTMRDisableInterrupts(hTimer);
+	halTMRDisableInterrupts(hTimer, HAL_TMR_EVENT_ALL);
 }
 
 
@@ -461,12 +449,16 @@ void P2PMotion::timerStop() {
 ///
 void P2PMotion::tmrInterruptFunction(
     TMRHandler handler,
-    void* param) {
+    void* param,
+	uint32_t event) {
 
-    P2PMotion* motion = static_cast<P2PMotion*>(param);
-    motion->loop();
-    if (!motion->busy)
-        motion->finished.releaseISR();
+	P2PMotion* motion = static_cast<P2PMotion*>(param);
+
+	if (event == HAL_TMR_EVENT_UPDATE) {
+		motion->loop();
+		if (!motion->busy)
+			motion->finished.releaseISR();
+	}
 }
 
 

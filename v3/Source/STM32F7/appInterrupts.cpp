@@ -1,5 +1,7 @@
 #include "eos.h"
+#include "eosAssert.h"
 #include "HAL/halTMR.h"
+#include "HAL/halUART.h"
 
 
 /// ----------------------------------------------------------------------
@@ -35,4 +37,16 @@ extern "C" void TIM4_IRQHandler() {
 
 	if (hMotionTimer != nullptr)
 		halTMRInterruptHandler(hMotionTimer);
+}
+
+
+/// ----------------------------------------------------------------------
+/// \brief    Procesa el vector d'interrupcio UART6_IRQn
+///
+extern "C" void UART6_IRQHandler() {
+
+	extern UARTHandler hUARTHandler;
+
+	if (hUARTHandler != nullptr)
+		halUARTInterruptHandler(hUARTHandler);
 }

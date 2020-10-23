@@ -5,6 +5,7 @@
 #include "eos.h"
 #include "Services/eosDigInputService.h"
 #include "Services/eosDigOutputService.h"
+#include "Services/eosUARTService.h"
 #include "System/eosApplication.h"
 #include "System/eosCallbacks.h"
 #include "axisMotionService.h"
@@ -46,6 +47,8 @@ namespace axis {
             DigOutputService* digOutputService;
             DigOutput* led1;
 
+            UARTService* hUARTService;
+
             //FsmService* fsmService;
 
             DigInputEventCallback sw1EventCallback;
@@ -61,6 +64,7 @@ namespace axis {
             void configureDigInputService();
             void configureDigOutputService();
             void configureMotionService();
+            void configuraUARTService();
 
         protected:
             void onInitialize();

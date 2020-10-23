@@ -13,6 +13,7 @@
 namespace eos {
 
     class Application;
+    class Task;
 }
 
 
@@ -40,7 +41,7 @@ namespace axis {
                 void* param;
             };
             typedef eos::ICallbackP1<const EventArgs&> IEventCallback;
-            struct InitParams {
+            struct InitializeInfo {
             	P2PMotion* motion;
             	IEventCallback* eventCallback;
             	void* eventParam;
@@ -61,10 +62,10 @@ namespace axis {
 
         protected:
             void onInitialize() override;
-            void onTask() override;
+            void onTask(eos::Task *task) override;
 
         public:
-            MotionService(eos::Application *application, const InitParams& initParams);
+            MotionService(eos::Application *application, const InitializeInfo& info);
 
             void moveHome();
             void moveAbs(int x, int y, int z);

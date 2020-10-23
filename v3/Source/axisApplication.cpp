@@ -3,11 +3,13 @@
 #include "HAL\halINT.h"
 #include "HAL\halSYS.h"
 #include "HAL\halTMR.h"
+#include "HAL\halUART.h"
 #ifdef EOS_PIC32
 #include "HAL\PIC32\halCN.h"
 #endif
 #include "Services/eosDigInputService.h"
 #include "Services/eosDigOutputService.h"
+#include "Services/eosUARTService.h"
 #include "axisConfig.h"
 #include "axisApplication.h"
 #include "axisMotionService.h"
@@ -22,10 +24,12 @@ using namespace axis;
 static TMRData digInputTimerData;      // Dades del temporitzador pel servei DigInput
 static TMRData digOutputTimerData;     // Dades del temporitzador pel servei DigOutput
 static TMRData motionTimerData;        // Dades del temporitzador pel control de moviment
+static UARTData uartData;              // Dades del modul UART
 
 TMRHandler hDigInputTimer = nullptr;   // Handler del temporitzador
 TMRHandler hDigOutputTimer = nullptr;  // Handler del temporitzador
 TMRHandler hMotionTimer = nullptr;     // Handler del temporitzador
+UARTHandler hUART = nullptr;           // Handler de la UART
 
 
 /// ----------------------------------------------------------------------
@@ -88,9 +92,9 @@ void AxisApplication::configureDigInputService() {
 
     // Inicialitza el servei
     //
-    DigInputService::InitParams digInputServiceInit;
-    digInputServiceInit.hTimer = hDigInputTimer;
-    digInputService = new DigInputService(this, digInputServiceInit);
+    DigInputService::InitializeInfo digInputServiceInfo;
+    digInputServiceInfo.hTimer = hDigInputTimer;
+    digInputService = new DigInputService(this, digInputServiceInfo);
 
 
     DigInput::InitParams digInputInit;
@@ -147,9 +151,9 @@ void AxisApplication::configureDigOutputService() {
 
     // Inicialitza el servei
     //
-    DigOutputService::InitParams digOutputServiceInit;
-    digOutputServiceInit.hTimer = hDigOutputTimer;
-    digOutputService = new DigOutputService(this, digOutputServiceInit);
+    DigOutputService::InitializeInfo digOutputServiceInfo;
+    digOutputServiceInfo.hTimer = hDigOutputTimer;
+    digOutputService = new DigOutputService(this, digOutputServiceInfo);
 
     DigOutput::InitParams digOutputInit;
 
@@ -310,11 +314,35 @@ void AxisApplication::configureMotionService() {
 
     // Crea el servei de control de moviment
     //
-    MotionService::InitParams motionServiceInit;
-    motionServiceInit.motion = motion;
-    motionServiceInit.eventCallback = &motionServiceEventCallback;
-    motionServiceInit.eventParam = nullptr;
-    motionService = new MotionService(this, motionServiceInit);
+    MotionService::InitializeInfo motionServiceInfo;
+    motionServiceInfo.motion = motion;
+    motionServiceInfo.eventCallback = &motionServiceEventCallback;
+    motionServiceInfo.eventParam = nullptr;
+    motionService = new MotionService(this, motionServiceInfo);
+}
+
+
+/// ----------------------------------------------------------------------
+/// \brief    Inicialitza el servei de comunicacio UART
+///
+void AxisApplication::configuraUARTService() {
+
+	// Inicialitza el modul UART
+	//
+	UARTInitializeInfo uartInit;
+	uartInit.channel = UARTService_UARTChannel;
+	uartInit.options =
+		HAL_UART_CLOCK_AUTO | HAL_UART_BAUD_9600 | HAL_UART_OVERSAMPLING_16 |
+		HAL_UART_LEN_8 | HAL_UART_STOP_1 | HAL_UART_PARITY_NONE;
+	hUART = halUARTInitialize(&uartData, &uartInit);
+	halINTEnableInterruptVector(UARTService_UARTInterreuptVector);
+	halINTSetInterruptVectorPriority(UARTService_UARTInterruptVector, UARTService_UARTInterruptPriority, UARTService_UARTInterruptSubPriority);
+
+	// Inicialitza el servei.
+	//
+	UARTService::InitializeInfo uartServiceInfo;
+	uartServiceInfo.hUART = hUART;
+	hUARTService = new UARTService(this, uartServiceInfo);
 }
 
 
@@ -327,6 +355,7 @@ void AxisApplication::onInitialize() {
     //fsmService = new FsmService(this, nullptr);
     configureDigInputService();
     configureDigOutputService();
+    configuraUARTService();
 }
 
 

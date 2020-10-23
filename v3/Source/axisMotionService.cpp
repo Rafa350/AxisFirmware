@@ -16,13 +16,13 @@ using namespace axis;
 ///
 MotionService::MotionService(
     Application* application,
-    const InitParams& initParams):
+    const InitializeInfo& info):
 
     Service(application),
     commandQueue(commandQueueSize),
-    motion(initParams.motion),
-	eventCallback(initParams.eventCallback),
-	eventParam(initParams.eventParam) {
+    motion(info.motion),
+	eventCallback(info.eventCallback),
+	eventParam(info.eventParam) {
 
 }
 
@@ -38,8 +38,10 @@ void MotionService::onInitialize() {
 
 /// ----------------------------------------------------------------------
 /// \brief    Procesa les tasques del servei.
+/// \param    task: L'objecte Task que executa el servei.
 ///
-void MotionService::onTask() {
+void MotionService::onTask(
+	Task *task) {
 
     Command cmd;
     while (commandQueue.pop(cmd, unsigned(-1))) {

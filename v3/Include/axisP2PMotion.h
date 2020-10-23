@@ -121,7 +121,7 @@ namespace axis {
             int computeMaxSpeed(const Vector& position) const;
             int computeMaxAcceleration(const Vector& position) const;
 
-            static void tmrInterruptFunction(TMRHandler handler, void* param);
+            static void tmrInterruptFunction(TMRHandler handler, void* param, uint32_t event);
     };
 }
 

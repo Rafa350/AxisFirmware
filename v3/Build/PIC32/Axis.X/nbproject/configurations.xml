@@ -44,7 +44,6 @@
           </logicalFolder>
           <logicalFolder name="f3" displayName="Services" projectFiles="true">
             <itemPath>../../../../../EOS/v2/Include/Services/eosService.h</itemPath>
-            <itemPath>../../../../../EOS/v2/Include/Services/eosFsmService.h</itemPath>
             <itemPath>../../../../../EOS/v2/Include/Services/eosDigOutputService.h</itemPath>
             <itemPath>../../../../../EOS/v2/Include/Services/eosDigInputService.h</itemPath>
           </logicalFolder>
@@ -108,7 +107,6 @@
           </logicalFolder>
           <logicalFolder name="f3" displayName="Services" projectFiles="true">
             <itemPath>../../../../../EOS/v2/Source/Services/eosService.cpp</itemPath>
-            <itemPath>../../../../../EOS/v2/Source/Services/eosFsmService.cpp</itemPath>
             <itemPath>../../../../../EOS/v2/Source/Services/eosDigInputService.cpp</itemPath>
             <itemPath>../../../../../EOS/v2/Source/Services/eosDigOutputService.cpp</itemPath>
           </logicalFolder>
