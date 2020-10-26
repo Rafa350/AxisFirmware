@@ -71,19 +71,19 @@ void AxisApplication::configureDigInputService() {
 
     // Inicialitza el temporitzador
     //
-	TMRInitializeInfo tmrInfo;
-	tmrInfo.timer = DigInputService_Timer;
+	TMRSettings tmrSettings;
+	tmrSettings.timer = DigInputService_Timer;
 #if defined(EOS_PIC32)
-    tmrInfo.options = HAL_TMR_MODE_16 | HAL_TMR_CLKDIV_64;
-    tmrInfo.period = ((DigInputService_TimerClockFrequency * DigInputService_TimerPeriod) / 64000) - 1;
+    tmrSettings.options = HAL_TMR_MODE_16 | HAL_TMR_CLKDIV_64;
+    tmrSettings.period = ((DigInputService_TimerClockFrequency * DigInputService_TimerPeriod) / 64000) - 1;
 #elif defined(EOS_STM32F4) || defined(EOS_STM32F7)
-    tmrInfo.options = HAL_TMR_MODE_16 | HAL_TMR_CLKDIV_1;
-    tmrInfo.prescaler = (DigInputService_TimerClockFrequency / 1000000L) - 1;
-    tmrInfo.period = (1000 * DigInputService_TimerPeriod) - 1;
+    tmrSettings.options = HAL_TMR_MODE_16 | HAL_TMR_CLKDIV_1;
+    tmrSettings.prescaler = (DigInputService_TimerClockFrequency / 1000000L) - 1;
+    tmrSettings.period = (1000 * DigInputService_TimerPeriod) - 1;
 #else
     //#error CPU no soportada
 #endif
-	hDigInputTimer = halTMRInitialize(&digInputTimerData, &tmrInfo);
+	hDigInputTimer = halTMRInitialize(&digInputTimerData, &tmrSettings);
 
 	// Inicialitza les interrupcions associades al temporitzador
 	//
@@ -92,28 +92,27 @@ void AxisApplication::configureDigInputService() {
 
     // Inicialitza el servei
     //
-    DigInputService::InitializeInfo digInputServiceInfo;
-    digInputServiceInfo.hTimer = hDigInputTimer;
-    digInputService = new DigInputService(this, digInputServiceInfo);
+    DigInputService::Settings digInputServiceSettings;
+    digInputServiceSettings.hTimer = hDigInputTimer;
+    digInputService = new DigInputService(this, digInputServiceSettings);
 
-
-    DigInput::InitParams digInputInit;
-    digInputInit.eventParam = nullptr;
+    DigInput::Settings digInputSettings;
+    digInputSettings.eventParam = nullptr;
 
     // Inicialitza la entrada SW_SW1
     //
-    digInputInit.port = SWITCHES_SW1_PORT;
-    digInputInit.pin = SWITCHES_SW1_PIN;
-    digInputInit.eventCallback = &sw1EventCallback;
-    sw1 = new DigInput(digInputService, digInputInit);
+    digInputSettings.port = SWITCHES_SW1_PORT;
+    digInputSettings.pin = SWITCHES_SW1_PIN;
+    digInputSettings.eventCallback = &sw1EventCallback;
+    sw1 = new DigInput(digInputService, digInputSettings);
 
     // Inicialitza la entrada SW_SW2
     //
 #ifdef EXIST_SWITCHES_SW2
-    digInputInit.port = SWITCHES_SW2_PORT;
-    digInputInit.pin = SWITCHES_SW2_PIN;
-    digInputInit.eventCallback = &sw2EventCallback;
-    sw2 = new DigInput(digInputService, digInputInit);
+    digInputSettings.port = SWITCHES_SW2_PORT;
+    digInputSettings.pin = SWITCHES_SW2_PIN;
+    digInputSettings.eventCallback = &sw2EventCallback;
+    sw2 = new DigInput(digInputService, digInputSettings);
 #endif
 }
 
@@ -130,19 +129,19 @@ void AxisApplication::configureDigOutputService() {
 
     // Inicialitza el temporitzador
     //
-	TMRInitializeInfo tmrInfo;
-	tmrInfo.timer = DigOutputService_Timer;
+	TMRSettings tmrSettings;
+	tmrSettings.timer = DigOutputService_Timer;
 #if defined(EOS_PIC32)
-    tmrInfo.options = HAL_TMR_MODE_16 | HAL_TMR_CLKDIV_64;
-    tmrInfo.period = ((DigOutputService_TimerClockFrequency * DigOutputService_TimerPeriod) / 64000) - 1;
+    tmrSettings.options = HAL_TMR_MODE_16 | HAL_TMR_CLKDIV_64;
+    tmrSettings.period = ((DigOutputService_TimerClockFrequency * DigOutputService_TimerPeriod) / 64000) - 1;
 #elif defined(EOS_STM32F4) || defined(EOS_STM32F7)
-    tmrInfo.options = HAL_TMR_MODE_16 | HAL_TMR_CLKDIV_1;
-    tmrInfo.prescaler = (DigOutputService_TimerClockFrequency / 1000000L) - 1;
-    tmrInfo.period = (1000 * DigOutputService_TimerPeriod) - 1;
+    tmrSettings.options = HAL_TMR_MODE_16 | HAL_TMR_CLKDIV_1;
+    tmrSettings.prescaler = (DigOutputService_TimerClockFrequency / 1000000L) - 1;
+    tmrSettings.period = (1000 * DigOutputService_TimerPeriod) - 1;
 #else
     //#error CPU no soportada
 #endif
-	hDigOutputTimer = halTMRInitialize(&digOutputTimerData, &tmrInfo);
+	hDigOutputTimer = halTMRInitialize(&digOutputTimerData, &tmrSettings);
 
 	// Inicialitza les interrupcions associades al temporitzador
 	//
@@ -151,17 +150,17 @@ void AxisApplication::configureDigOutputService() {
 
     // Inicialitza el servei
     //
-    DigOutputService::InitializeInfo digOutputServiceInfo;
-    digOutputServiceInfo.hTimer = hDigOutputTimer;
-    digOutputService = new DigOutputService(this, digOutputServiceInfo);
+    DigOutputService::Settings digOutputServiceSettings;
+    digOutputServiceSettings.hTimer = hDigOutputTimer;
+    digOutputService = new DigOutputService(this, digOutputServiceSettings);
 
-    DigOutput::InitParams digOutputInit;
+    DigOutput::Settings digOutputSettings;
 
-    // Inicialitza la sortida LED_LED3
+    // Inicialitza la sortida LED1
     //
-    digOutputInit.port = DigOutput_BusyLedPort;
-    digOutputInit.pin = DigOutput_BusyLedPin;
-    led1 = new DigOutput(digOutputService, digOutputInit);
+    digOutputSettings.port = DigOutput_BusyLedPort;
+    digOutputSettings.pin = DigOutput_BusyLedPin;
+    led1 = new DigOutput(digOutputService, digOutputSettings);
 }
 
 
@@ -172,75 +171,75 @@ void AxisApplication::configureMotionService() {
 
     // Inicialitza els ports
     //
-    GPIOInitializePinInfo gpioInit;
+    GPIOPinSettings gpioSettings;
 
-    gpioInit.options = HAL_GPIO_MODE_OUTPUT_PP | HAL_GPIO_INIT_CLR;
-    gpioInit.alt = HAL_GPIO_AF_NONE;
+    gpioSettings.options = HAL_GPIO_MODE_OUTPUT_PP | HAL_GPIO_INIT_CLR;
+    gpioSettings.alt = HAL_GPIO_AF_NONE;
 
-    gpioInit.port = MotionService_XMotorStepPort;
-    gpioInit.pin = MotionService_XMotorStepPin;
-    halGPIOInitializePins(&gpioInit, 1);
+    gpioSettings.port = MotionService_XMotorStepPort;
+    gpioSettings.pin = MotionService_XMotorStepPin;
+    halGPIOInitializePins(&gpioSettings, 1);
 
-    gpioInit.port = MotionService_XMotorDirectionPort;
-    gpioInit.pin = MotionService_XMotorDirectionPin;
-    halGPIOInitializePins(&gpioInit, 1);
+    gpioSettings.port = MotionService_XMotorDirectionPort;
+    gpioSettings.pin = MotionService_XMotorDirectionPin;
+    halGPIOInitializePins(&gpioSettings, 1);
 
-    gpioInit.port = MotionService_YMotorStepPort;
-    gpioInit.pin = MotionService_YMotorStepPin;
-    halGPIOInitializePins(&gpioInit, 1);
+    gpioSettings.port = MotionService_YMotorStepPort;
+    gpioSettings.pin = MotionService_YMotorStepPin;
+    halGPIOInitializePins(&gpioSettings, 1);
 
-    gpioInit.port = MotionService_YMotorDirectionPort;
-    gpioInit.pin = MotionService_YMotorDirectionPin;
-    halGPIOInitializePins(&gpioInit, 1);
+    gpioSettings.port = MotionService_YMotorDirectionPort;
+    gpioSettings.pin = MotionService_YMotorDirectionPin;
+    halGPIOInitializePins(&gpioSettings, 1);
 
-    gpioInit.port = MotionService_ZMotorStepPort;
-    gpioInit.pin = MotionService_ZMotorStepPin;
-    halGPIOInitializePins(&gpioInit, 1);
+    gpioSettings.port = MotionService_ZMotorStepPort;
+    gpioSettings.pin = MotionService_ZMotorStepPin;
+    halGPIOInitializePins(&gpioSettings, 1);
 
-    gpioInit.port = MotionService_ZMotorDirectionPort;
-    gpioInit.pin = MotionService_ZMotorDirectionPin;
-    halGPIOInitializePins(&gpioInit, 1);
+    gpioSettings.port = MotionService_ZMotorDirectionPort;
+    gpioSettings.pin = MotionService_ZMotorDirectionPin;
+    halGPIOInitializePins(&gpioSettings, 1);
 
-    gpioInit.options = HAL_GPIO_MODE_INPUT | HAL_GPIO_PULL_UP;
+    gpioSettings.options = HAL_GPIO_MODE_INPUT | HAL_GPIO_PULL_UP;
 
-    gpioInit.port = MotionService_XMotorHomePort;
-    gpioInit.pin = MotionService_XMotorHomePin;
-    halGPIOInitializePins(&gpioInit, 1);
+    gpioSettings.port = MotionService_XMotorHomePort;
+    gpioSettings.pin = MotionService_XMotorHomePin;
+    halGPIOInitializePins(&gpioSettings, 1);
 
-    gpioInit.port = MotionService_XMotorLimitPort;
-    gpioInit.pin = MotionService_XMotorLimitPin;
-    halGPIOInitializePins(&gpioInit, 1);
+    gpioSettings.port = MotionService_XMotorLimitPort;
+    gpioSettings.pin = MotionService_XMotorLimitPin;
+    halGPIOInitializePins(&gpioSettings, 1);
 
-    gpioInit.port = MotionService_YMotorHomePort;
-    gpioInit.pin = MotionService_YMotorHomePin;
-    halGPIOInitializePins(&gpioInit, 1);
+    gpioSettings.port = MotionService_YMotorHomePort;
+    gpioSettings.pin = MotionService_YMotorHomePin;
+    halGPIOInitializePins(&gpioSettings, 1);
 
-    gpioInit.port = MotionService_YMotorLimitPort;
-    gpioInit.pin = MotionService_YMotorLimitPin;
-    halGPIOInitializePins(&gpioInit, 1);
+    gpioSettings.port = MotionService_YMotorLimitPort;
+    gpioSettings.pin = MotionService_YMotorLimitPin;
+    halGPIOInitializePins(&gpioSettings, 1);
 
-    gpioInit.port = MotionService_ZMotorHomePort;
-    gpioInit.pin = MotionService_ZMotorHomePin;
-    halGPIOInitializePins(&gpioInit, 1);
+    gpioSettings.port = MotionService_ZMotorHomePort;
+    gpioSettings.pin = MotionService_ZMotorHomePin;
+    halGPIOInitializePins(&gpioSettings, 1);
 
-    gpioInit.port = MotionService_ZMotorLimitPort;
-    gpioInit.pin = MotionService_ZMotorLimitPin;
-    halGPIOInitializePins(&gpioInit, 1);
+    gpioSettings.port = MotionService_ZMotorLimitPort;
+    gpioSettings.pin = MotionService_ZMotorLimitPin;
+    halGPIOInitializePins(&gpioSettings, 1);
 
     // Inicialitza el temporitzador
     //
-    TMRInitializeInfo tmrInit;
+    TMRSettings tmrSettings;
 
-    tmrInit.timer = MotionService_Timer;
+    tmrSettings.timer = MotionService_Timer;
 #if defined(EOS_PIC32)
-    tmrInit.options = HAL_TMR_MODE_16 | HAL_TMR_CLKDIV_32;
-    tmrInit.period = (MotionService_TimerClockFrequency / 32 / 100000L) - 1;
+    tmrSettings.options = HAL_TMR_MODE_16 | HAL_TMR_CLKDIV_32;
+    tmrSettings.period = (MotionService_TimerClockFrequency / 32 / 100000L) - 1;
 #elif defined(EOS_STM32F7)
-    tmrInit.options = HAL_TMR_MODE_16 | HAL_TMR_CLKDIV_1;
-    tmrInit.prescaler = (MotionService_TimerClockFrequency / 1000000L) - 1;
-    tmrInit.period = 10 - 1;
+    tmrSettings.options = HAL_TMR_MODE_16 | HAL_TMR_CLKDIV_1;
+    tmrSettings.prescaler = (MotionService_TimerClockFrequency / 1000000L) - 1;
+    tmrSettings.period = 10 - 1;
 #endif
-    hMotionTimer = halTMRInitialize(&motionTimerData, &tmrInit);
+    hMotionTimer = halTMRInitialize(&motionTimerData, &tmrSettings);
 
 	// Inicialitza les interrupcions associades al temporitzador
 	//
@@ -327,22 +326,39 @@ void AxisApplication::configureMotionService() {
 ///
 void AxisApplication::configuraUARTService() {
 
+	// Configura els pins (Corresponen al pins del conector Arduino D0/D1)
+	//
+    GPIOPinSettings gpioSettings;
+
+    gpioSettings.options = HAL_GPIO_MODE_ALT_PP | HAL_GPIO_SPEED_HIGH | HAL_GPIO_PULL_UP;
+
+	gpioSettings.port = UARTService_TxPort;
+	gpioSettings.pin = UARTService_TxPin;
+	gpioSettings.alt = UARTService_TxAF;
+	halGPIOInitializePins(&gpioSettings, 1);
+
+	gpioSettings.port = UARTService_RxPort;
+	gpioSettings.pin = UARTService_RxPin;
+	gpioSettings.alt = UARTService_RxAF;
+	halGPIOInitializePins(&gpioSettings, 1);
+
+
 	// Inicialitza el modul UART
 	//
-	UARTInitializeInfo uartInit;
-	uartInit.channel = UARTService_UARTChannel;
-	uartInit.options =
+	UARTSettings uartSettings;
+	uartSettings.channel = UARTService_UARTChannel;
+	uartSettings.options =
 		HAL_UART_CLOCK_AUTO | HAL_UART_BAUD_9600 | HAL_UART_OVERSAMPLING_16 |
 		HAL_UART_LEN_8 | HAL_UART_STOP_1 | HAL_UART_PARITY_NONE;
-	hUART = halUARTInitialize(&uartData, &uartInit);
-	halINTEnableInterruptVector(UARTService_UARTInterreuptVector);
+	hUART = halUARTInitialize(&uartData, &uartSettings);
+	halINTEnableInterruptVector(UARTService_UARTInterruptVector);
 	halINTSetInterruptVectorPriority(UARTService_UARTInterruptVector, UARTService_UARTInterruptPriority, UARTService_UARTInterruptSubPriority);
 
 	// Inicialitza el servei.
 	//
-	UARTService::InitializeInfo uartServiceInfo;
-	uartServiceInfo.hUART = hUART;
-	hUARTService = new UARTService(this, uartServiceInfo);
+	UARTService::Settings uartServiceSettings;
+	uartServiceSettings.hUART = hUART;
+	hUARTService = new UARTService(this, uartServiceSettings);
 }
 
 

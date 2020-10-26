@@ -11,16 +11,16 @@
 #ifdef USE_LEDS_LED2
 #define EXIST_LEDS_LED2
 
-#define LEDS_LED2_PORT            ARDUINO_D0_PORT
-#define LEDS_LED2_PIN             ARDUINO_D0_PIN
+#define LEDS_LED2_PORT            ARDUINO_D14_PORT
+#define LEDS_LED2_PIN             ARDUINO_D14_PIN
 
 #endif
 
 #ifdef USE_LEDS_LED3
 #define EXIST_LEDS_LED3
 
-#define LEDS_LED3_PORT            ARDUINO_D1_PORT
-#define LEDS_LED3_PIN             ARDUINO_D1_PIN
+#define LEDS_LED3_PORT            ARDUINO_D15_PORT
+#define LEDS_LED3_PIN             ARDUINO_D15_PIN
 
 #endif
 
@@ -90,6 +90,17 @@
 
 #define MOTORS_MOTOR3_LIMIT_PORT       ARDUINO_D13_PORT
 #define MOTORS_MOTOR3_LIMIT_PIN        ARDUINO_D13_PIN
+
+// -----------------------------------------------------------------------
+// UART
+//
+#define UART_TX_PORT                   ARDUINO_D1_PORT
+#define UART_TX_PIN					   ARDUINO_D1_PIN
+#define UART_TX_AF                     HAL_GPIO_AF8_USART6
+
+#define UART_RX_PORT                   ARDUINO_D0_PORT
+#define UART_RX_PIN                    ARDUINO_D0_PIN
+#define UART_RX_AF                     HAL_GPIO_AF8_USART6
 
 
 #endif // __appBoard_STM32F746G_DISCO__

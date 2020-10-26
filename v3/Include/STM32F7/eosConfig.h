@@ -24,14 +24,16 @@
 #define Eos_UseApplicationInitializeCallback          0
 #define Eos_UseApplicationTerminateCallback           0
 
+
 // Opcions de configuracio del servei DigInputs
 //
 #define DigInputService_Timer                         HAL_TMR_TIMER_2
 #define DigInputService_TimerClockFrequency           (halSYSGetPeripheralClock1Frequency() * 2)
 #define DigInputService_TimerPeriod                   5 // Periode en ms
 #define DigInputService_TimerInterruptVector          HAL_INT_VECTOR_TMR2
-#define DigInputService_TimerInterruptPriority        HAL_INT_PRIORITY_5
+#define DigInputService_TimerInterruptPriority        HAL_INT_PRIORITY_6
 #define DigInputService_TimerInterruptSubPriority     HAL_INT_SUBPRIORITY_0
+
 
 // Opcions de configuracio del servei DigOutputs
 //
@@ -39,11 +41,25 @@
 #define DigOutputService_TimerClockFrequency          (halSYSGetPeripheralClock1Frequency() * 2)
 #define DigOutputService_TimerPeriod                  1 // Periode en ms
 #define DigOutputService_TimerInterruptVector         HAL_INT_VECTOR_TMR3
-#define DigOutputService_TimerInterruptPriority       HAL_INT_PRIORITY_5
+#define DigOutputService_TimerInterruptPriority       HAL_INT_PRIORITY_6
 #define DigOutputService_TimerInterruptSubPriority    HAL_INT_SUBPRIORITY_0
 
 #define DigOutput_BusyLedPort                         LEDS_LED1_PORT
 #define DigOutput_BusyLedPin                          LEDS_LED1_PIN
+
+
+// Opcions de conmfiguracio del servei UART
+//
+#define UARTService_TxPort                            UART_TX_PORT
+#define UARTService_TxPin                             UART_TX_PIN
+#define UARTService_TxAF                              UART_TX_AF
+#define UARTService_RxPort                            UART_RX_PORT
+#define UARTService_RxPin                             UART_RX_PIN
+#define UARTService_RxAF                              UART_RX_AF
+#define UARTService_UARTChannel                       HAL_UART_CHANNEL_6
+#define UARTService_UARTInterruptVector               HAL_INT_VECTOR_UART6
+#define UARTService_UARTInterruptPriority             HAL_INT_PRIORITY_10
+#define UARTService_UARTInterruptSubPriority          HAL_INT_SUBPRIORITY_0
 
 
 // Opcions de configuracio del servei MotionService
@@ -96,7 +112,7 @@
 #define MotionService_Timer                           HAL_TMR_TIMER_4
 #define MotionService_TimerClockFrequency             (halSYSGetPeripheralClock1Frequency() * 2)
 #define MotionService_TimerInterruptVector            HAL_INT_VECTOR_TMR4
-#define MotionService_TimerInterruptPriority          HAL_INT_PRIORITY_6
+#define MotionService_TimerInterruptPriority          HAL_INT_PRIORITY_5
 #define MotionService_TimerInterruptSubPriority       HAL_INT_SUBPRIORITY_0
 
 #define MotionService_CommandQueueSize                10
