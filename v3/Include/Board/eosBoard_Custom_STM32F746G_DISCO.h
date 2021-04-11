@@ -1,5 +1,5 @@
-#ifndef __appBoard_STM32F746G_DISCO__
-#define __appBoard_STM32F746G_DISCO__
+#ifndef __eosBoard_Custom_STM32F746G_DISCO__
+#define __eosBoard_Custom_STM32F746G_DISCO__
 
 
 #include "Board/eosBoard_STM32F746G_DISCO.h"
@@ -103,4 +103,4 @@
 #define UART_RX_AF                     HAL_GPIO_AF8_USART6
 
 
-#endif // __appBoard_STM32F746G_DISCO__
+#endif // __eosBoard_Custom_STM32F746G_DISCO__
