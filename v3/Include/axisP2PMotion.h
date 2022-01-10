@@ -4,7 +4,7 @@
 
 #include "eos.h"
 #include "HAL/halTMR.h"
-#include "System/Collections/eosStaticArray.h"
+#include "System/Collections/eosArray.h"
 #include "System/Core/eosSemaphore.h"
 #include "axisMotor.h"
 
@@ -18,12 +18,12 @@ namespace axis {
 
     class P2PMotion {
         public:
-            typedef eos::StaticArray<Motor*, MOTION_MAX_AXIS> Motors;
-            typedef eos::StaticArray<int, MOTION_MAX_AXIS> Vector;
+            typedef eos::Array<Motor*, MOTION_MAX_AXIS> Motors;
+            typedef eos::Array<int, MOTION_MAX_AXIS> Vector;
             struct Configuration {
                 int numAxis;
                 Motors motors;
-                TMRHandler hTimer;
+                halTMRHandler hTimer;
             };
 
         private:
@@ -42,18 +42,18 @@ namespace axis {
             	int maxPosition;            // -Posicio minima
             	int minPosition;            // -Posicio maxima
             };
-            typedef eos::StaticArray<AxisDataElement, MOTION_MAX_AXIS> AxisData;
+            typedef eos::Array<AxisDataElement, MOTION_MAX_AXIS> AxisData;
             struct MotionDataElement {      // Informacio de moviment de cada eix
             	int error;                  // -Error acumulat
             	int ddelta;                 // -Delta * 2
             	int inc;                    // -Increment
             };
-            typedef eos::StaticArray<MotionDataElement, MOTION_MAX_AXIS> MotionData;
+            typedef eos::Array<MotionDataElement, MOTION_MAX_AXIS> MotionData;
 
         private:
             int numAxis;                       // -Nombre d'eixos
             AxisData axisData;                 // -Dades de cada eix
-            TMRHandler hTimer;                 // -Temporitzador
+            halTMRHandler hTimer;              // -Temporitzador
             int homingSpeed;                   // -Velocitat de homming
             int maxSpeed;                      // -Velocitat maxima
             int maxAcceleration;               // -Acceleracio maxima
@@ -121,7 +121,7 @@ namespace axis {
             int computeMaxSpeed(const Vector& position) const;
             int computeMaxAcceleration(const Vector& position) const;
 
-            static void tmrInterruptFunction(TMRHandler handler, void* param, uint32_t event);
+            static void tmrInterruptFunction(halTMRHandler handler, void* param, uint32_t event);
     };
 }
 

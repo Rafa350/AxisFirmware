@@ -12,16 +12,16 @@ namespace axis {
     class Motor {
         public:
             struct Configuration {
-                GPIOPort stepPort;
-                GPIOPin stepPin;
-                GPIOPort directionPort;
-                GPIOPin directionPin;
-                GPIOPort enablePort;
-                GPIOPin enablePin;
-                GPIOPort homePort;
-                GPIOPin homePin;
-                GPIOPort limitPort;
-                GPIOPin limitPin;
+                halGPIOPort stepPort;
+                halGPIOPin stepPin;
+                halGPIOPort directionPort;
+                halGPIOPin directionPin;
+                halGPIOPort enablePort;
+                halGPIOPin enablePin;
+                halGPIOPort homePort;
+                halGPIOPin homePin;
+                halGPIOPort limitPort;
+                halGPIOPin limitPin;
                 int maxJerk;
                 int maxAcceleration;
                 int maxSpeed;

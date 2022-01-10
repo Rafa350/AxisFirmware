@@ -21,15 +21,15 @@ using namespace eos;
 using namespace axis;
 
 
-static TMRData digInputTimerData;      // Dades del temporitzador pel servei DigInput
-static TMRData digOutputTimerData;     // Dades del temporitzador pel servei DigOutput
-static TMRData motionTimerData;        // Dades del temporitzador pel control de moviment
-static UARTData uartData;              // Dades del modul UART
+static halTMRData digInputTimerData;      // Dades del temporitzador pel servei DigInput
+static halTMRData digOutputTimerData;     // Dades del temporitzador pel servei DigOutput
+static halTMRData motionTimerData;        // Dades del temporitzador pel control de moviment
+static halUARTData uartData;              // Dades del modul UART
 
-TMRHandler hDigInputTimer = nullptr;   // Handler del temporitzador
-TMRHandler hDigOutputTimer = nullptr;  // Handler del temporitzador
-TMRHandler hMotionTimer = nullptr;     // Handler del temporitzador
-UARTHandler hUART = nullptr;           // Handler de la UART
+halTMRHandler hDigInputTimer = nullptr;   // Handler del temporitzador
+halTMRHandler hDigOutputTimer = nullptr;  // Handler del temporitzador
+halTMRHandler hMotionTimer = nullptr;     // Handler del temporitzador
+halUARTHandler hUART = nullptr;           // Handler de la UART
 
 
 /// ----------------------------------------------------------------------
@@ -71,7 +71,7 @@ void AxisApplication::configureDigInputService() {
 
     // Inicialitza el temporitzador
     //
-	TMRSettings tmrSettings;
+	halTMRSettings tmrSettings;
 	tmrSettings.timer = DigInputService_Timer;
 #if defined(EOS_PIC32)
     tmrSettings.options = HAL_TMR_MODE_16 | HAL_TMR_CLKDIV_64;
@@ -129,7 +129,7 @@ void AxisApplication::configureDigOutputService() {
 
     // Inicialitza el temporitzador
     //
-	TMRSettings tmrSettings;
+	halTMRSettings tmrSettings;
 	tmrSettings.timer = DigOutputService_Timer;
 #if defined(EOS_PIC32)
     tmrSettings.options = HAL_TMR_MODE_16 | HAL_TMR_CLKDIV_64;
@@ -171,7 +171,7 @@ void AxisApplication::configureMotionService() {
 
     // Inicialitza els ports
     //
-    GPIOPinSettings gpioSettings;
+    halGPIOPinSettings gpioSettings;
 
     gpioSettings.options = HAL_GPIO_MODE_OUTPUT_PP | HAL_GPIO_INIT_CLR;
     gpioSettings.alt = HAL_GPIO_AF_NONE;
@@ -228,7 +228,7 @@ void AxisApplication::configureMotionService() {
 
     // Inicialitza el temporitzador
     //
-    TMRSettings tmrSettings;
+    halTMRSettings tmrSettings;
 
     tmrSettings.timer = MotionService_Timer;
 #if defined(EOS_PIC32)
@@ -290,11 +290,11 @@ void AxisApplication::configureMotionService() {
     motorCfg.directionPin = MotionService_ZMotorDirectionPin;
     motorCfg.enablePort = MotionService_ZMotorEnablePort;
     motorCfg.enablePin = MotionService_ZMotorEnablePin;
-    motorCfg.homePort = MotionService_XMotorHomePort;
-    motorCfg.homePin = MotionService_XMotorHomePin;
-    motorCfg.limitPort = MotionService_XMotorLimitPort;
-    motorCfg.limitPin = MotionService_XMotorLimitPin;
-    motorCfg.stepsByRev = Axis_Y_StepsByRev;
+    motorCfg.homePort = MotionService_ZMotorHomePort;
+    motorCfg.homePin = MotionService_ZMotorHomePin;
+    motorCfg.limitPort = MotionService_ZMotorLimitPort;
+    motorCfg.limitPin = MotionService_ZMotorLimitPin;
+    motorCfg.stepsByRev = Axis_Z_StepsByRev;
     zMotor = new Motor(motorCfg);
 
     // Crea el controlador de moviment
@@ -328,7 +328,7 @@ void AxisApplication::configuraUARTService() {
 
 	// Configura els pins (Corresponen al pins del conector Arduino D0/D1)
 	//
-    GPIOPinSettings gpioSettings;
+    halGPIOPinSettings gpioSettings;
 
     gpioSettings.options = HAL_GPIO_MODE_ALT_PP | HAL_GPIO_SPEED_HIGH | HAL_GPIO_PULL_UP;
 
@@ -345,7 +345,7 @@ void AxisApplication::configuraUARTService() {
 
 	// Inicialitza el modul UART
 	//
-	UARTSettings uartSettings;
+	halUARTSettings uartSettings;
 	uartSettings.channel = UARTService_UARTChannel;
 	uartSettings.options =
 		HAL_UART_CLOCK_AUTO | HAL_UART_BAUD_9600 | HAL_UART_OVERSAMPLING_16 |

@@ -56,7 +56,7 @@
 #define UARTService_RxPort                            UART_RX_PORT
 #define UARTService_RxPin                             UART_RX_PIN
 #define UARTService_RxAF                              UART_RX_AF
-#define UARTService_UARTChannel                       HAL_UART_CHANNEL_6
+#define UARTService_UARTChannel                       UART_CHANNEL
 #define UARTService_UARTInterruptVector               HAL_INT_VECTOR_UART6
 #define UARTService_UARTInterruptPriority             HAL_INT_PRIORITY_10
 #define UARTService_UARTInterruptSubPriority          HAL_INT_SUBPRIORITY_0

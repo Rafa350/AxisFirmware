@@ -91,16 +91,19 @@
 #define MOTORS_MOTOR3_LIMIT_PORT       ARDUINO_D13_PORT
 #define MOTORS_MOTOR3_LIMIT_PIN        ARDUINO_D13_PIN
 
+
 // -----------------------------------------------------------------------
 // UART
 //
 #define UART_TX_PORT                   ARDUINO_D1_PORT
 #define UART_TX_PIN					   ARDUINO_D1_PIN
-#define UART_TX_AF                     HAL_GPIO_AF8_USART6
+#define UART_TX_AF                     HAL_GPIO_AF_8
 
 #define UART_RX_PORT                   ARDUINO_D0_PORT
 #define UART_RX_PIN                    ARDUINO_D0_PIN
-#define UART_RX_AF                     HAL_GPIO_AF8_USART6
+#define UART_RX_AF                     HAL_GPIO_AF_8
+
+#define UART_CHANNEL                   HAL_UART_CHANNEL_6
 
 
 #endif // __eosBoard_Custom_STM32F746G_DISCO__

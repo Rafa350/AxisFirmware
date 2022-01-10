@@ -448,7 +448,7 @@ void P2PMotion::timerStop() {
 /// \param    param: Handler del servei.
 ///
 void P2PMotion::tmrInterruptFunction(
-    TMRHandler handler,
+    halTMRHandler handler,
     void* param,
 	uint32_t event) {
 
